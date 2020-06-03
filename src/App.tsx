@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Counter from "./components/Counter";
+import Counter from './components/Counter';
 
 const App: React.FC = () => <Counter name="John" />;
 
