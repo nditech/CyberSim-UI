@@ -3,26 +3,26 @@ import io from 'socket.io-client';
 
 const App = () => {
   const [socket, setSocket] = useState(null);
+  const [socketConnected, setSocketConnected] = useState(false);
 
   useEffect(() => {
-    setSocket(io(process.env.REACT_APP_API_URL));
-  }, [setSocket]);
+    const socket = io(process.env.REACT_APP_API_URL);
+    socket.on('connect', () => {
+      setSocketConnected(socket.connected);
+    });
+    // TODO: implement socket events handlers here
+    setSocket(socket);
+    return () => {
+      socket.removeAllListeners();
+      socket.close();
+    };
+  }, [setSocketConnected, setSocket]);
 
-  useEffect(
-    () => () => {
-      if (socket !== null) {
-        socket.removeAllListeners();
-        socket.close();
-      }
-    },
-    [socket],
-  );
-
-  if (!socket) {
+  if (!socket || !socketConnected) {
     return <div>Loading...</div>;
   }
 
-  return <div>test</div>;
+  return <div>Socket connected!</div>;
 };
 
 export default App;
