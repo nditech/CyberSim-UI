@@ -1,0 +1,5 @@
+export default {
+  SCORE: 'SCORE',
+  PREPARATION: 'PREPARATION',
+  PROGRESS: 'PROGRESS',
+};
