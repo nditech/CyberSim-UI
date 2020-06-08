@@ -48,12 +48,12 @@ const Game = ({ socket, popError }) => {
     return <>Preparation</>;
   }
 
-  if (game.state === GameStates.SCORE) {
-    return <>Score</>;
+  if (game.state === GameStates.ASSESSMENT) {
+    return <>ASSESSMENT</>;
   }
 
-  if (game.state === GameStates.PROGRESS) {
-    return <>Progress</>;
+  if (game.state === GameStates.SIMULATION) {
+    return <>SIMULATION</>;
   }
 
   return <>Unknown game state</>;
