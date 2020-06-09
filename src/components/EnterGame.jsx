@@ -9,6 +9,7 @@ const EnterGame = ({
   setRememberGameId,
   rememberGameId,
   gameId,
+  loading,
 }) => (
   <Container fluid="md" className="mt-5 pt-5">
     <Row>
@@ -36,7 +37,6 @@ const EnterGame = ({
           </Form.Group>
           <Form.Group controlId="RememberGameId">
             <Form.Check
-              // type="checkbox"
               type="switch"
               label="Remember me:"
               defaultChecked={rememberGameId}
@@ -50,7 +50,7 @@ const EnterGame = ({
                 variant="outline-primary"
                 className="rounded-pill w-100"
                 type="button"
-                disabled={!gameId}
+                disabled={!gameId || loading}
                 onClick={() => enterGame(SocketEvents.CREATEGAME)}
               >
                 <h4 className="font-weight-normal mb-0">
@@ -65,7 +65,7 @@ const EnterGame = ({
                 variant="outline-primary"
                 className="rounded-pill w-100"
                 type="button"
-                disabled={!gameId}
+                disabled={!gameId || loading}
                 onClick={() => enterGame(SocketEvents.JOINGAME)}
               >
                 <h4 className="font-weight-normal mb-0">Join Game</h4>
