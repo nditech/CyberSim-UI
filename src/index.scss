@@ -14,3 +14,51 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+label {
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  white-space: nowrap;
+}
+
+input[type='text'],
+select.form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid
+    map-get($map: $theme-colors, $key: 'primary');
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin-left: 10px;
+  padding: 0;
+  height: auto;
+  line-height: 1;
+  color: map-get($map: $theme-colors, $key: 'primary');
+}
+
+input[type='text']:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+// TODO: these rules are temporary and only made for enter game screen => create custom switch input instead
+
+.custom-switch {
+  padding: 0;
+}
+.custom-switch .custom-control-label::after {
+  top: calc(0.45rem + 2px);
+  left: calc(8rem + 2px);
+}
+.custom-switch .custom-control-label::before {
+  left: 8rem;
+  top: 55%;
+  transform: translate(0, -50%);
+}
+
+// END OF TODO
