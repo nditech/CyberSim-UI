@@ -10,6 +10,7 @@ import {
 
 // import { SocketEvents } from '../constants';
 import MitigationCategory from './MitigationCategory';
+import { numberToUsd } from '../../util';
 
 const Preparation = ({ socket, game, setGame }) => {
   const [
@@ -44,56 +45,49 @@ const Preparation = ({ socket, game, setGame }) => {
 
   return (
     <div>
+      <div className="pt-4" />
       <div
-        className="py-4 border-primary border-bottom position-sticky bg-white"
-        style={{ top: 0 }}
+        className="py-3 border-primary border-bottom position-sticky bg-white"
+        style={{ top: 0, zIndex: 1 }}
       >
         <Container fluid="md">
           <Row>
             <Col>
               <h3 className="m-0">
                 <span className="mr-1">TOTAL Budget Allocated:</span>
-                {game.allocated_budget.toLocaleString('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
+                {numberToUsd(game.allocated_budget)}
               </h3>
             </Col>
             <Col className="text-right">
               <h3 className="m-0">
                 <span className="mr-1">Remaining Budget:</span>
-                {game.budget.toLocaleString('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                  minimumFractionDigits: 0,
-                  maximumFractionDigits: 0,
-                })}
+                {numberToUsd(game.budget)}
               </h3>
             </Col>
           </Row>
         </Container>
       </div>
-      <div className="py-5">
-        <Container fluid="md">
-          {mitigationsByCategory ? (
-            Object.keys(mitigationsByCategory).map((key) => (
-              <MitigationCategory
-                key={key}
-                name={key}
-                mitigations={mitigationsByCategory[key]}
-                game={game}
-                toggleMitigation={toggleMitigation}
-              />
-            ))
-          ) : (
-            <Spinner animation="border" />
-          )}
-        </Container>
-      </div>
+      <Container fluid="md" className="mb-5 pb-5">
+        {mitigationsByCategory ? (
+          Object.keys(mitigationsByCategory).map((key) => (
+            <MitigationCategory
+              key={key}
+              name={key}
+              mitigations={mitigationsByCategory[key]}
+              game={game}
+              toggleMitigation={toggleMitigation}
+            />
+          ))
+        ) : (
+          <Spinner
+            animation="border"
+            className="position-fixed"
+            style={{ left: '50%', top: '50%' }}
+          />
+        )}
+      </Container>
       <div
-        className="py-4 border-primary border-top position-fixed bg-white w-100"
+        className="py-4 border-primary border-top position-fixed w-100 bg-white"
         style={{ bottom: 0 }}
       >
         <Container fluid="md">

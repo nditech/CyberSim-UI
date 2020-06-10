@@ -107,7 +107,7 @@ const EnterGame = ({ setGame, socket }) => {
             <Form.Group controlId="RememberGameId">
               <Form.Check
                 type="switch"
-                label="Remember me:"
+                label="Remember me"
                 defaultChecked={rememberGameId}
                 onChange={setRememberGameId}
                 style={{ fontSize: '1.125rem' }}

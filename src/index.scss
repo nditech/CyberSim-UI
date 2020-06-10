@@ -46,18 +46,43 @@ select.form-control:focus {
   box-shadow: none;
 }
 
-// TODO: these rules are temporary and only made for enter game screen => create custom switch input instead
-
-.custom-switch {
-  padding: 0;
+.mitigation-row {
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: lighten(
+      map-get($map: $theme-colors, $key: 'primary'),
+      52%
+    );
+  }
 }
+
 .custom-switch .custom-control-label::after {
-  top: calc(0.45rem + 2px);
-  left: calc(8rem + 2px);
+  top: 50%;
+  transform: translate(0.75rem, -50%);
+}
+.custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
+  transform: translate(0, -50%);
 }
 .custom-switch .custom-control-label::before {
-  left: 8rem;
-  top: 55%;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.custom-switch.custom-switch-right {
+  padding: 0;
+  .custom-control-label {
+    padding-right: 33px;
+  }
+}
+.custom-switch.custom-switch-right .custom-control-label::after {
+  right: 14px;
+  left: auto;
+}
+
+.custom-switch.custom-switch-right .custom-control-label::before {
+  right: 0;
+  left: auto;
   transform: translate(0, -50%);
 }
 
