@@ -9,8 +9,7 @@ const MitigationCategory = ({
   game,
   toggleMitigation,
 }) => {
-  // TODO: change game state and emit socket event on switch
-  // calculate allocated budgets, use switch state from game state
+  // TODO: calculate allocated budgets
   return (
     <div className="my-5 py-3">
       <Row className="pb-2">
@@ -43,6 +42,16 @@ const MitigationCategory = ({
                     className="custom-switch-right"
                     id={`${mitigation.id}_hq`}
                     label={numberToUsd(mitigation.hq_cost)}
+                    checked={
+                      !!game.mitigations[`${mitigation.id}_hq`]
+                    }
+                    onChange={(e) =>
+                      toggleMitigation({
+                        id: mitigation.id,
+                        type: 'hq',
+                        value: e.target.checked,
+                      })
+                    }
                   />
                 )}
               </Col>
@@ -53,6 +62,16 @@ const MitigationCategory = ({
                     className="custom-switch-right"
                     id={`${mitigation.id}_local`}
                     label={numberToUsd(mitigation.local_cost)}
+                    checked={
+                      !!game.mitigations[`${mitigation.id}_local`]
+                    }
+                    onChange={(e) =>
+                      toggleMitigation({
+                        id: mitigation.id,
+                        type: 'local',
+                        value: e.target.checked,
+                      })
+                    }
                   />
                 )}
               </Col>

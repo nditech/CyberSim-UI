@@ -18,10 +18,19 @@ const Preparation = ({ socket, game, setGame }) => {
     setMitigationsByCategory,
   ] = useState();
 
-  const toggleMitigation = useCallback(({ id, type }) => {
-    // TODO:
-    console.log('emit socket event for mitigation purchase');
-  }, []);
+  const toggleMitigation = useCallback(
+    ({ id, type, value }) => {
+      setGame({
+        ...game,
+        mitigations: {
+          ...game.mitigations,
+          [`${id}_${type}`]: value,
+        },
+      });
+      // TODO: emit socket event
+    },
+    [game, setGame],
+  );
 
   useEffect(() => {
     axios

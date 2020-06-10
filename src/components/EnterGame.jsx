@@ -109,7 +109,7 @@ const EnterGame = ({ setGame, socket }) => {
                 type="switch"
                 label="Remember me"
                 defaultChecked={rememberGameId}
-                onChange={setRememberGameId}
+                onChange={(e) => setRememberGameId(e.target.checked)}
                 style={{ fontSize: '1.125rem' }}
               />
             </Form.Group>
