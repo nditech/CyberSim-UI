@@ -3,4 +3,5 @@ export default {
   DISCONNECT: 'disconnect',
   CREATEGAME: 'createGame',
   JOINGAME: 'joinGame',
+  GAMEUPDATED: 'gameUpdated',
 };

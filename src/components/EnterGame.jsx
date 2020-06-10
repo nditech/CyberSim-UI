@@ -1,81 +1,153 @@
-import React from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Alert,
+} from 'react-bootstrap';
+import qs from 'query-string';
 
 import { SocketEvents } from '../constants';
 
-const EnterGame = ({
-  enterGame,
-  setGameId,
-  setRememberGameId,
-  rememberGameId,
-  gameId,
-  loading,
-}) => (
-  <Container fluid="md" className="mt-5 pt-5">
-    <Row>
-      <Col md={{ span: 8, offset: 2 }}>
-        <Row className="font-weight-bold">
-          <Col>
-            <h4>ENTER GAME</h4>
-          </Col>
-        </Row>
-        <Form>
-          <Form.Group controlId="GameId">
-            <Form.Label>
-              <h5 className="font-weight-normal mb-0">
-                Your game’s name:
-              </h5>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Game Id"
-              onChange={(event) => setGameId(event.target.value)}
-              value={gameId}
-              autoComplete="off"
-              style={{ fontSize: '1.125rem' }}
-            />
-          </Form.Group>
-          <Form.Group controlId="RememberGameId">
-            <Form.Check
-              type="switch"
-              label="Remember me:"
-              defaultChecked={rememberGameId}
-              onChange={setRememberGameId}
-              style={{ fontSize: '1.125rem' }}
-            />
-          </Form.Group>
-          <Row className="my-4">
+const gameIdFromLocalStorage = localStorage.getItem('gameId');
+const queryParams = qs.parse(window.location.search);
+
+const EnterGame = ({ setGame, socket }) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [showError, setShowError] = useState(null);
+  const [gameId, setGameId] = useState(gameIdFromLocalStorage || '');
+  const [rememberGameId, setRememberGameId] = useState(
+    !!gameIdFromLocalStorage,
+  );
+
+  const popError = useCallback(
+    (errorMessage) => {
+      setError(errorMessage);
+      setShowError(true);
+      // TODO: hide error after some time (click outside?)
+    },
+    [setError, setShowError],
+  );
+
+  const enterGame = useCallback(
+    (eventType) => {
+      setLoading(true);
+      socket.emit(eventType, gameId, ({ error, game }) => {
+        if (!error) {
+          setGame(game);
+          if (rememberGameId) {
+            localStorage.setItem('gameId', gameId);
+          } else {
+            localStorage.removeItem('gameId');
+          }
+        } else {
+          popError(error);
+        }
+        setLoading(false);
+      });
+    },
+    [socket, setGame, gameId, popError, rememberGameId, setLoading],
+  );
+
+  useEffect(() => {
+    if (queryParams.gameId) {
+      setLoading(true);
+      socket.emit(
+        SocketEvents.JOINGAME,
+        queryParams.gameId,
+        ({ error, game }) => {
+          if (!error) {
+            setGame(game);
+          } else {
+            setLoading(false);
+          }
+        },
+      );
+    }
+  }, [setGame, socket, setLoading]);
+
+  return (
+    <Container fluid="md" className="mt-5 pt-5">
+      <div className="position-fixed top-0 left-0 d-flex justify-content-center w-100">
+        <Alert
+          show={showError}
+          variant="danger"
+          onClose={() => setShowError(false)}
+          dismissible
+        >
+          {error}
+        </Alert>
+      </div>
+      <Row>
+        <Col md={{ span: 8, offset: 2 }}>
+          <Row className="font-weight-bold">
             <Col>
-              <Button
-                variant="outline-primary"
-                className="rounded-pill w-100"
-                type="button"
-                disabled={!gameId || loading}
-                onClick={() => enterGame(SocketEvents.CREATEGAME)}
-              >
-                <h4 className="font-weight-normal mb-0">
-                  Create Game
-                </h4>
-              </Button>
+              <h4>ENTER GAME</h4>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Button
-                variant="outline-primary"
-                className="rounded-pill w-100"
-                type="button"
-                disabled={!gameId || loading}
-                onClick={() => enterGame(SocketEvents.JOINGAME)}
-              >
-                <h4 className="font-weight-normal mb-0">Join Game</h4>
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Col>
-    </Row>
-  </Container>
-);
+          <Form>
+            <Form.Group controlId="GameId">
+              <Form.Label>
+                <h5 className="font-weight-normal mb-0">
+                  Your game’s name:
+                </h5>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Game Id"
+                onChange={(event) => setGameId(event.target.value)}
+                value={gameId}
+                autoComplete="off"
+                style={{ fontSize: '1.125rem' }}
+              />
+            </Form.Group>
+            <Form.Group controlId="RememberGameId">
+              <Form.Check
+                type="switch"
+                label="Remember me:"
+                defaultChecked={rememberGameId}
+                onChange={setRememberGameId}
+                style={{ fontSize: '1.125rem' }}
+              />
+            </Form.Group>
+            <Row className="my-4">
+              <Col>
+                <Button
+                  variant="outline-primary"
+                  className="rounded-pill w-100"
+                  type="button"
+                  disabled={!gameId || loading}
+                  onClick={() => enterGame(SocketEvents.CREATEGAME)}
+                >
+                  <h4 className="font-weight-normal mb-0">
+                    Create Game
+                  </h4>
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Button
+                  variant="outline-primary"
+                  className="rounded-pill w-100"
+                  type="button"
+                  disabled={!gameId || loading}
+                  onClick={() => enterGame(SocketEvents.JOINGAME)}
+                >
+                  <h4 className="font-weight-normal mb-0">
+                    Join Game
+                  </h4>
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
 export default EnterGame;
