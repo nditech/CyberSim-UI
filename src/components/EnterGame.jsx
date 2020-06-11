@@ -14,6 +14,8 @@ import { SocketEvents } from '../constants';
 const gameIdFromLocalStorage = localStorage.getItem('gameId');
 const queryParams = qs.parse(window.location.search);
 
+let errorTimeout;
+
 const EnterGame = ({ setGame, socket }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,11 +25,17 @@ const EnterGame = ({ setGame, socket }) => {
     !!gameIdFromLocalStorage,
   );
 
+  // TODO: refactor this to upper level, so it can be used by other components
   const popError = useCallback(
     (errorMessage) => {
       setError(errorMessage);
       setShowError(true);
-      // TODO: hide error after some time (click outside?)
+      if (errorTimeout) {
+        clearTimeout(errorTimeout);
+      }
+      errorTimeout = setTimeout(() => {
+        setShowError(false);
+      }, 4000);
     },
     [setError, setShowError],
   );
@@ -45,8 +53,8 @@ const EnterGame = ({ setGame, socket }) => {
           }
         } else {
           popError(error);
+          setLoading(false);
         }
-        setLoading(false);
       });
     },
     [socket, setGame, gameId, popError, rememberGameId, setLoading],
@@ -71,7 +79,14 @@ const EnterGame = ({ setGame, socket }) => {
 
   return (
     <Container fluid="md" className="mt-5 pt-5">
-      <div className="position-fixed top-0 left-0 d-flex justify-content-center w-100">
+      <div
+        className="position-fixed"
+        style={{
+          bottom: '20px',
+          left: '50%',
+          transform: 'translate(-50%)',
+        }}
+      >
         <Alert
           show={showError}
           variant="danger"

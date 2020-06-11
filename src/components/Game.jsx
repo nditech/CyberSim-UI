@@ -11,6 +11,27 @@ const Game = ({ socket }) => {
   const [game, setGame] = useState(null); // TODO: game should be a context or an easy state store
 
   useEffect(() => {
+    const reconnectFunction = () => {
+      if (game) {
+        socket.emit(
+          SocketEvents.JOINGAME,
+          game.id,
+          ({ error, game: g }) => {
+            if (!error) {
+              setGame(g);
+            }
+            // TODO: show reconnection error
+          },
+        );
+      }
+    };
+    socket.on(SocketEvents.RECONNECT, reconnectFunction);
+    return () => {
+      socket.off(SocketEvents.RECONNECT, reconnectFunction);
+    };
+  }, [socket, setGame, game]);
+
+  useEffect(() => {
     socket.on(SocketEvents.GAMEUPDATED, (g) => setGame(g));
   }, [socket, setGame]);
 

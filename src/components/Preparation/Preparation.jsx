@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-bootstrap';
 
-// import { SocketEvents } from '../constants';
+import { SocketEvents } from '../../constants';
 import MitigationCategory from './MitigationCategory';
 import { numberToUsd } from '../../util';
 
@@ -20,16 +20,17 @@ const Preparation = ({ socket, game, setGame }) => {
 
   const toggleMitigation = useCallback(
     ({ id, type, value }) => {
-      setGame({
-        ...game,
-        mitigations: {
-          ...game.mitigations,
-          [`${id}_${type}`]: value,
+      socket.emit(
+        SocketEvents.CHANGEMITIGATION,
+        { id, type, value },
+        ({ error }) => {
+          if (error) {
+            console.log(error); // TODO: show alert
+          }
         },
-      });
-      // TODO: emit socket event
+      );
     },
-    [game, setGame],
+    [socket],
   );
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const Preparation = ({ socket, game, setGame }) => {
             <Col>
               <h3 className="m-0">
                 <span className="mr-1">TOTAL Budget Allocated:</span>
-                {numberToUsd(game.allocated_budget)}
+                {numberToUsd(0) /* TODO: */}
               </h3>
             </Col>
             <Col className="text-right">
@@ -101,7 +102,7 @@ const Preparation = ({ socket, game, setGame }) => {
       >
         <Container fluid="md">
           <Row>
-            <Col md={6}>
+            <Col md={8}>
               <Button
                 variant="outline-primary"
                 className="rounded-pill"
@@ -116,7 +117,7 @@ const Preparation = ({ socket, game, setGame }) => {
                 </h4>
               </Button>
             </Col>
-            <Col md={6} className="text-right">
+            <Col md={4} className="text-right">
               <Button
                 variant="outline-primary"
                 className="rounded-pill"
