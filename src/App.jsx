@@ -21,7 +21,7 @@ const App = () => {
   }, [setSocketConnected, setSocket]);
 
   if (!socket || !socketConnected) {
-    return <div>Connection Socket...</div>;
+    return <div>Connecting Socket...</div>;
   }
 
   return <Game socket={socket} />;

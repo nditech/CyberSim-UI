@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react';
 import axios from 'axios';
 import {
   Container,
@@ -12,7 +17,7 @@ import { SocketEvents } from '../../constants';
 import MitigationCategory from './MitigationCategory';
 import { numberToUsd } from '../../util';
 
-const Preparation = ({ socket, game, setGame }) => {
+const Preparation = ({ socket, game }) => {
   const [
     mitigationsByCategory,
     setMitigationsByCategory,
@@ -53,6 +58,35 @@ const Preparation = ({ socket, game, setGame }) => {
       .catch((e) => console.error(e));
   }, []);
 
+  const categoryBudgetsAllocated = useMemo(
+    () =>
+      mitigationsByCategory
+        ? Object.keys(mitigationsByCategory).reduce(
+            (acc, categoryKey) => {
+              const categorySum = mitigationsByCategory[
+                categoryKey
+              ].reduce((sum, { id, hq_cost, local_cost }) => {
+                let newSum = sum;
+                if (game.mitigations[`${id}_hq`] && hq_cost) {
+                  newSum += hq_cost;
+                }
+                if (game.mitigations[`${id}_local`] && local_cost) {
+                  newSum += local_cost;
+                }
+                return newSum;
+              }, 0);
+              return {
+                ...acc,
+                [categoryKey]: categorySum,
+                sum: (acc.sum || 0) + categorySum,
+              };
+            },
+            {},
+          )
+        : { sum: 0 },
+    [mitigationsByCategory, game],
+  );
+
   return (
     <div>
       <div className="pt-4" />
@@ -65,7 +99,7 @@ const Preparation = ({ socket, game, setGame }) => {
             <Col>
               <h3 className="m-0">
                 <span className="mr-1">TOTAL Budget Allocated:</span>
-                {numberToUsd(0) /* TODO: */}
+                {numberToUsd(categoryBudgetsAllocated.sum)}
               </h3>
             </Col>
             <Col className="text-right">
@@ -85,6 +119,7 @@ const Preparation = ({ socket, game, setGame }) => {
               name={key}
               mitigations={mitigationsByCategory[key]}
               game={game}
+              allocatedMoney={categoryBudgetsAllocated[key]}
               toggleMitigation={toggleMitigation}
             />
           ))

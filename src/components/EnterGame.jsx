@@ -61,14 +61,21 @@ const EnterGame = ({ setGame, socket }) => {
   );
 
   useEffect(() => {
-    if (queryParams.gameId) {
+    const { gameId: gameIdFromQuery, ...newParams } = queryParams;
+    if (gameIdFromQuery) {
       setLoading(true);
       socket.emit(
         SocketEvents.JOINGAME,
-        queryParams.gameId,
+        gameIdFromQuery,
         ({ error, game }) => {
           if (!error) {
             setGame(game);
+            window.history.replaceState(
+              null,
+              null,
+              `?${qs.stringify(newParams)}`,
+            );
+            localStorage.setItem('gameId', gameIdFromQuery);
           } else {
             setLoading(false);
           }

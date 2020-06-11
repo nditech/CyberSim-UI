@@ -45,9 +45,7 @@ const Game = ({ socket }) => {
   }
 
   if (game.state === GameStates.PREPARATION) {
-    return (
-      <Preparation socket={socket} game={game} setGame={setGame} />
-    );
+    return <Preparation socket={socket} game={game} />;
   }
 
   // TODO: ASSESSMENT phase
