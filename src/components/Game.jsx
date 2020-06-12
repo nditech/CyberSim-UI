@@ -4,6 +4,7 @@ import qs from 'query-string';
 import { GameStates, SocketEvents } from '../constants';
 import EnterGame from './EnterGame';
 import Preparation from './Preparation/Preparation';
+import Simulation from './Simulation/Simulation';
 
 const queryParams = qs.parse(window.location.search);
 
@@ -48,14 +49,13 @@ const Game = ({ socket }) => {
     return <Preparation socket={socket} game={game} />;
   }
 
+  if (game.state === GameStates.SIMULATION) {
+    return <Simulation socket={socket} game={game} />;
+  }
+
   // TODO: ASSESSMENT phase
   if (game.state === GameStates.ASSESSMENT) {
     return <>ASSESSMENT</>;
-  }
-
-  // TODO: SIMULATION phase
-  if (game.state === GameStates.SIMULATION) {
-    return <>SIMULATION</>;
   }
 
   return <>Unknown game state</>;

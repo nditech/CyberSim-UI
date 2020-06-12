@@ -1,4 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react';
 import {
   Form,
   Button,
@@ -14,8 +19,6 @@ import { SocketEvents } from '../constants';
 const gameIdFromLocalStorage = localStorage.getItem('gameId');
 const queryParams = qs.parse(window.location.search);
 
-let errorTimeout;
-
 const EnterGame = ({ setGame, socket }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -24,16 +27,17 @@ const EnterGame = ({ setGame, socket }) => {
   const [rememberGameId, setRememberGameId] = useState(
     !!gameIdFromLocalStorage,
   );
+  const errorTimeRef = useRef();
 
   // TODO: refactor this to upper level, so it can be used by other components
   const popError = useCallback(
     (errorMessage) => {
       setError(errorMessage);
       setShowError(true);
-      if (errorTimeout) {
-        clearTimeout(errorTimeout);
+      if (errorTimeRef.current) {
+        clearTimeout(errorTimeRef.current);
       }
-      errorTimeout = setTimeout(() => {
+      errorTimeRef.current = setTimeout(() => {
         setShowError(false);
       }, 4000);
     },

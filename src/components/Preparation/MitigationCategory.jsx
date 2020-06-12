@@ -8,14 +8,14 @@ const MitigationCategory = ({
   mitigations,
   game,
   toggleMitigation,
-  allocatedMoney,
+  allocatedBudget,
 }) => (
   <div className="my-5 py-3">
     <Row className="pb-2">
       <Col md={9}>
         <h4 className="m-0 font-weight-normal border-bottom border-primary w-100 text-uppercase">
           ALLOCATED <span className="font-weight-bold">{name}</span>{' '}
-          BUDGET : {numberToUsd(allocatedMoney)}
+          BUDGET : {numberToUsd(allocatedBudget)}
         </h4>
       </Col>
       <Col md={3}>

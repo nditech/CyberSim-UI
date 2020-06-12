@@ -28,15 +28,18 @@ const Preparation = ({ socket, game }) => {
       socket.emit(
         SocketEvents.CHANGEMITIGATION,
         { id, type, value },
-        ({ error }) => {
-          if (error) {
-            console.log(error); // TODO: show alert
-          }
-        },
+        ({ error }) => error && console.error(error), // TODO: show alert (not enought budget)
       );
     },
     [socket],
   );
+
+  const startSimulation = useCallback(() => {
+    socket.emit(
+      SocketEvents.STARTSIMULATION,
+      ({ error }) => error && console.error(error),
+    );
+  }, [socket]);
 
   useEffect(() => {
     axios
@@ -56,9 +59,9 @@ const Preparation = ({ socket, game }) => {
         );
       })
       .catch((e) => console.error(e));
-  }, []);
+  }, [setMitigationsByCategory]);
 
-  const categoryBudgetsAllocated = useMemo(
+  const allocatedCategoryBudgets = useMemo(
     () =>
       mitigationsByCategory
         ? Object.keys(mitigationsByCategory).reduce(
@@ -98,8 +101,8 @@ const Preparation = ({ socket, game }) => {
           <Row>
             <Col>
               <h3 className="m-0">
-                <span className="mr-1">TOTAL Budget Allocated:</span>
-                {numberToUsd(categoryBudgetsAllocated.sum)}
+                <span className="mr-1">Budget Allocated:</span>
+                {numberToUsd(allocatedCategoryBudgets.sum)}
               </h3>
             </Col>
             <Col className="text-right">
@@ -119,7 +122,7 @@ const Preparation = ({ socket, game }) => {
               name={key}
               mitigations={mitigationsByCategory[key]}
               game={game}
-              allocatedMoney={categoryBudgetsAllocated[key]}
+              allocatedBudget={allocatedCategoryBudgets[key]}
               toggleMitigation={toggleMitigation}
             />
           ))
@@ -143,9 +146,7 @@ const Preparation = ({ socket, game }) => {
                 className="rounded-pill"
                 type="button"
                 disabled={!mitigationsByCategory}
-                onClick={() =>
-                  console.log('emit go to simulation status')
-                }
+                onClick={startSimulation}
               >
                 <h4 className="font-weight-normal mb-0">
                   SAVE Budget and START Simulation
@@ -155,10 +156,9 @@ const Preparation = ({ socket, game }) => {
             <Col md={4} className="text-right">
               <Button
                 variant="outline-primary"
-                className="rounded-pill"
+                className="rounded-pill overflow-scroll"
                 type="button"
-                disabled={!mitigationsByCategory}
-                onClick={() => console.log('open projector?')}
+                onClick={() => console.log('TODO: open projector?')}
               >
                 <h4 className="font-weight-normal mb-0">{game.id}</h4>
               </Button>
