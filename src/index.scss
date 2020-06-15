@@ -86,4 +86,24 @@ select.form-control:focus {
   transform: translate(0, -50%);
 }
 
-// END OF TODO
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.simulation-menu {
+  transition: box-shadow 0.2s linear;
+  h4 {
+    transition: font-weight 0.2s linear;
+  }
+  &.active {
+    h4 {
+      font-weight: bold !important;
+    }
+  }
+  &:hover,
+  &.active {
+    box-shadow: inset 0px 8px 0px
+        map-get($map: $theme-colors, $key: 'primary'),
+      inset 0px -8px 0px map-get($map: $theme-colors, $key: 'primary');
+  }
+}
