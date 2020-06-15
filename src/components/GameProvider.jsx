@@ -118,44 +118,17 @@ export const GameProvider = ({ socket, children }) => {
     [socket, setGame, popError, setLoading],
   );
 
-  const resumeSimulation = useCallback(() => {
-    socket.emit(
-      SocketEvents.STARTSIMULATION,
-      ({ error }) => error && popError(error),
-    );
-  }, [socket, popError]);
-
-  const pauseSimulation = useCallback(() => {
-    socket.emit(
-      SocketEvents.PAUSESIMULATION,
-      ({ error }) => error && popError(error),
-    );
-  }, [socket, popError]);
-
-  const finishSimulation = useCallback(() => {
-    socket.emit(
-      SocketEvents.FINISHSIMULATION,
-      ({ error }) => error && popError(error),
-    );
-  }, [socket, popError]);
-
-  const toggleMitigation = useCallback(
-    ({ id, type, value }) => {
-      socket.emit(
-        SocketEvents.CHANGEMITIGATION,
-        { id, type, value },
-        ({ error }) => error && popError(error),
-      );
-    },
+  const emitEvent = useCallback(
+    (event, params) =>
+      params
+        ? socket.emit(
+            event,
+            params,
+            ({ error }) => error && popError(error),
+          )
+        : socket.emit(event, ({ error }) => error && popError(error)),
     [socket, popError],
   );
-
-  const startSimulation = useCallback(() => {
-    socket.emit(
-      SocketEvents.STARTSIMULATION,
-      ({ error }) => error && popError(error),
-    );
-  }, [socket, popError]);
 
   return (
     <GameContext.Provider
@@ -163,11 +136,16 @@ export const GameProvider = ({ socket, children }) => {
         ...game,
         actions: {
           enterGame,
-          resumeSimulation,
-          pauseSimulation,
-          finishSimulation,
-          toggleMitigation,
-          startSimulation,
+          resumeSimulation: () =>
+            emitEvent(SocketEvents.STARTSIMULATION),
+          pauseSimulation: () =>
+            emitEvent(SocketEvents.PAUSESIMULATION),
+          finishSimulation: () =>
+            emitEvent(SocketEvents.FINISHSIMULATION),
+          toggleMitigation: (params) =>
+            emitEvent(SocketEvents.CHANGEMITIGATION, params),
+          startSimulation: () =>
+            emitEvent(SocketEvents.STARTSIMULATION),
         },
         loading,
       }}
