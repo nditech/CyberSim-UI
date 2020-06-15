@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-} from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import {
   Container,
@@ -13,33 +8,22 @@ import {
   Button,
 } from 'react-bootstrap';
 
-import { SocketEvents } from '../../constants';
+import { useGame } from '../GameProvider';
 import MitigationCategory from './MitigationCategory';
 import { numberToUsd } from '../../util';
 
-const Preparation = ({ socket, game }) => {
+const Preparation = () => {
+  const {
+    id,
+    budget,
+    mitigations,
+    actions: { toggleMitigation, startSimulation },
+  } = useGame();
+
   const [
     mitigationsByCategory,
     setMitigationsByCategory,
   ] = useState();
-
-  const toggleMitigation = useCallback(
-    ({ id, type, value }) => {
-      socket.emit(
-        SocketEvents.CHANGEMITIGATION,
-        { id, type, value },
-        ({ error }) => error && console.error(error), // TODO: show alert (not enought budget)
-      );
-    },
-    [socket],
-  );
-
-  const startSimulation = useCallback(() => {
-    socket.emit(
-      SocketEvents.STARTSIMULATION,
-      ({ error }) => error && console.error(error),
-    );
-  }, [socket]);
 
   useEffect(() => {
     axios
@@ -70,10 +54,10 @@ const Preparation = ({ socket, game }) => {
                 categoryKey
               ].reduce((sum, { id, hq_cost, local_cost }) => {
                 let newSum = sum;
-                if (game.mitigations[`${id}_hq`] && hq_cost) {
+                if (mitigations[`${id}_hq`] && hq_cost) {
                   newSum += hq_cost;
                 }
-                if (game.mitigations[`${id}_local`] && local_cost) {
+                if (mitigations[`${id}_local`] && local_cost) {
                   newSum += local_cost;
                 }
                 return newSum;
@@ -87,7 +71,7 @@ const Preparation = ({ socket, game }) => {
             {},
           )
         : { sum: 0 },
-    [mitigationsByCategory, game],
+    [mitigationsByCategory, mitigations],
   );
 
   return (
@@ -108,7 +92,7 @@ const Preparation = ({ socket, game }) => {
             <Col className="text-right">
               <h3 className="m-0">
                 <span className="mr-1">Remaining Budget:</span>
-                {numberToUsd(game.budget)}
+                {numberToUsd(budget)}
               </h3>
             </Col>
           </Row>
@@ -121,7 +105,7 @@ const Preparation = ({ socket, game }) => {
               key={key}
               name={key}
               mitigations={mitigationsByCategory[key]}
-              game={game}
+              gameMitigations={mitigations}
               allocatedBudget={allocatedCategoryBudgets[key]}
               toggleMitigation={toggleMitigation}
             />
@@ -160,7 +144,7 @@ const Preparation = ({ socket, game }) => {
                 type="button"
                 onClick={() => console.log('TODO: open projector?')}
               >
-                <h4 className="font-weight-normal mb-0">{game.id}</h4>
+                <h4 className="font-weight-normal mb-0">{id}</h4>
               </Button>
             </Col>
           </Row>

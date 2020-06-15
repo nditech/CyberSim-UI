@@ -1,112 +1,24 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
-import {
-  Form,
-  Button,
-  Container,
-  Row,
-  Col,
-  Alert,
-} from 'react-bootstrap';
-import qs from 'query-string';
+import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 import { SocketEvents } from '../constants';
+import { useGame } from './GameProvider';
 
 const gameIdFromLocalStorage = localStorage.getItem('gameId');
-const queryParams = qs.parse(window.location.search);
 
-const EnterGame = ({ setGame, socket }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [showError, setShowError] = useState(null);
+const EnterGame = () => {
+  const {
+    loading,
+    actions: { enterGame },
+  } = useGame();
+
   const [gameId, setGameId] = useState(gameIdFromLocalStorage || '');
   const [rememberGameId, setRememberGameId] = useState(
     !!gameIdFromLocalStorage,
   );
-  const errorTimeRef = useRef();
-
-  // TODO: refactor this to upper level, so it can be used by other components
-  const popError = useCallback(
-    (errorMessage) => {
-      setError(errorMessage);
-      setShowError(true);
-      if (errorTimeRef.current) {
-        clearTimeout(errorTimeRef.current);
-      }
-      errorTimeRef.current = setTimeout(() => {
-        setShowError(false);
-      }, 4000);
-    },
-    [setError, setShowError],
-  );
-
-  const enterGame = useCallback(
-    (eventType) => {
-      setLoading(true);
-      socket.emit(eventType, gameId, ({ error, game }) => {
-        if (!error) {
-          setGame(game);
-          if (rememberGameId) {
-            localStorage.setItem('gameId', gameId);
-          } else {
-            localStorage.removeItem('gameId');
-          }
-        } else {
-          popError(error);
-          setLoading(false);
-        }
-      });
-    },
-    [socket, setGame, gameId, popError, rememberGameId, setLoading],
-  );
-
-  useEffect(() => {
-    const { gameId: gameIdFromQuery, ...newParams } = queryParams;
-    if (gameIdFromQuery) {
-      setLoading(true);
-      socket.emit(
-        SocketEvents.JOINGAME,
-        gameIdFromQuery,
-        ({ error, game }) => {
-          if (!error) {
-            setGame(game);
-            window.history.replaceState(
-              null,
-              null,
-              `?${qs.stringify(newParams)}`,
-            );
-            localStorage.setItem('gameId', gameIdFromQuery);
-          } else {
-            setLoading(false);
-          }
-        },
-      );
-    }
-  }, [setGame, socket, setLoading]);
 
   return (
     <Container fluid="md" className="mt-5 pt-5">
-      <div
-        className="position-fixed"
-        style={{
-          bottom: '20px',
-          left: '50%',
-          transform: 'translate(-50%)',
-        }}
-      >
-        <Alert
-          show={showError}
-          variant="danger"
-          onClose={() => setShowError(false)}
-          dismissible
-        >
-          {error}
-        </Alert>
-      </div>
       <Row>
         <Col md={{ span: 8, offset: 2 }}>
           <Row className="font-weight-bold">
@@ -146,7 +58,13 @@ const EnterGame = ({ setGame, socket }) => {
                   className="rounded-pill w-100"
                   type="button"
                   disabled={!gameId || loading}
-                  onClick={() => enterGame(SocketEvents.CREATEGAME)}
+                  onClick={() =>
+                    enterGame({
+                      eventType: SocketEvents.CREATEGAME,
+                      gameId,
+                      rememberGameId,
+                    })
+                  }
                 >
                   <h4 className="font-weight-normal mb-0">
                     Create Game
@@ -161,7 +79,13 @@ const EnterGame = ({ setGame, socket }) => {
                   className="rounded-pill w-100"
                   type="button"
                   disabled={!gameId || loading}
-                  onClick={() => enterGame(SocketEvents.JOINGAME)}
+                  onClick={() =>
+                    enterGame({
+                      eventType: SocketEvents.JOINGAME,
+                      gameId,
+                      rememberGameId,
+                    })
+                  }
                 >
                   <h4 className="font-weight-normal mb-0">
                     Join Game

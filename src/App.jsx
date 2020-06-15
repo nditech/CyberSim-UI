@@ -3,6 +3,7 @@ import io from 'socket.io-client';
 
 import { SocketEvents } from './constants';
 import Game from './components/Game';
+import { GameProvider } from './components/GameProvider';
 
 const App = () => {
   const [socket, setSocket] = useState(null);
@@ -23,8 +24,11 @@ const App = () => {
   if (!socket || !socketConnected) {
     return <div>Connecting Socket...</div>;
   }
-
-  return <Game socket={socket} />;
+  return (
+    <GameProvider socket={socket}>
+      <Game />
+    </GameProvider>
+  );
 };
 
 export default App;

@@ -1,43 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import qs from 'query-string';
 
-import { GameStates, SocketEvents } from '../constants';
+import { GameStates } from '../constants';
 import EnterGame from './EnterGame';
 import Preparation from './Preparation/Preparation';
 import Simulation from './Simulation/Simulation';
+import { useGame } from './GameProvider';
 
 const queryParams = qs.parse(window.location.search);
 
-const Game = ({ socket }) => {
-  const [game, setGame] = useState(null); // TODO: game should be a context or an easy state store
+const Game = () => {
+  const { state: gameState } = useGame();
 
-  useEffect(() => {
-    const reconnectFunction = () => {
-      if (game) {
-        socket.emit(
-          SocketEvents.JOINGAME,
-          game.id,
-          ({ error, game: g }) => {
-            if (!error) {
-              setGame(g);
-            }
-            // TODO: show reconnection error
-          },
-        );
-      }
-    };
-    socket.on(SocketEvents.RECONNECT, reconnectFunction);
-    return () => {
-      socket.off(SocketEvents.RECONNECT, reconnectFunction);
-    };
-  }, [socket, setGame, game]);
-
-  useEffect(() => {
-    socket.on(SocketEvents.GAMEUPDATED, (g) => setGame(g));
-  }, [socket, setGame]);
-
-  if (!game) {
-    return <EnterGame socket={socket} setGame={setGame} />;
+  if (!gameState) {
+    return <EnterGame />;
   }
 
   // TODO: open projector button => use query params for game id and projector view
@@ -45,16 +21,16 @@ const Game = ({ socket }) => {
     return <>PROJECTOR</>;
   }
 
-  if (game.state === GameStates.PREPARATION) {
-    return <Preparation socket={socket} game={game} />;
+  if (gameState === GameStates.PREPARATION) {
+    return <Preparation />;
   }
 
-  if (game.state === GameStates.SIMULATION) {
-    return <Simulation socket={socket} game={game} />;
+  if (gameState === GameStates.SIMULATION) {
+    return <Simulation />;
   }
 
   // TODO: ASSESSMENT phase
-  if (game.state === GameStates.ASSESSMENT) {
+  if (gameState === GameStates.ASSESSMENT) {
     return <>ASSESSMENT</>;
   }
 

@@ -6,7 +6,7 @@ import { numberToUsd } from '../../util';
 const MitigationCategory = ({
   name,
   mitigations,
-  game,
+  gameMitigations,
   toggleMitigation,
   allocatedBudget,
 }) => (
@@ -41,7 +41,7 @@ const MitigationCategory = ({
                   className="custom-switch-right"
                   id={`${mitigation.id}_hq`}
                   label={numberToUsd(mitigation.hq_cost)}
-                  checked={!!game.mitigations[`${mitigation.id}_hq`]}
+                  checked={!!gameMitigations[`${mitigation.id}_hq`]}
                   onChange={(e) =>
                     toggleMitigation({
                       id: mitigation.id,
@@ -60,7 +60,7 @@ const MitigationCategory = ({
                   id={`${mitigation.id}_local`}
                   label={numberToUsd(mitigation.local_cost)}
                   checked={
-                    !!game.mitigations[`${mitigation.id}_local`]
+                    !!gameMitigations[`${mitigation.id}_local`]
                   }
                   onChange={(e) =>
                     toggleMitigation({

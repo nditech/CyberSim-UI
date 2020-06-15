@@ -3,9 +3,11 @@ import { Container } from 'react-bootstrap';
 
 import Header from './Header';
 import Footer from './Footer';
+import ActionTable from './ActionTable';
+import FacilitatorTable from './FacilitatorTable';
 import { SimulationTabs } from '../../constants';
 
-const Preparation = ({ socket, game }) => {
+const Simulation = () => {
   const [activeTab, setActiveTab] = useState(
     SimulationTabs.ACTION_TABLE,
   );
@@ -14,11 +16,15 @@ const Preparation = ({ socket, game }) => {
     <div>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <Container fluid="md" className="mb-5 pb-5">
-        TODO: SIMULATION CONTENT
+        {activeTab === SimulationTabs.ACTION_TABLE ? (
+          <ActionTable />
+        ) : (
+          <FacilitatorTable activeTab={activeTab} />
+        )}
       </Container>
-      <Footer socket={socket} game={game} />
+      <Footer />
     </div>
   );
 };
 
-export default Preparation;
+export default Simulation;
