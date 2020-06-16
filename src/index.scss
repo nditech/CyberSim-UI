@@ -102,8 +102,19 @@ select.form-control:focus {
   }
   &:hover,
   &.active {
-    box-shadow: inset 0px 8px 0px
+    box-shadow: inset 0px 5px 0px
         map-get($map: $theme-colors, $key: 'primary'),
-      inset 0px -8px 0px map-get($map: $theme-colors, $key: 'primary');
+      inset 0px -5px 0px map-get($map: $theme-colors, $key: 'primary');
+  }
+
+  &--small {
+    transition: box-shadow 0.2s linear;
+    &:hover,
+    &.active {
+      box-shadow: inset 0px 3px 0px
+          map-get($map: $theme-colors, $key: 'primary'),
+        inset 0px -3px 0px map-get($map: $theme-colors, $key:
+              'primary');
+    }
   }
 }

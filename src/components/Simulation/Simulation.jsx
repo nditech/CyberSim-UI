@@ -13,7 +13,7 @@ const Simulation = () => {
   );
 
   return (
-    <div>
+    <>
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       <Container fluid="md" className="mb-5 pb-5">
         {activeTab === SimulationTabs.ACTION_TABLE ? (
@@ -23,7 +23,7 @@ const Simulation = () => {
         )}
       </Container>
       <Footer />
-    </div>
+    </>
   );
 };
 

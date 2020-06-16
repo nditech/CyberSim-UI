@@ -19,7 +19,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.ACTION_TABLE)}
       >
-        <h4 className="my-3 font-weight-normal">ACTION TABLE</h4>
+        <h4 className="my-2 font-weight-normal">ACTION TABLE</h4>
       </Col>
       <Col
         xs={4}
@@ -31,7 +31,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.CAMPAIGN_HQ)}
       >
-        <h4 className="my-3 font-weight-normal">Campaign HQ</h4>
+        <h4 className="my-2 font-weight-normal">Campaign HQ</h4>
       </Col>
       <Col
         xs={4}
@@ -40,47 +40,53 @@ const Header = ({ activeTab, setActiveTab }) => (
         })}
         onClick={() => setActiveTab(SimulationTabs.LOCAL_BRANCH)}
       >
-        <h4 className="my-3 font-weight-normal">Local Branch</h4>
+        <h4 className="my-2 font-weight-normal">Local Branch</h4>
       </Col>
     </Row>
     {activeTab === SimulationTabs.ACTION_TABLE ? (
       <Row className="m-0 border-primary border-bottom">
         <Col
           xs={3}
-          className="simulation-menu cursor-pointer border-primary border-right p-0"
+          className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-2">SYSTEMS</h6>
+          <h6 className="my-1">SYSTEMS</h6>
         </Col>
         <Col
           xs={6}
-          className="simulation-menu cursor-pointer border-primary border-right p-0"
+          className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-2">MITIGATIONS</h6>
+          <h6 className="my-1">MITIGATIONS</h6>
         </Col>
-        <Col xs={3} className="simulation-menu cursor-pointer p-0">
-          <h6 className="my-2">EVENT LOG</h6>
+        <Col
+          xs={3}
+          className="simulation-menu--small cursor-pointer p-0"
+        >
+          <h6 className="my-1">EVENT LOG</h6>
         </Col>
       </Row>
     ) : (
       <Row className="m-0 border-primary border-bottom">
         <Col
           xs={3}
-          className="simulation-menu cursor-pointer border-primary border-right p-0"
+          className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-2">INJECTS & RESPONSES</h6>
+          <h6 className="my-1">INJECTS & RESPONSES</h6>
         </Col>
         <Col
           xs={6}
-          className="simulation-menu cursor-pointer border-primary border-right p-0"
+          className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-2">
+          <h6 className="my-1">
             {activeTab === SimulationTabs.CAMPAIGN_HQ
               ? 'CAMPAIGN ACTIONS'
               : 'LOCAL ACTIONS'}
           </h6>
         </Col>
-        <Col xs={3} className="simulation-menu cursor-pointer p-0">
-          <h6 className="my-2">SECURITY ACTIONS</h6>
+        <Col
+          xs={3}
+          className="simulation-menu--small cursor-pointer p-0"
+        >
+          <h6 className="my-1">SECURITY ACTIONS</h6>
         </Col>
       </Row>
     )}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { FiPause, FiPlay } from 'react-icons/fi';
+import { FiPause, FiPlay, FiBarChart2 } from 'react-icons/fi';
 
 import { useGame } from '../GameProvider';
 import BPT from '../BPT';
@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <div
-      className="py-4 border-primary border-top position-fixed w-100 bg-white"
+      className="py-3 border-primary border-top position-fixed w-100 bg-white"
       style={{ bottom: 0 }}
     >
       <Container fluid="md">
@@ -60,12 +60,15 @@ const Footer = () => {
             </Button>
             <Button
               variant="outline-primary"
-              className="rounded-pill ml-1 ml-lg-3"
+              className="rounded-pill ml-1 ml-lg-3 d-flex align-items-center"
               style={{ overflow: 'scroll', whiteSpace: 'nowrap' }}
               type="button"
               onClick={() => console.log('TODO: open projector?')}
             >
-              <h4 className="font-weight-normal mb-0">{id}</h4>
+              <div>
+                <FiBarChart2 fontSize="25px" />
+              </div>
+              <h4 className="font-weight-normal mb-0 ml-1">{id}</h4>
             </Button>
           </Col>
         </Row>

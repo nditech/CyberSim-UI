@@ -7,6 +7,7 @@ import {
   Spinner,
   Button,
 } from 'react-bootstrap';
+import { FiBarChart2 } from 'react-icons/fi';
 
 import { useGame } from '../GameProvider';
 import MitigationCategory from './MitigationCategory';
@@ -119,7 +120,7 @@ const Preparation = () => {
         )}
       </Container>
       <div
-        className="py-4 border-primary border-top position-fixed w-100 bg-white"
+        className="py-3 border-primary border-top position-fixed w-100 bg-white"
         style={{ bottom: 0 }}
       >
         <Container fluid="md">
@@ -140,11 +141,15 @@ const Preparation = () => {
             <Col md={4} className="text-right">
               <Button
                 variant="outline-primary"
-                className="rounded-pill overflow-scroll"
+                className="rounded-pill d-flex align-items-center"
+                style={{ overflow: 'scroll', whiteSpace: 'nowrap' }}
                 type="button"
                 onClick={() => console.log('TODO: open projector?')}
               >
-                <h4 className="font-weight-normal mb-0">{id}</h4>
+                <div>
+                  <FiBarChart2 fontSize="25px" />
+                </div>
+                <h4 className="font-weight-normal mb-0 ml-1">{id}</h4>
               </Button>
             </Col>
           </Row>
