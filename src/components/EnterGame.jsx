@@ -20,7 +20,7 @@ const EnterGame = () => {
   return (
     <Container fluid="md" className="mt-5 pt-5">
       <Row>
-        <Col md={{ span: 8, offset: 2 }}>
+        <Col xs={{ span: 8, offset: 2 }}>
           <Row className="font-weight-bold">
             <Col>
               <h4>ENTER GAME</h4>

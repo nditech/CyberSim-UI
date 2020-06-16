@@ -5,6 +5,7 @@ import { GameStates } from '../constants';
 import EnterGame from './EnterGame';
 import Preparation from './Preparation/Preparation';
 import Simulation from './Simulation/Simulation';
+import Projector from './Projector';
 import { useGame } from './GameProvider';
 
 const queryParams = qs.parse(window.location.search);
@@ -16,9 +17,8 @@ const Game = () => {
     return <EnterGame />;
   }
 
-  // TODO: open projector button => use query params for game id and projector view
   if (queryParams.isProjectorView) {
-    return <>PROJECTOR</>;
+    return <Projector />;
   }
 
   if (gameState === GameStates.PREPARATION) {

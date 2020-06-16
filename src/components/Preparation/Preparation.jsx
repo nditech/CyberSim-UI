@@ -6,6 +6,7 @@ import {
   Col,
   Spinner,
   Button,
+  Nav,
 } from 'react-bootstrap';
 import { FiBarChart2 } from 'react-icons/fi';
 
@@ -76,7 +77,7 @@ const Preparation = () => {
   );
 
   return (
-    <div>
+    <>
       <div className="pt-4" />
       <div
         className="py-3 border-primary border-bottom position-sticky bg-white"
@@ -139,23 +140,22 @@ const Preparation = () => {
               </Button>
             </Col>
             <Col md={4} className="text-right">
-              <Button
-                variant="outline-primary"
-                className="rounded-pill d-flex align-items-center"
+              <Nav.Link
+                href={`?gameId=${id}&isProjectorView=true`}
+                className="btn btn-outline-primary rounded-pill d-flex align-items-center"
                 style={{ overflow: 'scroll', whiteSpace: 'nowrap' }}
-                type="button"
-                onClick={() => console.log('TODO: open projector?')}
+                target="_blank"
               >
                 <div>
                   <FiBarChart2 fontSize="25px" />
                 </div>
                 <h4 className="font-weight-normal mb-0 ml-1">{id}</h4>
-              </Button>
+              </Nav.Link>
             </Col>
           </Row>
         </Container>
       </div>
-    </div>
+    </>
   );
 };
 

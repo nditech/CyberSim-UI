@@ -6,7 +6,7 @@ import { BsClock } from 'react-icons/bs';
 import { useGame } from './GameProvider';
 import { msToMinutesSeconds, numberToUsd } from '../util';
 
-const TimeTaken = () => {
+const TimeTaken = ({ big }) => {
   const {
     paused,
     millis_taken_before_started: millisTakenBeforeStarted,
@@ -59,35 +59,38 @@ const TimeTaken = () => {
   return (
     <h4
       className={classNames(
-        'font-weight-normal mb-0 d-flex align-items-center',
+        'bpt-item font-weight-normal mb-0 d-flex align-items-center',
         {
           'text-danger': paused,
         },
       )}
     >
-      <BsClock className="mr-2" />
+      <BsClock className={big ? 'mr-3 pr-1' : 'mr-2'} />
       {timeTaken}
     </h4>
   );
 };
 
-// TODO: add param for what size it should use and reuse BPT at the pojector
 // BudgetPollTimer
-const BPT = () => {
+const BPT = ({ big }) => {
   const { budget, poll } = useGame();
 
   return (
-    <Row>
-      <Col md={4} style={{ whiteSpace: 'nowrap' }}>
-        <h4 className="font-weight-normal mb-0">
+    <Row
+      className={classNames('justify-content-center', {
+        'bpt-big': big,
+      })}
+    >
+      <Col sm={6} md={4} style={{ whiteSpace: 'nowrap' }}>
+        <h4 className="bpt-item font-weight-normal mb-0">
           {numberToUsd(budget).replace('$', '$ ')}
         </h4>
       </Col>
-      <Col md={4}>
-        <h4 className="font-weight-normal mb-0">% {poll}</h4>
+      <Col sm={6} md={4}>
+        <h4 className="bpt-item font-weight-normal mb-0">% {poll}</h4>
       </Col>
-      <Col md={4}>
-        <TimeTaken />
+      <Col sm={6} md={4}>
+        <TimeTaken big={big} />
       </Col>
     </Row>
   );

@@ -117,4 +117,24 @@ select.form-control:focus {
               'primary');
     }
   }
+
+  &--big {
+    transition: box-shadow 0.2s linear;
+    &:hover,
+    &.active {
+      box-shadow: inset 0px 7px 0px
+          map-get($map: $theme-colors, $key: 'primary'),
+        inset 0px -7px 0px map-get($map: $theme-colors, $key:
+              'primary');
+    }
+  }
+}
+
+.bpt-big {
+  .bpt-item {
+    font-size: 3rem !important;
+    @media screen and (min-width: 992px) {
+      font-size: 4rem !important;
+    }
+  }
 }

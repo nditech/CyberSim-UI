@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import { FiPause, FiPlay, FiBarChart2 } from 'react-icons/fi';
 
 import { useGame } from '../GameProvider';
@@ -19,10 +19,10 @@ const Footer = () => {
     >
       <Container fluid="md">
         <Row className="d-flex align-items-center">
-          <Col md={6}>
+          <Col xs={4} md={6}>
             <BPT />
           </Col>
-          <Col md={1} className="p-0">
+          <Col xs={1} className="p-0">
             <Button
               variant="primary"
               className="rounded-circle d-flex justify-content-center align-items-center shadow-none"
@@ -37,6 +37,7 @@ const Footer = () => {
             </Button>
           </Col>
           <Col
+            xs={7}
             md={5}
             className="pl-0 pr-md-0 d-flex justify-content-end"
           >
@@ -58,18 +59,17 @@ const Footer = () => {
                 </span>
               </h4>
             </Button>
-            <Button
-              variant="outline-primary"
-              className="rounded-pill ml-1 ml-lg-3 d-flex align-items-center"
+            <Nav.Link
+              href={`?gameId=${id}&isProjectorView=true`}
+              className="btn btn-outline-primary rounded-pill ml-1 ml-lg-3 d-flex align-items-center"
               style={{ overflow: 'scroll', whiteSpace: 'nowrap' }}
-              type="button"
-              onClick={() => console.log('TODO: open projector?')}
+              target="_blank"
             >
               <div>
                 <FiBarChart2 fontSize="25px" />
               </div>
               <h4 className="font-weight-normal mb-0 ml-1">{id}</h4>
-            </Button>
+            </Nav.Link>
           </Col>
         </Row>
       </Container>

@@ -25,6 +25,7 @@ const Systems = () => {
       {systems ? (
         systems.map((system) => (
           <Col
+            xs={6}
             md={4}
             className="d-flex align-items-center mb-4"
             key={system.id}

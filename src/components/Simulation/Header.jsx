@@ -49,19 +49,19 @@ const Header = ({ activeTab, setActiveTab }) => (
           xs={3}
           className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-1">SYSTEMS</h6>
+          <p className="my-1 font-weight-bold">SYSTEMS</p>
         </Col>
         <Col
           xs={6}
           className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-1">MITIGATIONS</h6>
+          <p className="my-1 font-weight-bold">THREATS</p>
         </Col>
         <Col
           xs={3}
           className="simulation-menu--small cursor-pointer p-0"
         >
-          <h6 className="my-1">EVENT LOG</h6>
+          <p className="my-1 font-weight-bold">EVENT LOG</p>
         </Col>
       </Row>
     ) : (
@@ -70,23 +70,23 @@ const Header = ({ activeTab, setActiveTab }) => (
           xs={3}
           className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-1">INJECTS & RESPONSES</h6>
+          <p className="my-1 font-weight-bold">INJECTS & RESPONSES</p>
         </Col>
         <Col
           xs={6}
           className="simulation-menu--small cursor-pointer border-primary border-right p-0"
         >
-          <h6 className="my-1">
+          <p className="my-1 font-weight-bold">
             {activeTab === SimulationTabs.CAMPAIGN_HQ
               ? 'CAMPAIGN ACTIONS'
               : 'LOCAL ACTIONS'}
-          </h6>
+          </p>
         </Col>
         <Col
           xs={3}
           className="simulation-menu--small cursor-pointer p-0"
         >
-          <h6 className="my-1">SECURITY ACTIONS</h6>
+          <p className="my-1 font-weight-bold">SECURITY ACTIONS</p>
         </Col>
       </Row>
     )}
