@@ -32,7 +32,7 @@ const Systems = () => {
           >
             {gameSystems[system.id] ? (
               <FaFistRaised
-                className="text-success"
+                className="text-primary"
                 fontSize="30px"
               />
             ) : (

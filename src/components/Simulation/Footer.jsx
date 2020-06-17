@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <div
-      className="py-3 border-primary border-top position-fixed w-100 bg-white"
+      className="py-3 border-primary border-top position-fixed w-100 bg-white shadow-lg"
       style={{ bottom: 0 }}
     >
       <Container fluid="md">

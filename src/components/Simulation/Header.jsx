@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { SimulationTabs } from '../../constants';
 
 const Header = ({ activeTab, setActiveTab }) => (
-  <div className="position-sticky bg-white text-center simulation-menu">
+  <div className="position-sticky bg-white text-center simulation-menu shadow">
     <Row className="m-0 border-primary border-bottom">
       <Col
         xs={4}

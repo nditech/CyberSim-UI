@@ -11,13 +11,13 @@ const Projector = () => {
   return (
     <>
       <div
-        className="position-sticky bg-white"
+        className="position-sticky bg-white shadow"
         style={{ top: 0, zIndex: 1 }}
       >
         <Row className="m-0">
           <Col
             xs={12}
-            className="simulation-menu-item--big active p-0 d-flex justify-content-center"
+            className="simulation-menu-item--big active p-2 d-flex justify-content-center"
           >
             <h1 className="my-2">{id}</h1>
           </Col>
