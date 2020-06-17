@@ -6,7 +6,7 @@ import Systems from '../Systems';
 const ActionTable = () => {
   return (
     <>
-      <Row className="mt-5 pt-4">
+      <Row className="mt-5 pt-4" id="systems">
         <Col xs={12}>
           <h3>TECHNICAL SYSTEMS:</h3>
         </Col>
@@ -29,7 +29,7 @@ const ActionTable = () => {
         <Col>TODO: actions radio buttons</Col>
       </Row>
 
-      <Row className="mt-5 pt-4">
+      <Row className="mt-5 pt-4" id="threats">
         <Col md={6}>
           <h3>MITIGATED THREATS:</h3>
           TODO: list mitigated threats (injections which will not
@@ -37,8 +37,8 @@ const ActionTable = () => {
         </Col>
         <Col md={6}>
           <h3>NOT MITIGATED THREATS:</h3>
-          TODO: list mitigated threats (injections which WILL cause
-          trouble)
+          TODO: list not mitigated threats (injections which WILL
+          cause trouble)
         </Col>
       </Row>
 
@@ -60,7 +60,7 @@ const ActionTable = () => {
         </Col>
       </Row>
 
-      <Row className="my-5 py-4">
+      <Row className="my-5 py-4" id="logs">
         <Col xs={12}>
           <h3>EVENTS LOG:</h3>
         </Col>

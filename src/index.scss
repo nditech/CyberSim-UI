@@ -15,6 +15,11 @@ code {
     monospace;
 }
 
+// Add fixed header height to scrollIntoView
+*[id] {
+  scroll-margin-top: 75px;
+}
+
 label {
   margin: 0;
 }
@@ -91,41 +96,47 @@ select.form-control:focus {
 }
 
 .simulation-menu {
-  transition: box-shadow 0.2s linear;
-  h4 {
-    transition: font-weight 0.2s linear;
-  }
-  &.active {
+  top: 0;
+  z-index: 1;
+
+  &-item {
+    transition: box-shadow 0.2s linear;
     h4 {
-      font-weight: bold !important;
+      transition: font-weight 0.2s linear;
     }
-  }
-  &:hover,
-  &.active {
-    box-shadow: inset 0px 5px 0px
-        map-get($map: $theme-colors, $key: 'primary'),
-      inset 0px -5px 0px map-get($map: $theme-colors, $key: 'primary');
-  }
-
-  &--small {
-    transition: box-shadow 0.2s linear;
+    &.active {
+      h4 {
+        font-weight: bold !important;
+      }
+    }
     &:hover,
     &.active {
-      box-shadow: inset 0px 3px 0px
+      box-shadow: inset 0px 5px 0px
           map-get($map: $theme-colors, $key: 'primary'),
-        inset 0px -3px 0px map-get($map: $theme-colors, $key:
+        inset 0px -5px 0px map-get($map: $theme-colors, $key:
               'primary');
     }
-  }
 
-  &--big {
-    transition: box-shadow 0.2s linear;
-    &:hover,
-    &.active {
-      box-shadow: inset 0px 7px 0px
-          map-get($map: $theme-colors, $key: 'primary'),
-        inset 0px -7px 0px map-get($map: $theme-colors, $key:
-              'primary');
+    &--small {
+      transition: box-shadow 0.2s linear;
+      &:hover,
+      &.active {
+        box-shadow: inset 0px 3px 0px
+            map-get($map: $theme-colors, $key: 'primary'),
+          inset 0px -3px 0px map-get($map: $theme-colors, $key:
+                'primary');
+      }
+    }
+
+    &--big {
+      transition: box-shadow 0.2s linear;
+      &:hover,
+      &.active {
+        box-shadow: inset 0px 7px 0px
+            map-get($map: $theme-colors, $key: 'primary'),
+          inset 0px -7px 0px map-get($map: $theme-colors, $key:
+                'primary');
+      }
     }
   }
 }
