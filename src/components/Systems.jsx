@@ -6,7 +6,7 @@ import { AiOutlineStop } from 'react-icons/ai';
 
 import { useGame } from './GameProvider';
 
-const Systems = () => {
+const Systems = ({ className, withHeader }) => {
   const { systems: gameSystems } = useGame();
 
   const [systems, setSystems] = useState();
@@ -21,7 +21,12 @@ const Systems = () => {
   }, [setSystems]);
 
   return (
-    <Row>
+    <Row className={className} id="systems">
+      {withHeader && (
+        <Col xs={12}>
+          <h3>TECHNICAL SYSTEMS:</h3>
+        </Col>
+      )}
       {systems ? (
         systems.map((system) => (
           <Col

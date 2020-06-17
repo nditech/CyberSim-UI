@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 import Header from './Header';
 import Footer from './Footer';
-import ActionTable from './ActionTable';
+import ActionTable from './ActionTable/ActionTable';
 import FacilitatorTable from './FacilitatorTable';
 import { SimulationTabs } from '../../constants';
 
