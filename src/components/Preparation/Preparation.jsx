@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import axios from 'axios';
+import React, { useMemo } from 'react';
 import {
   Container,
   Row,
@@ -12,6 +11,7 @@ import { FiBarChart2 } from 'react-icons/fi';
 import { reduce as _reduce, map as _map } from 'lodash';
 
 import { useGame } from '../GameProvider';
+import { useStaticData } from '../StaticDataProvider';
 import MitigationCategory from './MitigationCategory';
 import { numberToUsd } from '../../util';
 
@@ -19,35 +19,26 @@ const Preparation = () => {
   const {
     id,
     budget,
-    mitigations,
+    mitigations: gameMitigations,
     actions: { toggleMitigation, startSimulation },
   } = useGame();
+  const { mitigations } = useStaticData();
 
-  const [
-    mitigationsByCategory,
-    setMitigationsByCategory,
-  ] = useState();
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/mitigations`)
-      .then(({ data }) => {
-        setMitigationsByCategory(
-          _reduce(
-            data,
-            (categories, item) => ({
-              ...categories,
-              [item.category]: [
-                ...(categories[item.category] || []),
-                item,
-              ],
-            }),
-            {},
-          ),
-        );
-      })
-      .catch((e) => console.error(e));
-  }, [setMitigationsByCategory]);
+  const mitigationsByCategory = useMemo(
+    () =>
+      _reduce(
+        mitigations,
+        (categories, item) => ({
+          ...categories,
+          [item.category]: [
+            ...(categories[item.category] || []),
+            item,
+          ],
+        }),
+        {},
+      ),
+    [mitigations],
+  );
 
   const allocatedCategoryBudgets = useMemo(
     () =>
@@ -59,10 +50,10 @@ const Preparation = () => {
                 category,
                 (sum, { id, hq_cost, local_cost }) => {
                   let newSum = sum;
-                  if (mitigations[`${id}_hq`] && hq_cost) {
+                  if (gameMitigations[`${id}_hq`] && hq_cost) {
                     newSum += hq_cost;
                   }
-                  if (mitigations[`${id}_local`] && local_cost) {
+                  if (gameMitigations[`${id}_local`] && local_cost) {
                     newSum += local_cost;
                   }
                   return newSum;
@@ -78,7 +69,7 @@ const Preparation = () => {
             {},
           )
         : { sum: 0 },
-    [mitigationsByCategory, mitigations],
+    [mitigationsByCategory, gameMitigations],
   );
 
   return (
@@ -111,7 +102,7 @@ const Preparation = () => {
               key={key}
               name={key}
               mitigations={category}
-              gameMitigations={mitigations}
+              gameMitigations={gameMitigations}
               allocatedBudget={allocatedCategoryBudgets[key]}
               toggleMitigation={toggleMitigation}
             />

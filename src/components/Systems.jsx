@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { FaFistRaised } from 'react-icons/fa';
 import { AiOutlineStop } from 'react-icons/ai';
 
 import { useGame } from './GameProvider';
+import { useStaticData } from './StaticDataProvider';
 
 const Systems = ({ className, withHeader }) => {
   const { systems: gameSystems } = useGame();
-
-  const [systems, setSystems] = useState();
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/systems`)
-      .then(({ data }) => {
-        setSystems(data);
-      })
-      .catch((e) => console.error(e));
-  }, [setSystems]);
+  const { systems } = useStaticData();
 
   return (
     <Row className={className} id="systems">

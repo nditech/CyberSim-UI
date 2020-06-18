@@ -1,24 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
+import React, { useMemo } from 'react';
 import { Row, Col, Spinner, Card } from 'react-bootstrap';
 import { reduce as _reduce } from 'lodash';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 
 import { useGame } from '../../GameProvider';
+import { useStaticData } from '../../StaticDataProvider';
 
 const Threats = ({ className }) => {
   const { mitigations: gameMitigations } = useGame();
-
-  const [injections, setInjections] = useState();
-
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/injections`)
-      .then(({ data }) => {
-        setInjections(data);
-      })
-      .catch((e) => console.error(e));
-  }, [setInjections]);
+  const { injections } = useStaticData();
 
   const { threats, notThreats } = useMemo(
     () =>
