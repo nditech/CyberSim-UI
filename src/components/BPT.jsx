@@ -2,16 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import classNames from 'classnames';
 import { BsClock } from 'react-icons/bs';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from './GameProvider';
+import { gameStore } from './GameStore';
 import { msToMinutesSeconds, numberToUsd } from '../util';
 
-const TimeTaken = ({ big }) => {
+const TimeTaken = view(({ big }) => {
   const {
     paused,
     millis_taken_before_started: millisTakenBeforeStarted,
     started_at: startedAt,
-  } = useGame();
+  } = gameStore;
 
   // INIT TIMER
   const [timeTaken, setTimeTaken] = useState(
@@ -69,11 +70,11 @@ const TimeTaken = ({ big }) => {
       {timeTaken}
     </h4>
   );
-};
+});
 
 // BudgetPollTimer
-const BPT = ({ big }) => {
-  const { budget, poll } = useGame();
+const BPT = view(({ big }) => {
+  const { budget, poll } = gameStore;
 
   return (
     <Row
@@ -94,6 +95,6 @@ const BPT = ({ big }) => {
       </Col>
     </Row>
   );
-};
+});
 
 export default BPT;

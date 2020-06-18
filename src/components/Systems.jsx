@@ -2,12 +2,13 @@ import React from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { FaFistRaised } from 'react-icons/fa';
 import { AiOutlineStop } from 'react-icons/ai';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from './GameProvider';
+import { gameStore } from './GameStore';
 import { useStaticData } from './StaticDataProvider';
 
-const Systems = ({ className, withHeader }) => {
-  const { systems: gameSystems } = useGame();
+const Systems = view(({ className, withHeader }) => {
+  const { systems: gameSystems } = gameStore;
   const { systems } = useStaticData();
 
   return (
@@ -48,6 +49,6 @@ const Systems = ({ className, withHeader }) => {
       )}
     </Row>
   );
-};
+});
 
 export default Systems;

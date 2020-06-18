@@ -9,19 +9,20 @@ import {
 } from 'react-bootstrap';
 import { FiBarChart2 } from 'react-icons/fi';
 import { reduce as _reduce, map as _map } from 'lodash';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from '../GameProvider';
+import { gameStore } from '../GameStore';
 import { useStaticData } from '../StaticDataProvider';
 import MitigationCategory from './MitigationCategory';
 import { numberToUsd } from '../../util';
 
-const Preparation = () => {
+const Preparation = view(() => {
   const {
     id,
     budget,
     mitigations: gameMitigations,
     actions: { toggleMitigation, startSimulation },
-  } = useGame();
+  } = gameStore;
   const { mitigations } = useStaticData();
 
   const mitigationsByCategory = useMemo(
@@ -155,6 +156,6 @@ const Preparation = () => {
       </div>
     </>
   );
-};
+});
 
 export default Preparation;

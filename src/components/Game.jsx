@@ -1,17 +1,18 @@
 import React from 'react';
 import qs from 'query-string';
+import { view } from '@risingstack/react-easy-state';
 
 import { GameStates } from '../constants';
 import EnterGame from './EnterGame';
 import Preparation from './Preparation/Preparation';
 import Simulation from './Simulation/Simulation';
 import Projector from './Projector';
-import { useGame } from './GameProvider';
+import { gameStore } from './GameStore';
 
 const queryParams = qs.parse(window.location.search);
 
-const Game = () => {
-  const { state: gameState } = useGame();
+const Game = view(() => {
+  const { state: gameState } = gameStore;
 
   if (!gameState) {
     return <EnterGame />;
@@ -35,6 +36,6 @@ const Game = () => {
   }
 
   return <>Unknown game state</>;
-};
+});
 
 export default Game;

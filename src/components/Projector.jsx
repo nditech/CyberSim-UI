@@ -1,12 +1,13 @@
 import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from './GameProvider';
+import { gameStore } from './GameStore';
 import BPT from './BPT';
 import Systems from './Systems';
 
-const Projector = () => {
-  const { id } = useGame();
+const Projector = view(() => {
+  const { id } = gameStore;
 
   return (
     <>
@@ -31,6 +32,6 @@ const Projector = () => {
       </Container>
     </>
   );
-};
+});
 
 export default Projector;

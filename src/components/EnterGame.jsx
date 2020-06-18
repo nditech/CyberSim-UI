@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { view } from '@risingstack/react-easy-state';
 
 import { SocketEvents } from '../constants';
-import { useGame } from './GameProvider';
+import { gameStore } from './GameStore';
 
 const gameIdFromLocalStorage = localStorage.getItem('gameId');
 
-const EnterGame = () => {
+const EnterGame = view(() => {
   const {
     loading,
     actions: { enterGame },
-  } = useGame();
+  } = gameStore;
 
   const [gameId, setGameId] = useState(gameIdFromLocalStorage || '');
   const [rememberGameId, setRememberGameId] = useState(
@@ -98,6 +99,6 @@ const EnterGame = () => {
       </Row>
     </Container>
   );
-};
+});
 
 export default EnterGame;

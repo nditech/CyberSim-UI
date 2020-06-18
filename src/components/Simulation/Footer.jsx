@@ -1,16 +1,17 @@
 import React from 'react';
 import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
 import { FiPause, FiPlay, FiBarChart2 } from 'react-icons/fi';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from '../GameProvider';
+import { gameStore } from '../GameStore';
 import BPT from '../BPT';
 
-const Footer = () => {
+const Footer = view(() => {
   const {
     id,
     paused,
     actions: { resumeSimulation, pauseSimulation, finishSimulation },
-  } = useGame();
+  } = gameStore;
 
   return (
     <div
@@ -82,6 +83,6 @@ const Footer = () => {
       </Container>
     </div>
   );
-};
+});
 
 export default Footer;

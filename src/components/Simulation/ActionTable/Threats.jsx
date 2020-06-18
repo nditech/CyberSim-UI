@@ -2,12 +2,13 @@ import React, { useMemo } from 'react';
 import { Row, Col, Spinner, Card } from 'react-bootstrap';
 import { reduce as _reduce } from 'lodash';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import { view } from '@risingstack/react-easy-state';
 
-import { useGame } from '../../GameProvider';
+import { gameStore } from '../../GameStore';
 import { useStaticData } from '../../StaticDataProvider';
 
-const Threats = ({ className }) => {
-  const { mitigations: gameMitigations } = useGame();
+const Threats = view(({ className }) => {
+  const { mitigations: gameMitigations } = gameStore;
   const { injections } = useStaticData();
 
   const { threats, notThreats } = useMemo(
@@ -108,6 +109,6 @@ const Threats = ({ className }) => {
       </Col>
     </Row>
   );
-};
+});
 
 export default Threats;
