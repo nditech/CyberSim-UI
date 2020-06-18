@@ -56,7 +56,7 @@ export const GameProvider = ({ socket, children }) => {
             if (!error) {
               setGame(g);
             }
-            // TODO: show reconnection error
+            popError(error);
           },
         );
       }
@@ -65,7 +65,7 @@ export const GameProvider = ({ socket, children }) => {
     return () => {
       socket.off(SocketEvents.RECONNECT, reconnectFunction);
     };
-  }, [socket, setGame, game]);
+  }, [socket, setGame, game, popError]);
 
   // LISTEN TO GAME STATE UPDATES
   useEffect(() => {

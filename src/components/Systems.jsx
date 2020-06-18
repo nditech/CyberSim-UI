@@ -52,11 +52,9 @@ const Systems = ({ className, withHeader }) => {
           </Col>
         ))
       ) : (
-        <Spinner
-          animation="border"
-          className="position-fixed"
-          style={{ left: '50%', top: '50%' }}
-        />
+        <Col xs={12} className="d-flex justify-content-center">
+          <Spinner animation="border" />
+        </Col>
       )}
     </Row>
   );

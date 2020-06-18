@@ -50,7 +50,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={3}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
-              document.querySelector('#systems').scrollIntoView({
+              document.querySelector('#systems')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }
@@ -61,7 +61,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={6}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
-              document.querySelector('#threats').scrollIntoView({
+              document.querySelector('#threats')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }
@@ -72,7 +72,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={3}
             className="simulation-menu-item--small cursor-pointer p-0"
             onClick={() =>
-              document.querySelector('#logs').scrollIntoView({
+              document.querySelector('#logs')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }
@@ -86,7 +86,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={3}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
-              document.querySelector('#injects').scrollIntoView({
+              document.querySelector('#injects')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }
@@ -99,7 +99,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={6}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
-              document.querySelector('#actions').scrollIntoView({
+              document.querySelector('#actions')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }
@@ -114,7 +114,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             xs={3}
             className="simulation-menu-item--small cursor-pointer p-0"
             onClick={() =>
-              document.querySelector('#mitigations').scrollIntoView({
+              document.querySelector('#mitigations')?.scrollIntoView({
                 behavior: 'smooth',
               })
             }

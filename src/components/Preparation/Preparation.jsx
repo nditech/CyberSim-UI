@@ -9,6 +9,7 @@ import {
   Nav,
 } from 'react-bootstrap';
 import { FiBarChart2 } from 'react-icons/fi';
+import { reduce as _reduce, map as _map } from 'lodash';
 
 import { useGame } from '../GameProvider';
 import MitigationCategory from './MitigationCategory';
@@ -32,7 +33,8 @@ const Preparation = () => {
       .get(`${process.env.REACT_APP_API_URL}/mitigations`)
       .then(({ data }) => {
         setMitigationsByCategory(
-          data.reduce(
+          _reduce(
+            data,
             (categories, item) => ({
               ...categories,
               [item.category]: [
@@ -50,20 +52,23 @@ const Preparation = () => {
   const allocatedCategoryBudgets = useMemo(
     () =>
       mitigationsByCategory
-        ? Object.keys(mitigationsByCategory).reduce(
-            (acc, categoryKey) => {
-              const categorySum = mitigationsByCategory[
-                categoryKey
-              ].reduce((sum, { id, hq_cost, local_cost }) => {
-                let newSum = sum;
-                if (mitigations[`${id}_hq`] && hq_cost) {
-                  newSum += hq_cost;
-                }
-                if (mitigations[`${id}_local`] && local_cost) {
-                  newSum += local_cost;
-                }
-                return newSum;
-              }, 0);
+        ? _reduce(
+            mitigationsByCategory,
+            (acc, category, categoryKey) => {
+              const categorySum = _reduce(
+                category,
+                (sum, { id, hq_cost, local_cost }) => {
+                  let newSum = sum;
+                  if (mitigations[`${id}_hq`] && hq_cost) {
+                    newSum += hq_cost;
+                  }
+                  if (mitigations[`${id}_local`] && local_cost) {
+                    newSum += local_cost;
+                  }
+                  return newSum;
+                },
+                0,
+              );
               return {
                 ...acc,
                 [categoryKey]: categorySum,
@@ -101,11 +106,11 @@ const Preparation = () => {
       </div>
       <Container fluid="md" className="mb-5 pb-5">
         {mitigationsByCategory ? (
-          Object.keys(mitigationsByCategory).map((key) => (
+          _map(mitigationsByCategory, (category, key) => (
             <MitigationCategory
               key={key}
               name={key}
-              mitigations={mitigationsByCategory[key]}
+              mitigations={category}
               gameMitigations={mitigations}
               allocatedBudget={allocatedCategoryBudgets[key]}
               toggleMitigation={toggleMitigation}

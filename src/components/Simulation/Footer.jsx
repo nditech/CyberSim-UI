@@ -14,8 +14,12 @@ const Footer = () => {
 
   return (
     <div
-      className="py-3 border-primary border-top position-fixed w-100 bg-white shadow-lg"
-      style={{ bottom: 0 }}
+      className="border-primary border-top position-fixed w-100 bg-white shadow-lg"
+      style={{
+        bottom: 0,
+        paddingBottom: '0.75rem',
+        paddingTop: '0.75rem',
+      }}
     >
       <Container fluid="md">
         <Row className="d-flex align-items-center">
