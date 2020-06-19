@@ -1,7 +1,6 @@
 import React from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
-import { FaFistRaised } from 'react-icons/fa';
-import { AiOutlineStop } from 'react-icons/ai';
+import { AiOutlineStop, AiOutlineCheck } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
 
 import { gameStore } from './GameStore';
@@ -27,8 +26,8 @@ const Systems = view(({ className, withHeader }) => {
             key={system.id}
           >
             {gameSystems[system.id] ? (
-              <FaFistRaised
-                className="text-primary"
+              <AiOutlineCheck
+                className="text-success"
                 fontSize="30px"
               />
             ) : (

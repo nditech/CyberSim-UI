@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Row, Col, Spinner, Card } from 'react-bootstrap';
 import { reduce as _reduce } from 'lodash';
-import { FaCheck, FaTimes } from 'react-icons/fa';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
 
 import { gameStore } from '../../GameStore';
@@ -70,7 +70,7 @@ const Threats = view(({ className }) => {
                   key={i}
                   className="d-flex align-items-center mb-2"
                 >
-                  <FaCheck className="mr-2" fontSize="20px" />
+                  <AiOutlineCheck className="mr-2" fontSize="20px" />
                   {name}
                 </div>
               ))}
@@ -95,7 +95,7 @@ const Threats = view(({ className }) => {
                   key={i}
                   className="d-flex align-items-center mb-2"
                 >
-                  <FaTimes className="mr-2" fontSize="20px" />
+                  <AiOutlineClose className="mr-2" fontSize="20px" />
                   {name}
                 </div>
               ))}

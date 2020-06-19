@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import qs from 'query-string';
 import { view } from '@risingstack/react-easy-state';
 
@@ -13,6 +13,12 @@ const queryParams = qs.parse(window.location.search);
 
 const Game = view(() => {
   const { state: gameState } = gameStore;
+  useEffect(() => {
+    document.querySelector('#root').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  });
 
   if (!gameState) {
     return <EnterGame />;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button, Nav } from 'react-bootstrap';
-import { FiPause, FiPlay, FiBarChart2 } from 'react-icons/fi';
+import { FiPlay, FiBarChart2 } from 'react-icons/fi';
+import { AiOutlinePause } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
 
 import { gameStore } from '../GameStore';
@@ -38,7 +39,7 @@ const Footer = view(() => {
               }}
               onClick={paused ? resumeSimulation : pauseSimulation}
             >
-              {paused ? <FiPlay /> : <FiPause />}
+              {paused ? <FiPlay /> : <AiOutlinePause />}
             </Button>
           </Col>
           <Col
