@@ -8,9 +8,10 @@ const ErrorBox = view(() => (
   <div
     className="position-fixed"
     style={{
-      bottom: '20px',
+      bottom: '60px',
       left: '50%',
       transform: 'translate(-50%)',
+      zIndex: 999,
     }}
   >
     <Alert

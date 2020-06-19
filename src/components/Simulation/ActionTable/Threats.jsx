@@ -33,7 +33,7 @@ const Threats = view(({ className }) => {
               const hqUp =
                 gameMitigations[`${skipper_mitigation}_hq`];
               if (
-                (skipType === 'both' && localUp && hqUp) ||
+                (skipType === 'party' && localUp && hqUp) ||
                 (skipType === 'hq' && hqUp) ||
                 (skipType === 'local' && localUp)
               ) {

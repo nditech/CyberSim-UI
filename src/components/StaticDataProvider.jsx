@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { keyBy as _keyBy } from 'lodash';
 
 const StaticDataContext = React.createContext(null);
 
@@ -14,13 +15,13 @@ export const useStaticData = () => {
 export const StaticDataProvider = ({ children }) => {
   // SYSTEMS
   const [systemsLoading, setSystemsLoading] = useState(false);
-  const [systems, setSystems] = useState();
+  const [systems, setSystems] = useState([]);
   useEffect(() => {
     setSystemsLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/systems`)
       .then(({ data }) => {
-        setSystems(data);
+        setSystems(_keyBy(data, 'id'));
       })
       .catch((e) => console.error(e))
       .finally(() => setSystemsLoading(false));
@@ -28,13 +29,13 @@ export const StaticDataProvider = ({ children }) => {
 
   // MITIGATIONS
   const [mitigationsLoading, setMitigationsLoading] = useState(false);
-  const [mitigations, setMitigations] = useState();
+  const [mitigations, setMitigations] = useState([]);
   useEffect(() => {
     setMitigationsLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/mitigations`)
       .then(({ data }) => {
-        setMitigations(data);
+        setMitigations(_keyBy(data, 'id'));
       })
       .catch((e) => console.error(e))
       .finally(() => setMitigationsLoading(false));
@@ -42,13 +43,13 @@ export const StaticDataProvider = ({ children }) => {
 
   // INJECTIONS
   const [injectionsLoading, setInjectionsLoading] = useState(false);
-  const [injections, setInjections] = useState();
+  const [injections, setInjections] = useState([]);
   useEffect(() => {
     setInjectionsLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/injections`)
       .then(({ data }) => {
-        setInjections(data);
+        setInjections(_keyBy(data, 'id'));
       })
       .catch((e) => console.error(e))
       .finally(() => setInjectionsLoading(false));
@@ -56,13 +57,13 @@ export const StaticDataProvider = ({ children }) => {
 
   // RESPONSES
   const [responsesLoading, setResponsesLoading] = useState(false);
-  const [responses, setResponses] = useState();
+  const [responses, setResponses] = useState([]);
   useEffect(() => {
     setResponsesLoading(true);
     axios
       .get(`${process.env.REACT_APP_API_URL}/responses`)
       .then(({ data }) => {
-        setResponses(data);
+        setResponses(_keyBy(data, 'id'));
       })
       .catch((e) => console.error(e))
       .finally(() => setResponsesLoading(false));

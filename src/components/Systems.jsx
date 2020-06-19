@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { AiOutlineStop, AiOutlineCheck } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
+import { map as _map } from 'lodash';
 
 import { gameStore } from './GameStore';
 import { useStaticData } from './StaticDataProvider';
@@ -18,7 +19,7 @@ const Systems = view(({ className, withHeader }) => {
         </Col>
       )}
       {systems ? (
-        systems.map((system) => (
+        _map(systems, (system) => (
           <Col
             xs={6}
             md={4}
