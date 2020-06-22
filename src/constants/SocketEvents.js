@@ -9,4 +9,5 @@ export default {
   STARTSIMULATION: 'startSimulation',
   PAUSESIMULATION: 'pauseSimulation',
   FINISHSIMULATION: 'finishSimulation',
+  RESTORESYSTEM: 'restoreSystem',
 };

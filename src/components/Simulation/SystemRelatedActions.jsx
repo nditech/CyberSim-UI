@@ -1,17 +1,19 @@
 import React, { useMemo, useCallback } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import { filter as _filter } from 'lodash';
+import { view } from '@risingstack/react-easy-state';
 
 import { useStaticData } from '../StaticDataProvider';
 import { gameStore } from '../GameStore';
 import { numberToUsd } from '../../util';
 
-const SystemRelatedActions = ({ location, className }) => {
+const SystemRelatedActions = view(({ location, className }) => {
   const {
     mitigations: gameMitigations,
     systems: gameSystems,
     popError,
     closeError,
+    actions: { restoreSystem },
   } = gameStore;
   const { responses, systems } = useStaticData();
 
@@ -33,6 +35,7 @@ const SystemRelatedActions = ({ location, className }) => {
           systems_to_restore.some((key) => !gameSystems[key]) &&
           // required mitigation met
           (!required_mitigation_type ||
+            !required_mitigation ||
             (required_mitigation_type === 'party'
               ? gameMitigations[`${required_mitigation}_hq`] &&
                 gameMitigations[`${required_mitigation}_local`]
@@ -48,17 +51,19 @@ const SystemRelatedActions = ({ location, className }) => {
       event.persist();
       event.preventDefault();
       event.stopPropagation();
-      const isValid = event.target.checkValidity();
+      const isValid =
+        event.target.checkValidity() &&
+        event.target?.systemRealtedActions?.value;
       if (isValid) {
         closeError();
-        console.log('emit system related action with socket io', {
-          action: event.target.systemRealtedActions.value,
+        restoreSystem({
+          responseId: event.target.systemRealtedActions.value,
         });
       } else {
         popError('Please select an action.');
       }
     },
-    [popError, closeError],
+    [popError, closeError, restoreSystem],
   );
 
   return (
@@ -72,32 +77,35 @@ const SystemRelatedActions = ({ location, className }) => {
             variant="outline-primary"
             className="rounded-pill w-100"
             type="submit"
+            disabled={!systemRealtedActions.length}
           >
             PERFORM ACTION
           </Button>
         </Col>
         <Col>
-          {systemRealtedActions.map((action) => (
-            <Form.Check
-              custom
-              required
-              key={action.id}
-              type="radio"
-              className="mb-2"
-              label={`${numberToUsd(action.cost)} ${
-                action.description
-              } (Restores:${action.systems_to_restore.map(
-                (systemId) => ` ${systems[systemId].name}`,
-              )})`}
-              name="systemRealtedActions"
-              id={action.id}
-              value={action.id}
-            />
-          ))}
+          {systemRealtedActions.length
+            ? systemRealtedActions.map((action) => (
+                <Form.Check
+                  custom
+                  required
+                  key={action.id}
+                  type="radio"
+                  className="mb-2"
+                  label={`${numberToUsd(action.cost)} ${
+                    action.description
+                  } (Restores:${action.systems_to_restore.map(
+                    (systemId) => ` ${systems[systemId].name}`,
+                  )})`}
+                  name="systemRealtedActions"
+                  id={action.id}
+                  value={action.id}
+                />
+              ))
+            : 'No system related action is available.'}
         </Col>
       </Row>
     </Form>
   );
-};
+});
 
 export default SystemRelatedActions;
