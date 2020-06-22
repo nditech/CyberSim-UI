@@ -106,6 +106,7 @@ const Preparation = view(() => {
               gameMitigations={gameMitigations}
               allocatedBudget={allocatedCategoryBudgets[key]}
               toggleMitigation={toggleMitigation}
+              budget={budget}
             />
           ))
         ) : (

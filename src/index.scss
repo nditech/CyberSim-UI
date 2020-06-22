@@ -51,13 +51,21 @@ select.form-control:focus {
   box-shadow: none;
 }
 
-.mitigation-row {
+.select-row {
   transition: background-color 0.2s;
   &:hover {
     background-color: lighten(
       map-get($map: $theme-colors, $key: 'primary'),
       52%
     );
+  }
+}
+
+.custom-switch,
+.custom-radio {
+  label {
+    cursor: pointer;
+    width: 100%;
   }
 }
 
@@ -76,7 +84,7 @@ select.form-control:focus {
 }
 .custom-switch.custom-switch-right {
   padding: 0;
-  .custom-control-label {
+  .custom-control-label > * {
     padding-right: 33px;
   }
 }
@@ -84,11 +92,27 @@ select.form-control:focus {
   right: 14px;
   left: auto;
 }
-
 .custom-switch.custom-switch-right .custom-control-label::before {
   right: 0;
   left: auto;
   transform: translate(0, -50%);
+}
+
+.custom-radio .custom-control-label::after,
+.custom-radio .custom-control-label::before {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.custom-radio.custom-radio-right {
+  padding: 0;
+  .custom-control-label > * {
+    padding-right: 22px;
+  }
+}
+.custom-radio.custom-radio-right .custom-control-label::after,
+.custom-radio.custom-radio-right .custom-control-label::before {
+  right: 0;
+  left: auto;
 }
 
 .cursor-pointer {

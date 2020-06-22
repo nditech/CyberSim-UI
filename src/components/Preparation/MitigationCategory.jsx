@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, FormCheck } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 
 import { numberToUsd } from '../../util';
 
@@ -9,6 +9,7 @@ const MitigationCategory = ({
   gameMitigations,
   toggleMitigation,
   allocatedBudget,
+  budget,
 }) => (
   <div className="my-5 py-3">
     <Row className="pb-2">
@@ -30,17 +31,20 @@ const MitigationCategory = ({
       </Col>
     </Row>
     {mitigations.map((mitigation) => (
-      <Row className="py-2 mitigation-row" key={mitigation.id}>
+      <Row className="py-2 select-row" key={mitigation.id}>
         <Col md={9}>{mitigation.description}</Col>
         <Col md={3}>
           <Row>
             <Col md={6} className="justify-content-end d-flex">
               {mitigation.is_hq && (
-                <FormCheck
+                <Form.Check
                   type="switch"
                   className="custom-switch-right"
                   id={`${mitigation.id}_hq`}
-                  label={numberToUsd(mitigation.hq_cost)}
+                  label={
+                    <span>{numberToUsd(mitigation.hq_cost)}</span>
+                  }
+                  disabled={budget < mitigation.hq_cost}
                   checked={!!gameMitigations[`${mitigation.id}_hq`]}
                   onChange={(e) =>
                     toggleMitigation({
@@ -54,11 +58,14 @@ const MitigationCategory = ({
             </Col>
             <Col md={6} className="justify-content-end d-flex">
               {mitigation.is_local && (
-                <FormCheck
+                <Form.Check
                   type="switch"
                   className="custom-switch-right"
                   id={`${mitigation.id}_local`}
-                  label={numberToUsd(mitigation.local_cost)}
+                  label={
+                    <span>{numberToUsd(mitigation.local_cost)}</span>
+                  }
+                  disabled={budget < mitigation.local_cost}
                   checked={
                     !!gameMitigations[`${mitigation.id}_local`]
                   }

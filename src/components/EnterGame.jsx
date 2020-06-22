@@ -46,7 +46,7 @@ const EnterGame = view(() => {
             <Form.Group controlId="RememberGameId">
               <Form.Check
                 type="switch"
-                label="Remember me"
+                label={<span>Remember me</span>}
                 defaultChecked={rememberGameId}
                 onChange={(e) => setRememberGameId(e.target.checked)}
                 style={{ fontSize: '1.125rem' }}

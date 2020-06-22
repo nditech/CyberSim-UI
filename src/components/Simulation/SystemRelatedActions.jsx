@@ -9,6 +9,7 @@ import { numberToUsd } from '../../util';
 
 const SystemRelatedActions = view(({ location, className }) => {
   const {
+    budget,
     mitigations: gameMitigations,
     systems: gameSystems,
     popError,
@@ -88,15 +89,28 @@ const SystemRelatedActions = view(({ location, className }) => {
                 <Form.Check
                   custom
                   required
-                  key={action.id}
                   type="radio"
-                  className="mb-2"
-                  label={`${numberToUsd(action.cost)} ${
-                    action.description
-                  } (Restores:${action.systems_to_restore.map(
-                    (systemId) => ` ${systems[systemId].name}`,
-                  )})`}
+                  className="custom-radio-right"
+                  key={action.id}
+                  label={
+                    <Row className="py-1 select-row align-items-center">
+                      <Col md={10}>
+                        {`${
+                          action.description
+                        } (Restores:${action.systems_to_restore.map(
+                          (systemId) => ` ${systems[systemId].name}`,
+                        )})`}
+                      </Col>
+                      <Col
+                        md={2}
+                        className="justify-content-end d-flex align-items-center"
+                      >
+                        {numberToUsd(action.cost)}
+                      </Col>
+                    </Row>
+                  }
                   name="systemRealtedActions"
+                  disabled={budget < action.cost}
                   id={action.id}
                   value={action.id}
                 />
