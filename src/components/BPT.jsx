@@ -78,19 +78,36 @@ const BPT = view(({ big }) => {
 
   return (
     <Row
-      className={classNames('justify-content-center', {
+      className={classNames({
         'bpt-big': big,
       })}
     >
-      <Col sm={6} md={4} style={{ whiteSpace: 'nowrap' }}>
+      <Col
+        sm={6}
+        md={4}
+        style={{ whiteSpace: 'nowrap' }}
+        className="px-2"
+      >
         <h4 className="bpt-item font-weight-normal mb-0">
           {numberToUsd(budget).replace('$', '$ ')}
         </h4>
       </Col>
-      <Col sm={6} md={4}>
+      <Col
+        sm={6}
+        md={4}
+        className={classNames('px-2 d-flex', {
+          'justify-content-center': !big,
+        })}
+      >
         <h4 className="bpt-item font-weight-normal mb-0">% {poll}</h4>
       </Col>
-      <Col sm={6} md={4}>
+      <Col
+        sm={6}
+        md={4}
+        className={classNames('px-2 d-flex', {
+          'justify-content-end': !big,
+        })}
+      >
         <TimeTaken big={big} />
       </Col>
     </Row>

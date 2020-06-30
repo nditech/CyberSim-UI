@@ -38,11 +38,11 @@ const Systems = view(({ className, withHeader, big }) => {
               />
             )}
             {big ? (
-              <h4 className="ml-2 text-uppercase font-weight-normal mb-0">
+              <h4 className="ml-2 text-uppercase font-weight-normal mb-0 col p-0">
                 {system.name}
               </h4>
             ) : (
-              <h5 className="ml-2 text-uppercase font-weight-normal mb-0">
+              <h5 className="ml-2 text-uppercase font-weight-normal mb-0 col p-0">
                 {system.name}
               </h5>
             )}

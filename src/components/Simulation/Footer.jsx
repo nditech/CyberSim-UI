@@ -24,11 +24,11 @@ const Footer = view(() => {
       }}
     >
       <Container fluid="md">
-        <Row className="d-flex align-items-center">
-          <Col xs={4} md={6}>
+        <Row className="d-flex align-items-center justify-content-center">
+          <Col xs={4} md={5}>
             <BPT />
           </Col>
-          <Col xs={1} className="p-0">
+          <Col xs={2} className="p-0 d-flex justify-content-center">
             <Button
               variant="primary"
               className="rounded-circle d-flex justify-content-center align-items-center shadow-none"
