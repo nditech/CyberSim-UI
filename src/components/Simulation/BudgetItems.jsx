@@ -30,7 +30,6 @@ const BudgetItems = view(({ className, location }) => {
 
   const submitAction = useCallback(
     (event) => {
-      event.persist();
       event.preventDefault();
       event.stopPropagation();
       const isValid =

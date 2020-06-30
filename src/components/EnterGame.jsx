@@ -27,7 +27,17 @@ const EnterGame = view(() => {
               <h4>ENTER GAME</h4>
             </Col>
           </Row>
-          <Form>
+          <Form
+            onSubmit={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              enterGame({
+                eventType: SocketEvents.CREATEGAME,
+                gameId,
+                rememberGameId,
+              });
+            }}
+          >
             <Form.Group controlId="GameId">
               <Form.Label>
                 <h5 className="font-weight-normal mb-0">
@@ -36,7 +46,7 @@ const EnterGame = view(() => {
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Game Id"
+                placeholder="Game Name"
                 onChange={(event) => setGameId(event.target.value)}
                 value={gameId}
                 autoComplete="off"

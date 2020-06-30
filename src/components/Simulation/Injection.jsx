@@ -17,7 +17,6 @@ const Injection = view(
 
     // const submitAction = useCallback(
     //   (event) => {
-    //     event.persist();
     //     event.preventDefault();
     //     event.stopPropagation();
     //     const isValid =
