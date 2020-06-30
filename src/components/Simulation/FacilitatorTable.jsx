@@ -13,15 +13,15 @@ const FacilitatorTable = ({ activeTab }) => {
   return (
     <>
       <InjectsAndResponses
-        className="my-5 py-4"
+        className="my-5"
         location={isHq ? 'hq' : 'local'}
       />
       <BudgetItems
-        className="my-5 py-4"
+        className="my-5"
         location={isHq ? 'hq' : 'local'}
       />
       <SystemRelatedActions
-        className="my-5 py-4"
+        className="my-5"
         location={isHq ? 'hq' : 'local'}
       />
     </>

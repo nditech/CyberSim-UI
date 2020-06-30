@@ -7,7 +7,7 @@ import { map as _map } from 'lodash';
 import { gameStore } from './GameStore';
 import { useStaticData } from './StaticDataProvider';
 
-const Systems = view(({ className, withHeader }) => {
+const Systems = view(({ className, withHeader, big }) => {
   const { systems: gameSystems } = gameStore;
   const { systems } = useStaticData();
 
@@ -29,17 +29,23 @@ const Systems = view(({ className, withHeader }) => {
             {gameSystems[system.id] ? (
               <AiOutlineCheck
                 className="text-success"
-                fontSize="30px"
+                fontSize={big ? '40px' : '30px'}
               />
             ) : (
               <AiOutlineStop
                 className="text-danger"
-                fontSize="30px"
+                fontSize={big ? '40px' : '30px'}
               />
             )}
-            <h5 className="ml-2 text-uppercase font-weight-normal mb-0">
-              {system.name}
-            </h5>
+            {big ? (
+              <h4 className="ml-2 text-uppercase font-weight-normal mb-0">
+                {system.name}
+              </h4>
+            ) : (
+              <h5 className="ml-2 text-uppercase font-weight-normal mb-0">
+                {system.name}
+              </h5>
+            )}
           </Col>
         ))
       ) : (

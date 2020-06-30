@@ -28,7 +28,7 @@ const Projector = view(() => {
         <div className="my-5 py-5">
           <BPT big />
         </div>
-        <Systems />
+        <Systems big />
       </Container>
     </>
   );

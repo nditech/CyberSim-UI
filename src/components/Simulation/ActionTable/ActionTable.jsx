@@ -8,11 +8,11 @@ import EventLog from '../../EventLog';
 
 const ActionTable = () => (
   <>
-    <Systems className="mt-5 pt-4" withHeader />
-    <SystemRelatedActions className="my-5 py-4" />
-    <Threats className="mt-5 pt-4" />
-    <TriggerEvent className="mt-5 pt-4" />
-    <EventLog className="my-5 py-4" />
+    <Systems className="my-5" withHeader />
+    <SystemRelatedActions className="my-5" />
+    <Threats className="my-5" />
+    <TriggerEvent className="my-5" />
+    <EventLog className="my-5" />
   </>
 );
 
