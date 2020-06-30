@@ -58,8 +58,17 @@ const Threats = view(({ className }) => {
   return (
     <Row className={className} id="threats">
       <Col md={6}>
-        <Card className="shadow-sm rounded h-100">
-          <Card.Header as="h3">MITIGATED THREATS:</Card.Header>
+        <Card
+          className="shadow-sm h-100 border-primary"
+          style={{ borderRadius: '1rem' }}
+        >
+          <Card.Header
+            as="h3"
+            className="border-primary bg-white"
+            style={{ borderRadius: '1rem 1rem 0 0' }}
+          >
+            MITIGATED THREATS:
+          </Card.Header>
           <Card.Body
             className="pb-3"
             style={{ maxHeight: '350px', overflowY: 'scroll' }}
@@ -83,8 +92,17 @@ const Threats = view(({ className }) => {
         </Card>
       </Col>
       <Col md={6}>
-        <Card className="shadow-sm rounded h-100">
-          <Card.Header as="h3">NOT MITIGATED THREATS:</Card.Header>
+        <Card
+          className="shadow-sm h-100 border-primary"
+          style={{ borderRadius: '1rem' }}
+        >
+          <Card.Header
+            as="h3"
+            className="border-primary bg-white"
+            style={{ borderRadius: '1rem 1rem 0 0' }}
+          >
+            NOT MITIGATED THREATS:
+          </Card.Header>
           <Card.Body
             className="pb-3"
             style={{ maxHeight: '350px', overflowY: 'scroll' }}

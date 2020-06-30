@@ -75,6 +75,15 @@ export const gameStore = store({
       gameStore.emitEvent(SocketEvents.RESTORESYSTEM, params),
     startSimulation: () =>
       gameStore.emitEvent(SocketEvents.STARTSIMULATION),
+    deliverInjection: (params) =>
+      gameStore.emitEvent(SocketEvents.DELIVEREINJECTION, params),
+    respondToInjection: (params) =>
+      gameStore.emitEvent(SocketEvents.RESPONDTOINJECTION, params),
+    nonCorrectRespondToInjection: (params) =>
+      gameStore.emitEvent(
+        SocketEvents.NONCORRECTRESPONDTOINJECTION,
+        params,
+      ),
   },
 });
 

@@ -10,4 +10,7 @@ export default {
   PAUSESIMULATION: 'pauseSimulation',
   FINISHSIMULATION: 'finishSimulation',
   RESTORESYSTEM: 'restoreSystem',
+  DELIVEREINJECTION: 'delivereInjection',
+  RESPONDTOINJECTION: 'respondToInjection',
+  NONCORRECTRESPONDTOINJECTION: 'nonCorrectRespondToInjection',
 };

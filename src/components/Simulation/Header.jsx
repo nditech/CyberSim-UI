@@ -16,7 +16,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.ACTION_TABLE)}
       >
-        <h4 className="my-2 font-weight-normal">ACTION TABLE</h4>
+        <h5 className="my-2 font-weight-normal">ACTION TABLE</h5>
       </Col>
       <Col
         xs={4}
@@ -28,7 +28,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.CAMPAIGN_HQ)}
       >
-        <h4 className="my-2 font-weight-normal">Campaign HQ</h4>
+        <h5 className="my-2 font-weight-normal">Campaign HQ</h5>
       </Col>
       <Col
         xs={4}
@@ -40,7 +40,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.LOCAL_BRANCH)}
       >
-        <h4 className="my-2 font-weight-normal">Local Branch</h4>
+        <h5 className="my-2 font-weight-normal">Local Branch</h5>
       </Col>
     </Row>
     <Row className="m-0 border-primary border-bottom">
@@ -55,7 +55,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">SYSTEMS</p>
+            <p className="my-0 font-weight-bold">SYSTEMS</p>
           </Col>
           <Col
             xs={6}
@@ -66,7 +66,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">THREATS</p>
+            <p className="my-0 font-weight-bold">THREATS</p>
           </Col>
           <Col
             xs={3}
@@ -77,7 +77,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">EVENT LOG</p>
+            <p className="my-0 font-weight-bold">EVENT LOG</p>
           </Col>
         </>
       ) : (
@@ -91,7 +91,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">
+            <p className="my-0 font-weight-bold">
               INJECTS & RESPONSES
             </p>
           </Col>
@@ -104,7 +104,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">
+            <p className="my-0 font-weight-bold">
               {activeTab === SimulationTabs.CAMPAIGN_HQ
                 ? 'CAMPAIGN ACTIONS'
                 : 'LOCAL ACTIONS'}
@@ -119,7 +119,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-1 font-weight-bold">SECURITY ACTIONS</p>
+            <p className="my-0 font-weight-bold">SECURITY ACTIONS</p>
           </Col>
         </>
       )}

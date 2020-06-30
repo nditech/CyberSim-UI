@@ -8,6 +8,9 @@ export const numberToUsd = (num) =>
 
 export const msToMinutesSeconds = (millis) => {
   const seconds = ((millis % 60000) / 1000).toFixed(0);
+  if (seconds === 60) {
+    return Math.floor(millis / 60000) + 1 + ':00';
+  }
   return (
     Math.floor(millis / 60000) +
     ':' +

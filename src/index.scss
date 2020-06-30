@@ -69,6 +69,10 @@ select.form-control:focus {
   }
 }
 
+.custom-control-input {
+  width: 0 !important;
+}
+
 .custom-switch .custom-control-label::after {
   top: 50%;
   transform: translate(0.75rem, -50%);
@@ -125,11 +129,11 @@ select.form-control:focus {
 
   &-item {
     transition: box-shadow 0.2s linear;
-    h4 {
+    h5 {
       transition: font-weight 0.2s linear;
     }
     &.active {
-      h4 {
+      h5 {
         font-weight: bold !important;
       }
     }
