@@ -29,25 +29,35 @@ const InjectsAndResponses = view(({ className, location }) => {
       : Date.now() -
         new Date(startedAt).getTime() +
         millisTakenBeforeStarted;
+    let shownFutureInjectionCounter = 0;
     return _filter(
       injections,
       ({
         location: injectionLocation,
         trigger_time: triggerTime,
         id,
-      }) =>
-        // Location (hq or local)
-        (injectionLocation === location ||
-          injectionLocation === null) &&
-        // Max 10 minutes into the future
-        timeTaken + 600000 >= triggerTime &&
-        // Future or "Past and response not made yet" or "Past and not prevented"
-        (timeTaken < triggerTime ||
-          (timeTaken >= triggerTime &&
-            !gameInjectionsByInjectionId[id]?.response_made &&
-            !preventedInjections.some(
-              (preventedId) => id === preventedId,
-            ))),
+      }) => {
+        // injections return by the api in triggerTime order
+        // only allow 5 future injections to appear
+        if (shownFutureInjectionCounter === 5) {
+          return false;
+        }
+        const inFuture = timeTaken < triggerTime;
+        const canAppear =
+          // Location match
+          (injectionLocation === location ||
+            injectionLocation === null) &&
+          // "Future" or "Response not made yet and not prevented"
+          (inFuture ||
+            (!gameInjectionsByInjectionId[id]?.response_made &&
+              !preventedInjections.some(
+                (preventedId) => id === preventedId,
+              )));
+        if (inFuture && canAppear) {
+          shownFutureInjectionCounter += 1;
+        }
+        return canAppear;
+      },
     ).map((injection) => {
       const gameInjection = gameInjectionsByInjectionId[injection.id];
       const canMakeResponse =
