@@ -7,12 +7,15 @@ export const numberToUsd = (num) =>
   });
 
 export const msToMinutesSeconds = (millis) => {
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
+  let seconds = ((millis % 60000) / 1000).toFixed(0);
+  let minutes = Math.floor(millis / 60000);
   if (seconds === 60) {
-    return Math.floor(millis / 60000) + 1 + ':00';
+    minutes += 1;
+    seconds = 0;
   }
   return (
-    Math.floor(millis / 60000) +
+    (minutes < 10 ? '0' : '') +
+    minutes +
     ':' +
     (seconds < 10 ? '0' : '') +
     seconds

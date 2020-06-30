@@ -3,13 +3,24 @@ import { Row, Col, Spinner, Card } from 'react-bootstrap';
 import { reduce as _reduce } from 'lodash';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
+import { keyBy as _keyBy } from 'lodash';
 
 import { gameStore } from '../../GameStore';
+import { msToMinutesSeconds } from '../../../util';
 import { useStaticData } from '../../StaticDataProvider';
 
 const Threats = view(({ className }) => {
-  const { mitigations: gameMitigations } = gameStore;
+  const {
+    mitigations: gameMitigations,
+    injections: gameInjections,
+    prevented_injections: preventedInjections,
+  } = gameStore;
   const { injections } = useStaticData();
+
+  const gameInjectionsByInjectionId = useMemo(
+    () => _keyBy(gameInjections, 'injection_id'),
+    [gameInjections],
+  );
 
   const { threats, notThreats } = useMemo(
     () =>
@@ -19,28 +30,48 @@ const Threats = view(({ className }) => {
             (
               acc,
               {
-                skipper_mitigation,
+                trigger_time: triggerTime,
+                skipper_mitigation: skipMitigation,
                 skipper_mitigation_type: skipType,
                 title,
                 id,
+                location,
               },
             ) => {
-              if (!skipper_mitigation) {
-                return acc;
+              // Was not injected yet
+              if (!gameInjectionsByInjectionId[id]) {
+                const localUp =
+                  skipMitigation &&
+                  gameMitigations[`${skipMitigation}_local`];
+                const hqUp =
+                  skipMitigation &&
+                  gameMitigations[`${skipMitigation}_hq`];
+                // Prevented or will be prevented
+                if (
+                  (skipType === 'party' && localUp && hqUp) ||
+                  (skipType === 'hq' && hqUp) ||
+                  (skipType === 'local' && localUp) ||
+                  preventedInjections.some(
+                    (preventedId) => preventedId === id,
+                  )
+                ) {
+                  acc.notThreats.push({
+                    desc:
+                      msToMinutesSeconds(triggerTime) +
+                      ' - ' +
+                      (title || id),
+                    location: location?.toUpperCase() || 'PARTY',
+                  });
+                  return acc;
+                }
               }
-              const localUp =
-                gameMitigations[`${skipper_mitigation}_local`];
-              const hqUp =
-                gameMitigations[`${skipper_mitigation}_hq`];
-              if (
-                (skipType === 'party' && localUp && hqUp) ||
-                (skipType === 'hq' && hqUp) ||
-                (skipType === 'local' && localUp)
-              ) {
-                acc.notThreats.push(title || id);
-              } else {
-                acc.threats.push(title || id);
-              }
+              acc.threats.push({
+                desc:
+                  msToMinutesSeconds(triggerTime) +
+                  ' - ' +
+                  (title || id),
+                location: location?.toUpperCase() || 'PARTY',
+              });
               return acc;
             },
             {
@@ -52,12 +83,17 @@ const Threats = view(({ className }) => {
             threats: [],
             notThreats: [],
           },
-    [gameMitigations, injections],
+    [
+      gameInjectionsByInjectionId,
+      gameMitigations,
+      injections,
+      preventedInjections,
+    ],
   );
 
   return (
     <Row className={className} id="threats">
-      <Col md={6}>
+      <Col lg={6} className="mb-4 mb-lg-0">
         <Card
           className="shadow-sm h-100 border-primary"
           style={{ borderRadius: '1rem' }}
@@ -71,17 +107,25 @@ const Threats = view(({ className }) => {
           </Card.Header>
           <Card.Body
             className="pb-3"
-            style={{ maxHeight: '350px', overflowY: 'scroll' }}
+            style={{ maxHeight: '365px', overflowY: 'scroll' }}
           >
             {!!notThreats.length &&
-              notThreats.map((name, i) => (
-                <div
+              notThreats.map(({ desc, location }, i) => (
+                <Row
                   key={i}
-                  className="d-flex align-items-center mb-2"
+                  className="d-flex align-items-center mb-2 justify-content-between select-row"
                 >
-                  <AiOutlineCheck className="mr-2" fontSize="20px" />
-                  {name}
-                </div>
+                  <Col xs={10}>
+                    <AiOutlineCheck
+                      className="mr-2"
+                      fontSize="20px"
+                    />
+                    {desc}
+                  </Col>
+                  <Col xs={2} className="text-right">
+                    {location}
+                  </Col>
+                </Row>
               ))}
             {!injections && (
               <Col xs={12} className="d-flex justify-content-center">
@@ -91,7 +135,7 @@ const Threats = view(({ className }) => {
           </Card.Body>
         </Card>
       </Col>
-      <Col md={6}>
+      <Col lg={6}>
         <Card
           className="shadow-sm h-100 border-primary"
           style={{ borderRadius: '1rem' }}
@@ -105,17 +149,25 @@ const Threats = view(({ className }) => {
           </Card.Header>
           <Card.Body
             className="pb-3"
-            style={{ maxHeight: '350px', overflowY: 'scroll' }}
+            style={{ maxHeight: '365px', overflowY: 'scroll' }}
           >
             {!!threats.length &&
-              threats.map((name, i) => (
-                <div
+              threats.map(({ desc, location }, i) => (
+                <Row
                   key={i}
-                  className="d-flex align-items-center mb-2"
+                  className="d-flex align-items-center mb-2 justify-content-between select-row"
                 >
-                  <AiOutlineClose className="mr-2" fontSize="20px" />
-                  {name}
-                </div>
+                  <Col xs={10}>
+                    <AiOutlineClose
+                      className="mr-2"
+                      fontSize="20px"
+                    />
+                    {desc}
+                  </Col>
+                  <Col xs={2} className="text-right">
+                    {location}
+                  </Col>
+                </Row>
               ))}
             {!injections && (
               <Col xs={12} className="d-flex justify-content-center">

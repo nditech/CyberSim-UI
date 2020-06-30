@@ -54,14 +54,19 @@ const Injection = view(
           >
             <Row className="align-items-center">
               <Col
-                xs={8}
+                lg={8}
+                xs={7}
                 className="font-weight-bold"
               >{`${msToMinutesSeconds(injection.trigger_time)} - ${
                 disabled
                   ? `UPCOMING${prevented ? ' AVOIDED' : ''}: `
                   : ''
               }${injection.title}`}</Col>
-              <Col xs={4} className="d-flex justify-content-end">
+              <Col
+                lg={4}
+                xs={5}
+                className="d-flex justify-content-end"
+              >
                 <Form.Check
                   type="switch"
                   className={classNames(
