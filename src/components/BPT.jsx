@@ -83,7 +83,7 @@ const BPT = view(({ big }) => {
       })}
     >
       <Col
-        sm={6}
+        xs={6}
         md={4}
         style={{ whiteSpace: 'nowrap' }}
         className="px-2"
@@ -93,7 +93,7 @@ const BPT = view(({ big }) => {
         </h4>
       </Col>
       <Col
-        sm={6}
+        xs={6}
         md={4}
         className={classNames('px-2 d-flex', {
           'justify-content-center': !big,
@@ -102,7 +102,7 @@ const BPT = view(({ big }) => {
         <h4 className="bpt-item font-weight-normal mb-0">% {poll}</h4>
       </Col>
       <Col
-        sm={6}
+        xs={6}
         md={4}
         className={classNames('px-2 d-flex', {
           'justify-content-end': !big,

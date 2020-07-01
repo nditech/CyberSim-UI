@@ -4,10 +4,10 @@ import { Row, Col, Button } from 'react-bootstrap';
 const TriggerEvent = ({ className }) => {
   return (
     <Row className={className}>
-      <Col md={9}>
+      <Col xs={9}>
         <h3>TRIGGER RANDOM EVENT</h3>
       </Col>
-      <Col md={3}>
+      <Col xs={3}>
         <Button
           variant="outline-primary"
           className="rounded-pill w-100"

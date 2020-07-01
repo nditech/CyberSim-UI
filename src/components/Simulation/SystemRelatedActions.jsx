@@ -69,10 +69,10 @@ const SystemRelatedActions = view(({ location, className }) => {
   return (
     <Form onSubmit={submitAction} noValidate>
       <Row className={className}>
-        <Col md={9}>
+        <Col xs={9}>
           <h3>ACTIONS RELATED TO TECHNICAL SYSTEMS:</h3>
         </Col>
-        <Col md={3}>
+        <Col xs={3}>
           <Button
             variant="outline-primary"
             className="rounded-pill w-100"
@@ -93,7 +93,7 @@ const SystemRelatedActions = view(({ location, className }) => {
                   key={action.id}
                   label={
                     <Row className="py-1 select-row align-items-center">
-                      <Col md={10}>
+                      <Col xs={10}>
                         {`${
                           action.description
                         } (Restores:${action.systems_to_restore.map(
@@ -101,7 +101,7 @@ const SystemRelatedActions = view(({ location, className }) => {
                         )})`}
                       </Col>
                       <Col
-                        md={2}
+                        xs={2}
                         className="justify-content-end d-flex align-items-center"
                       >
                         {numberToUsd(action.cost)}

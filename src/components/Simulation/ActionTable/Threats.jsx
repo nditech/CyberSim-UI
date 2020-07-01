@@ -95,7 +95,7 @@ const Threats = view(({ className }) => {
     <Row className={className} id="threats">
       <Col lg={6} className="mb-4 mb-lg-0">
         <Card
-          className="shadow-sm h-100 border-primary"
+          className="h-100 border-primary threats"
           style={{ borderRadius: '1rem' }}
         >
           <Card.Header
@@ -107,13 +107,13 @@ const Threats = view(({ className }) => {
           </Card.Header>
           <Card.Body
             className="pb-3"
-            style={{ maxHeight: '365px', overflowY: 'scroll' }}
+            style={{ maxHeight: '367px', overflowY: 'scroll' }}
           >
             {!!notThreats.length &&
               notThreats.map(({ desc, location }, i) => (
                 <Row
                   key={i}
-                  className="d-flex align-items-center mb-2 justify-content-between select-row"
+                  className="d-flex align-items-center py-1 justify-content-between select-row"
                 >
                   <Col xs={10}>
                     <AiOutlineCheck
@@ -137,7 +137,7 @@ const Threats = view(({ className }) => {
       </Col>
       <Col lg={6}>
         <Card
-          className="shadow-sm h-100 border-primary"
+          className="h-100 border-primary threats"
           style={{ borderRadius: '1rem' }}
         >
           <Card.Header
@@ -149,13 +149,13 @@ const Threats = view(({ className }) => {
           </Card.Header>
           <Card.Body
             className="pb-3"
-            style={{ maxHeight: '365px', overflowY: 'scroll' }}
+            style={{ maxHeight: '367px', overflowY: 'scroll' }}
           >
             {!!threats.length &&
               threats.map(({ desc, location }, i) => (
                 <Row
                   key={i}
-                  className="d-flex align-items-center mb-2 justify-content-between select-row"
+                  className="d-flex align-items-center py-1 justify-content-between select-row"
                 >
                   <Col xs={10}>
                     <AiOutlineClose

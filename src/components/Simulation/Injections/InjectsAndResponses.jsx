@@ -4,8 +4,8 @@ import { view } from '@risingstack/react-easy-state';
 import { keyBy as _keyBy, filter as _filter } from 'lodash';
 
 import Injection from './Injection';
-import { gameStore } from '../GameStore';
-import { useStaticData } from '../StaticDataProvider';
+import { gameStore } from '../../GameStore';
+import { useStaticData } from '../../StaticDataProvider';
 
 const InjectsAndResponses = view(({ className, location }) => {
   const {
@@ -90,7 +90,7 @@ const InjectsAndResponses = view(({ className, location }) => {
 
   return (
     <Row className={className}>
-      <Col md={12}>
+      <Col xs={12}>
         <h3>INJECTS AND RESPONSES:</h3>
       </Col>
       <Col>

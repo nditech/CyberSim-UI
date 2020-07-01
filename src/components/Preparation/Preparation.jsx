@@ -123,7 +123,7 @@ const Preparation = view(() => {
       >
         <Container fluid="md">
           <Row>
-            <Col md={8}>
+            <Col xs={8}>
               <Button
                 variant="outline-primary"
                 className="rounded-pill"
@@ -136,7 +136,7 @@ const Preparation = view(() => {
                 </h4>
               </Button>
             </Col>
-            <Col md={4} className="d-flex justify-content-end">
+            <Col xs={4} className="d-flex justify-content-end">
               <Nav.Link
                 href={`?gameId=${id}&isProjectorView=true`}
                 className="btn btn-outline-primary rounded-pill d-flex align-items-center"

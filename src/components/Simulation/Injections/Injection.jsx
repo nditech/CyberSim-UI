@@ -3,9 +3,10 @@ import { Accordion, Card, Row, Col, Form } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
 import classNames from 'classnames';
 
-import { gameStore } from '../GameStore';
-import { msToMinutesSeconds } from '../../util';
-import { useStaticData } from '../StaticDataProvider';
+import InjectionResponseForm from './InjectionResponseForm';
+import { gameStore } from '../../GameStore';
+import { msToMinutesSeconds } from '../../../util';
+import { useStaticData } from '../../StaticDataProvider';
 
 const Injection = view(
   ({ injection, prevented, delivered, disabled }) => {
@@ -15,30 +16,10 @@ const Injection = view(
       actions: { deliverInjection },
     } = gameStore;
 
-    // const submitAction = useCallback(
-    //   (event) => {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //     const isValid =
-    //       event.target.checkValidity() &&
-    //       event.target?.budgetItems?.value;
-    //     if (isValid) {
-    //       closeError();
-    //       respondToInjection({
-    //         responseIds: 'TODO:',
-    //         injectionId: 'TODO:',
-    //       });
-    //     } else {
-    //       popError('Please select an action.');
-    //     }
-    //   },
-    //   [popError, closeError, respondToInjection],
-    // );
-
     return (
       <Accordion className="my-4">
         <Card
-          className={classNames('border-primary shadow-sm', {
+          className={classNames('border-primary injection', {
             'bg-light': disabled,
           })}
           style={{ borderRadius: '1rem' }}
@@ -140,20 +121,10 @@ const Injection = view(
                 </Row>
               </Card.Body>
               <Card.Body>
-                <Row>
-                  <Col xs={12} className="my-2">
-                    <span className="font-weight-bold">
-                      Select correct responses implemented:{' '}
-                    </span>
-                    TODO:
-                  </Col>
-                  <Col xs={12} className="my-2">
-                    <span className="font-weight-bold">
-                      Effect of implemented responses:{' '}
-                    </span>
-                    TODO:
-                  </Col>
-                </Row>
+                <InjectionResponseForm
+                  injection={injection}
+                  disabled={disabled}
+                />
               </Card.Body>
             </div>
           </Accordion.Collapse>

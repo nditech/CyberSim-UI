@@ -13,18 +13,18 @@ const MitigationCategory = ({
 }) => (
   <div className="my-5 py-3">
     <Row className="pb-2">
-      <Col md={9}>
+      <Col xs={9}>
         <h4 className="m-0 font-weight-normal border-bottom border-primary w-100 text-uppercase">
           ALLOCATED <span className="font-weight-bold">{name}</span>{' '}
           BUDGET : {numberToUsd(allocatedBudget)}
         </h4>
       </Col>
-      <Col md={3}>
+      <Col xs={3}>
         <Row>
-          <Col md={6} className="text-right">
+          <Col xs={6} className="text-right">
             HQ
           </Col>
-          <Col md={6} className="text-right">
+          <Col xs={6} className="text-right">
             Branch
           </Col>
         </Row>
@@ -32,10 +32,10 @@ const MitigationCategory = ({
     </Row>
     {mitigations.map((mitigation) => (
       <Row className="py-2 select-row" key={mitigation.id}>
-        <Col md={9}>{mitigation.description}</Col>
-        <Col md={3}>
+        <Col xs={9}>{mitigation.description}</Col>
+        <Col xs={3}>
           <Row>
-            <Col md={6} className="justify-content-end d-flex">
+            <Col xs={6} className="justify-content-end d-flex">
               {mitigation.is_hq && (
                 <Form.Check
                   type="switch"
@@ -56,7 +56,7 @@ const MitigationCategory = ({
                 />
               )}
             </Col>
-            <Col md={6} className="justify-content-end d-flex">
+            <Col xs={6} className="justify-content-end d-flex">
               {mitigation.is_local && (
                 <Form.Check
                   type="switch"

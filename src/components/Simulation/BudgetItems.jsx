@@ -52,10 +52,10 @@ const BudgetItems = view(({ className, location }) => {
   return (
     <Form onSubmit={submitAction} noValidate>
       <Row className={className}>
-        <Col md={9}>
+        <Col xs={9}>
           <h3>PURCHASE AVAILABLE BUDGET ITEM:</h3>
         </Col>
-        <Col md={3}>
+        <Col xs={3}>
           <Button
             variant="outline-primary"
             className="rounded-pill w-100"
@@ -76,9 +76,9 @@ const BudgetItems = view(({ className, location }) => {
                   key={mitigation.id}
                   label={
                     <Row className="py-1 select-row align-items-center">
-                      <Col md={10}>{mitigation.description}</Col>
+                      <Col xs={10}>{mitigation.description}</Col>
                       <Col
-                        md={2}
+                        xs={2}
                         className="justify-content-end d-flex align-items-center"
                       >
                         {numberToUsd(mitigation[`${location}_cost`])}

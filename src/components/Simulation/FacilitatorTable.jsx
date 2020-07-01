@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import SystemRelatedActions from './SystemRelatedActions';
 import BudgetItems from './BudgetItems';
-import InjectsAndResponses from './InjectsAndResponses';
+import InjectsAndResponses from './Injections/InjectsAndResponses';
 import { SimulationTabs } from '../../constants';
 
 const FacilitatorTable = ({ activeTab }) => {

@@ -7,7 +7,7 @@ const EventLog = ({ className }) => {
       <Col xs={9}>
         <h3>EVENTS LOG:</h3>
       </Col>
-      <Col md={3}>
+      <Col xs={3}>
         <Button
           variant="outline-primary"
           className="rounded-pill w-100"
