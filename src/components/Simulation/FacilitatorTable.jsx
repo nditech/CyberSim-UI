@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import SystemRelatedActions from './SystemRelatedActions';
 import BudgetItems from './BudgetItems';
+import ActionItems from './ActionItems';
 import InjectsAndResponses from './Injections/InjectsAndResponses';
 import { SimulationTabs } from '../../constants';
 
@@ -13,6 +14,10 @@ const FacilitatorTable = ({ activeTab }) => {
   return (
     <>
       <InjectsAndResponses
+        className="my-5"
+        location={isHq ? 'hq' : 'local'}
+      />
+      <ActionItems
         className="my-5"
         location={isHq ? 'hq' : 'local'}
       />
