@@ -139,11 +139,7 @@ const Preparation = view(() => {
             <Col xs={4} className="d-flex justify-content-end">
               <Nav.Link
                 href={`?gameId=${id}&isProjectorView=true`}
-                className="btn btn-outline-primary rounded-pill d-flex align-items-center"
-                style={{
-                  overflow: 'scroll',
-                  whiteSpace: 'nowrap',
-                }}
+                className="btn btn-outline-primary rounded-pill d-flex align-items-center projector-button"
                 target="_blank"
               >
                 <div>

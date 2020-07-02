@@ -67,11 +67,7 @@ const Footer = view(() => {
             </Button>
             <Nav.Link
               href={`?gameId=${id}&isProjectorView=true`}
-              className="btn btn-outline-primary rounded-pill ml-1 ml-lg-3 d-flex align-items-center"
-              style={{
-                overflow: 'scroll',
-                whiteSpace: 'nowrap',
-              }}
+              className="btn btn-outline-primary rounded-pill ml-1 ml-lg-3 d-flex align-items-center projector-button"
               target="_blank"
             >
               <div>

@@ -105,10 +105,7 @@ const Threats = view(({ className }) => {
           >
             MITIGATED THREATS:
           </Card.Header>
-          <Card.Body
-            className="pb-3"
-            style={{ maxHeight: '367px', overflowY: 'scroll' }}
-          >
+          <Card.Body className="pb-3 threats-body">
             {!!notThreats.length &&
               notThreats.map(({ desc, location }, i) => (
                 <Row
@@ -147,10 +144,7 @@ const Threats = view(({ className }) => {
           >
             NOT MITIGATED THREATS:
           </Card.Header>
-          <Card.Body
-            className="pb-3"
-            style={{ maxHeight: '367px', overflowY: 'scroll' }}
-          >
+          <Card.Body className="pb-3 threats-body">
             {!!threats.length &&
               threats.map(({ desc, location }, i) => (
                 <Row

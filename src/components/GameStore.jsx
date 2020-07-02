@@ -30,7 +30,25 @@ export const gameStore = store({
   // HELPERS
   setGame: (game) => {
     Object.keys(game).forEach((key) => {
-      gameStore[key] = game[key];
+      if (key === 'systems') {
+        gameStore.systems = game.systems.reduce(
+          (acc, { system_id, state }) => ({
+            ...acc,
+            [system_id]: state,
+          }),
+          {},
+        );
+      } else if (key === 'mitigations') {
+        gameStore.mitigations = game.mitigations.reduce(
+          (acc, { mitigation_id, location, state }) => ({
+            ...acc,
+            [`${mitigation_id}_${location}`]: state,
+          }),
+          {},
+        );
+      } else {
+        gameStore[key] = game[key];
+      }
     });
   },
   emitEvent: (event, params) =>

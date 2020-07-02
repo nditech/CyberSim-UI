@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Accordion, Card, Row, Col, Form } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
 import classNames from 'classnames';
+import { AiOutlineDown } from 'react-icons/ai';
 
 import InjectionResponseForm from './InjectionResponseForm';
 import { gameStore } from '../../GameStore';
@@ -9,27 +10,38 @@ import { msToMinutesSeconds } from '../../../util';
 import { useStaticData } from '../../StaticDataProvider';
 
 const Injection = view(
-  ({ injection, prevented, delivered, disabled }) => {
+  ({ injection, prevented, delivered, disabled, isDanger }) => {
     const { systems } = useStaticData();
 
     const {
       actions: { deliverInjection },
     } = gameStore;
 
+    const bgColor = useMemo(() => {
+      if (prevented) {
+        return 'bg-success-light';
+      }
+      if (isDanger) {
+        return 'bg-danger-light';
+      }
+      if (disabled) {
+        return 'bg-warning-light';
+      }
+      return 'bg-white';
+    }, [disabled, isDanger, prevented]);
+
     return (
       <Accordion className="my-4">
         <Card
-          className={classNames('border-primary injection', {
-            'bg-light': disabled,
-          })}
+          className="border-primary injection"
           style={{ borderRadius: '1rem' }}
         >
           <Accordion.Toggle
             as={Card.Header}
             eventKey="0"
             className={classNames(
-              'cursor-pointer border-primary py-3',
-              disabled ? 'bg-light' : 'bg-white',
+              'cursor-pointer border-primary py-3 injection-header',
+              bgColor,
             )}
           >
             <Row className="align-items-center">
@@ -45,32 +57,42 @@ const Injection = view(
               <Col
                 lg={4}
                 xs={5}
-                className="d-flex justify-content-end"
+                className="d-flex justify-content-end align-items-center"
               >
-                <Form.Check
-                  type="switch"
-                  className={classNames(
-                    'custom-switch-right rounded-pill px-2 py-1',
-                    { 'select-row': !disabled },
-                  )}
-                  style={{ width: 'fit-content' }}
-                  id={injection.id}
-                  label={<span>Check if delivered to table:</span>}
-                  checked={delivered}
-                  disabled={disabled}
-                  onChange={(e) =>
-                    deliverInjection({
-                      injectionId: injection.id,
-                      delivered: e.target.checked,
-                    })
-                  }
+                {!disabled && (
+                  <Form.Check
+                    type="switch"
+                    className={classNames(
+                      'custom-switch-right rounded-pill px-2 py-1',
+                      { 'select-row': !disabled },
+                    )}
+                    style={{ width: 'fit-content' }}
+                    id={injection.id}
+                    label={<span>Delivered to table:</span>}
+                    checked={delivered}
+                    onChange={(e) =>
+                      deliverInjection({
+                        injectionId: injection.id,
+                        delivered: e.target.checked,
+                      })
+                    }
+                  />
+                )}
+                <AiOutlineDown
+                  className="ml-2 text-primary"
+                  fontSize="25px"
                 />
               </Col>
             </Row>
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <div>
-              <Card.Body className="border-bottom border-primary">
+              <Card.Body
+                className={classNames(
+                  'border-bottom border-top border-primary',
+                  bgColor,
+                )}
+              >
                 <Row>
                   <Col xs={12} className="my-2">
                     <span className="font-weight-bold">
@@ -114,13 +136,13 @@ const Injection = view(
                   </Col>
                   <Col xs={12} className="my-2">
                     <span className="font-weight-bold">
-                      Deliver to table:{' '}
+                      Deliver asset to table:{' '}
                     </span>
                     {injection.asset_code}
                   </Col>
                 </Row>
               </Card.Body>
-              <Card.Body>
+              <Card.Body className={bgColor}>
                 <InjectionResponseForm
                   injection={injection}
                   disabled={disabled}

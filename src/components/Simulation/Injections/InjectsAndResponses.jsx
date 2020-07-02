@@ -67,14 +67,18 @@ const InjectsAndResponses = view(({ className, location }) => {
         disabled: !canMakeResponse,
         delivered: !!(gameInjection && gameInjection.delivered),
         prevented:
-          preventedInjections.some(
+          !canMakeResponse &&
+          (preventedInjections.some(
             (preventedId) => injection.id === preventedId,
           ) ||
-          (injection.skipper_mitigation &&
-            injection.skipper_mitigation_type &&
-            gameMitigations[
-              `${injection.skipper_mitigation}_${injection.skipper_mitigation_type}`
-            ]),
+            (injection.skipper_mitigation &&
+              injection.skipper_mitigation_type &&
+              gameMitigations[
+                `${injection.skipper_mitigation}_${injection.skipper_mitigation_type}`
+              ])),
+        isDanger:
+          !canMakeResponse &&
+          injection.trigger_time - timeTaken < 180000,
       };
     });
   }, [
@@ -95,13 +99,20 @@ const InjectsAndResponses = view(({ className, location }) => {
       </Col>
       <Col>
         {injectionsToShow.map(
-          ({ injection, disabled, prevented, delivered }) => (
+          ({
+            injection,
+            disabled,
+            prevented,
+            delivered,
+            isDanger,
+          }) => (
             <Injection
               injection={injection}
               key={injection.id}
               disabled={disabled}
               prevented={prevented}
               delivered={delivered}
+              isDanger={isDanger}
             />
           ),
         )}
