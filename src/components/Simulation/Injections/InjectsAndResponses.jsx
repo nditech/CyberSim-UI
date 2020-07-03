@@ -49,7 +49,7 @@ const InjectsAndResponses = view(({ className, location }) => {
             injectionLocation === null) &&
           // "Future" or "Response not made yet and not prevented"
           (inFuture ||
-            (!gameInjectionsByInjectionId[id]?.response_made &&
+            (!gameInjectionsByInjectionId[id]?.response_made_at &&
               !preventedInjections.some(
                 (preventedId) => id === preventedId,
               )));
@@ -61,7 +61,7 @@ const InjectsAndResponses = view(({ className, location }) => {
     ).map((injection) => {
       const gameInjection = gameInjectionsByInjectionId[injection.id];
       const canMakeResponse =
-        gameInjection && !gameInjection.response_made;
+        gameInjection && !gameInjection.response_made_at;
       return {
         injection,
         disabled: !canMakeResponse,
