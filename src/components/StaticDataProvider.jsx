@@ -69,6 +69,20 @@ export const StaticDataProvider = ({ children }) => {
       .finally(() => setResponsesLoading(false));
   }, [setResponses]);
 
+  // ACTIONS
+  const [actionsLoading, setActionsLoading] = useState(false);
+  const [actions, setActions] = useState([]);
+  useEffect(() => {
+    setActionsLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/actions`)
+      .then(({ data }) => {
+        setActions(_keyBy(data, 'id'));
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setActionsLoading(false));
+  }, [setActions]);
+
   return (
     <StaticDataContext.Provider
       value={{
@@ -80,6 +94,8 @@ export const StaticDataProvider = ({ children }) => {
         injections,
         responsesLoading,
         responses,
+        actionsLoading,
+        actions,
       }}
     >
       {children}

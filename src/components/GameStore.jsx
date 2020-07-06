@@ -89,6 +89,8 @@ export const gameStore = store({
       gameStore.emitEvent(SocketEvents.FINISHSIMULATION),
     toggleMitigation: (params) =>
       gameStore.emitEvent(SocketEvents.CHANGEMITIGATION, params),
+    performAction: (params) =>
+      gameStore.emitEvent(SocketEvents.PERFORMACTION, params),
     restoreSystem: (params) =>
       gameStore.emitEvent(SocketEvents.RESTORESYSTEM, params),
     startSimulation: () =>
