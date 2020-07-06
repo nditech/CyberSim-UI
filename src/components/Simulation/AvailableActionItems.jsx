@@ -5,57 +5,53 @@ import { gameStore } from '../GameStore';
 import { reduce as _reduce } from 'lodash';
 import { numberToUsd } from '../../util';
 
-const AviableActionItems = view(({ location, actionList }) => {
+const AvailableActionItems = view(({ actionList, role }) => {
   const {
     budget,
-    actions: { toggleMitigation },
+    actions: { performAction },
     popError,
     closeError,
   } = gameStore;
 
-  //TODO: action should be handled on server side
   const submitAction = useCallback(
     (event) => {
       event.preventDefault();
       event.stopPropagation();
       const isValid =
-        event.target.checkValidity() &&
-        event.target?.budgetItems?.value;
+        event.target.checkValidity() && event.target?.actions?.value;
       if (isValid) {
         closeError();
-        toggleMitigation({
-          id: event.target.budgetItems.value,
-          type: location,
-          value: true,
+        performAction({
+          actionId: event.target.actions.value,
         });
       } else {
         popError('Please select an action.');
       }
     },
-    [popError, closeError, toggleMitigation, location],
+    [popError, closeError, performAction],
   );
 
   const actionResultDescriptions = useMemo(
     () =>
       _reduce(
         actionList,
-        (result, value, key) => {
+        (descriptions, action, actionId) => {
           const resultDescription = [];
-          if (value.cost !== 0)
+          if (action.cost !== 0)
             resultDescription.push(
-              `Cost: ${numberToUsd(value.cost)}`,
+              `Cost: ${numberToUsd(action.cost)}`,
             );
-          if (value.poll_increase !== 0)
+          if (action.poll_increase !== 0)
             resultDescription.push(
-              `Gain ${value.poll_increase}% in polls`,
+              `Gain ${action.poll_increase}% in polls`,
             );
-          if (value.budget_increase !== 0)
+          if (action.budget_increase !== 0)
             resultDescription.push(
-              `Raise: ${numberToUsd(value.budget_increase)}`,
+              `Raise: ${numberToUsd(action.budget_increase)}`,
             );
-          console.log(value, result, resultDescription);
-          result[key] = resultDescription.join(', ');
-          return result;
+
+          descriptions[action.id] = resultDescription.join(', ');
+          return descriptions;
         },
         {},
       ),
@@ -67,7 +63,9 @@ const AviableActionItems = view(({ location, actionList }) => {
       <Form onSubmit={submitAction} noValidate className="mb-4">
         <Row className="d-flex align-items-center mb-3">
           <Col xs={9}>
-            <h5 className="m-0 font-weight-bold">AVIABLE ACTIONS:</h5>
+            <h5 className="m-0 font-weight-bold">
+              AVAILABLE ACTIONS:
+            </h5>
           </Col>
           <Col xs={3}>
             <Button
@@ -89,22 +87,22 @@ const AviableActionItems = view(({ location, actionList }) => {
                     required
                     type="radio"
                     className="custom-radio-right"
-                    key={action.id}
+                    key={`${role}_${action.id}`}
                     label={
                       <Row className="py-1 select-row align-items-center">
                         <Col xs={9}>{action.description}</Col>
-                        <Col className="flex-grow-1">
+                        <Col className="flex-grow-1 text-right">
                           {actionResultDescriptions[action.id]}
                         </Col>
                       </Row>
                     }
-                    name="budgetItems"
+                    name="actions"
                     disabled={budget < action.cost}
-                    id={action.id}
+                    id={`${role}_${action.id}`}
                     value={action.id}
                   />
                 ))
-              : 'No budget item is available to purchase.'}
+              : 'No action item is available to purchase.'}
           </Col>
         </Row>
       </Form>
@@ -112,4 +110,4 @@ const AviableActionItems = view(({ location, actionList }) => {
   );
 });
 
-export default AviableActionItems;
+export default AvailableActionItems;

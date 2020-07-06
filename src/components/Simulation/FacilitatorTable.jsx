@@ -18,7 +18,7 @@ const FacilitatorTable = ({ activeTab }) => {
         location={isHq ? 'hq' : 'local'}
       />
       <ActionItems
-        className="my-5"
+        className="my-5 p-0"
         location={isHq ? 'hq' : 'local'}
       />
       <BudgetItems
