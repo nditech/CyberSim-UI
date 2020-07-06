@@ -1,6 +1,7 @@
 import qs from 'query-string';
 import { store } from '@risingstack/react-easy-state';
 import io from 'socket.io-client';
+import { keyBy as _keyBy } from 'lodash';
 
 import { SocketEvents } from '../constants';
 
@@ -45,6 +46,18 @@ export const gameStore = store({
             [`${mitigation_id}_${location}`]: state,
           }),
           {},
+        );
+        gameStore.preparationMitigations = game.mitigations.reduce(
+          (acc, { mitigation_id, location, preparation }) => ({
+            ...acc,
+            [`${mitigation_id}_${location}`]: preparation,
+          }),
+          {},
+        );
+      } else if (key === 'injections') {
+        gameStore.injections = _keyBy(
+          game.injections,
+          'injection_id',
         );
       } else {
         gameStore[key] = game[key];

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
-import { keyBy as _keyBy, filter as _filter } from 'lodash';
+import { filter as _filter } from 'lodash';
 
 import Injection from './Injection';
 import { gameStore } from '../../GameStore';
@@ -17,11 +17,6 @@ const InjectsAndResponses = view(({ className, location }) => {
     mitigations: gameMitigations,
   } = gameStore;
   const { injections } = useStaticData();
-
-  const gameInjectionsByInjectionId = useMemo(
-    () => _keyBy(gameInjections, 'injection_id'),
-    [gameInjections],
-  );
 
   const injectionsToShow = useMemo(() => {
     const timeTaken = paused
@@ -49,7 +44,7 @@ const InjectsAndResponses = view(({ className, location }) => {
             injectionLocation === null) &&
           // "Future" or "Response not made yet and not prevented"
           (inFuture ||
-            (!gameInjectionsByInjectionId[id]?.response_made_at &&
+            (!gameInjections[id]?.response_made_at &&
               !preventedInjections.some(
                 (preventedId) => id === preventedId,
               )));
@@ -59,7 +54,7 @@ const InjectsAndResponses = view(({ className, location }) => {
         return canAppear;
       },
     ).map((injection) => {
-      const gameInjection = gameInjectionsByInjectionId[injection.id];
+      const gameInjection = gameInjections[injection.id];
       const canMakeResponse =
         gameInjection && !gameInjection.response_made_at;
       return {
@@ -87,7 +82,7 @@ const InjectsAndResponses = view(({ className, location }) => {
     startedAt,
     injections,
     location,
-    gameInjectionsByInjectionId,
+    gameInjections,
     preventedInjections,
     gameMitigations,
   ]);

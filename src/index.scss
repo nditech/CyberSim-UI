@@ -188,7 +188,8 @@ select.form-control:focus {
   }
 }
 
-.injection-header {
+.injection-header,
+.injection-body {
   transition: background-color 0.15s;
 }
 

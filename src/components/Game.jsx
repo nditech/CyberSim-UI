@@ -29,7 +29,7 @@ const Game = view(() => {
   }
 
   if (gameState === GameStates.PREPARATION) {
-    return <Preparation />;
+    return <Preparation className="mb-5 pb-5" />;
   }
 
   if (gameState === GameStates.SIMULATION) {

@@ -89,7 +89,7 @@ const Injection = view(
             <div>
               <Card.Body
                 className={classNames(
-                  'border-bottom border-top border-primary',
+                  'border-bottom border-top border-primary injection-body',
                   bgColor,
                 )}
               >

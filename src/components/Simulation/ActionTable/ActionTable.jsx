@@ -4,7 +4,7 @@ import Threats from './Threats';
 import TriggerEvent from './TriggerEvent';
 import SystemRelatedActions from '../SystemRelatedActions';
 import Systems from '../../Systems';
-import EventLog from '../../EventLog';
+import EventLogs from '../../EventLogs/EventLogs';
 
 const ActionTable = () => (
   <>
@@ -12,7 +12,7 @@ const ActionTable = () => (
     <SystemRelatedActions className="my-5" />
     <Threats className="my-5" />
     <TriggerEvent className="my-5" />
-    <EventLog className="my-5" />
+    <EventLogs className="my-5" />
   </>
 );
 

@@ -1,17 +1,20 @@
 import React from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
+import classNames from 'classnames';
 
 import { numberToUsd } from '../../util';
 
 const MitigationCategory = ({
   name,
   mitigations,
-  gameMitigations,
+  toggledMitigations,
   toggleMitigation,
   allocatedBudget,
   budget,
+  log,
 }) => (
-  <div className="my-5 py-3">
+  <div className={classNames('py-3', log ? 'my-3' : 'my-5')}>
     <Row className="pb-2">
       <Col xs={9}>
         <h4 className="m-0 font-weight-normal border-bottom border-primary w-100 text-uppercase">
@@ -36,48 +39,84 @@ const MitigationCategory = ({
         <Col xs={3}>
           <Row>
             <Col xs={6} className="justify-content-end d-flex">
-              {mitigation.is_hq && (
-                <Form.Check
-                  type="switch"
-                  className="custom-switch-right"
-                  id={`${mitigation.id}_hq`}
-                  label={
-                    <span>{numberToUsd(mitigation.hq_cost)}</span>
-                  }
-                  disabled={budget < mitigation.hq_cost}
-                  checked={!!gameMitigations[`${mitigation.id}_hq`]}
-                  onChange={(e) =>
-                    toggleMitigation({
-                      id: mitigation.id,
-                      type: 'hq',
-                      value: e.target.checked,
-                    })
-                  }
-                />
-              )}
+              {mitigation.is_hq &&
+                (!log ? (
+                  <Form.Check
+                    type="switch"
+                    className="custom-switch-right"
+                    id={`${mitigation.id}_hq`}
+                    label={
+                      <span>{numberToUsd(mitigation.hq_cost)}</span>
+                    }
+                    disabled={budget < mitigation.hq_cost}
+                    checked={
+                      toggledMitigations[`${mitigation.id}_hq`]
+                    }
+                    onChange={(e) =>
+                      toggleMitigation({
+                        id: mitigation.id,
+                        type: 'hq',
+                        value: e.target.checked,
+                      })
+                    }
+                  />
+                ) : (
+                  <div className="d-flex align-items-center">
+                    {numberToUsd(mitigation.hq_cost)}
+                    {toggledMitigations[`${mitigation.id}_hq`] ? (
+                      <AiOutlineCheck
+                        className="ml-2"
+                        fontSize="20px"
+                      />
+                    ) : (
+                      <AiOutlineClose
+                        className="ml-2"
+                        fontSize="20px"
+                      />
+                    )}
+                  </div>
+                ))}
             </Col>
             <Col xs={6} className="justify-content-end d-flex">
-              {mitigation.is_local && (
-                <Form.Check
-                  type="switch"
-                  className="custom-switch-right"
-                  id={`${mitigation.id}_local`}
-                  label={
-                    <span>{numberToUsd(mitigation.local_cost)}</span>
-                  }
-                  disabled={budget < mitigation.local_cost}
-                  checked={
-                    !!gameMitigations[`${mitigation.id}_local`]
-                  }
-                  onChange={(e) =>
-                    toggleMitigation({
-                      id: mitigation.id,
-                      type: 'local',
-                      value: e.target.checked,
-                    })
-                  }
-                />
-              )}
+              {mitigation.is_local &&
+                (!log ? (
+                  <Form.Check
+                    type="switch"
+                    className="custom-switch-right"
+                    id={`${mitigation.id}_local`}
+                    label={
+                      <span>
+                        {numberToUsd(mitigation.local_cost)}
+                      </span>
+                    }
+                    disabled={budget < mitigation.local_cost}
+                    checked={
+                      toggledMitigations[`${mitigation.id}_local`]
+                    }
+                    onChange={(e) =>
+                      toggleMitigation({
+                        id: mitigation.id,
+                        type: 'local',
+                        value: e.target.checked,
+                      })
+                    }
+                  />
+                ) : (
+                  <div className="d-flex align-items-center">
+                    {numberToUsd(mitigation.hq_cost)}
+                    {toggledMitigations[`${mitigation.id}_local`] ? (
+                      <AiOutlineCheck
+                        className="ml-2"
+                        fontSize="20px"
+                      />
+                    ) : (
+                      <AiOutlineClose
+                        className="ml-2"
+                        fontSize="20px"
+                      />
+                    )}
+                  </div>
+                ))}
             </Col>
           </Row>
         </Col>

@@ -3,7 +3,6 @@ import { Row, Col, Spinner, Card } from 'react-bootstrap';
 import { reduce as _reduce } from 'lodash';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
-import { keyBy as _keyBy } from 'lodash';
 
 import { gameStore } from '../../GameStore';
 import { msToMinutesSeconds } from '../../../util';
@@ -16,11 +15,6 @@ const Threats = view(({ className }) => {
     prevented_injections: preventedInjections,
   } = gameStore;
   const { injections } = useStaticData();
-
-  const gameInjectionsByInjectionId = useMemo(
-    () => _keyBy(gameInjections, 'injection_id'),
-    [gameInjections],
-  );
 
   const { threats, notThreats } = useMemo(
     () =>
@@ -39,7 +33,7 @@ const Threats = view(({ className }) => {
               },
             ) => {
               // Was not injected yet
-              if (!gameInjectionsByInjectionId[id]) {
+              if (!gameInjections[id]) {
                 const localUp =
                   skipMitigation &&
                   gameMitigations[`${skipMitigation}_local`];
@@ -84,7 +78,7 @@ const Threats = view(({ className }) => {
             notThreats: [],
           },
     [
-      gameInjectionsByInjectionId,
+      gameInjections,
       gameMitigations,
       injections,
       preventedInjections,
