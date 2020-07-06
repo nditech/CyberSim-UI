@@ -27,18 +27,16 @@ const ActionItems = view(({ className, location }) => {
           return result;
         }
 
+        const actionAvailability =
+          action.unavailableSystems.length === 0
+            ? 'available'
+            : 'notAvailable';
+
         action.roles.forEach((role) => {
-          if (action.unavailableSystems.length === 0) {
-            (
-              result[role] ||
-              (result[role] = { available: [], notAvailable: [] })
-            ).available.push(action);
-          } else {
-            (
-              result[role] ||
-              (result[role] = { available: [], notAvailable: [] })
-            ).notAvailable.push(action);
-          }
+          (result[role] ||
+            (result[role] = { available: [], notAvailable: [] }))[
+            actionAvailability
+          ].push(action);
         });
 
         return result;
@@ -50,7 +48,7 @@ const ActionItems = view(({ className, location }) => {
   return (
     <Container className={className}>
       {_map(actionListByRoles, (actions, role) => (
-        <div className="my-5">
+        <div className="my-5" key={role}>
           <Row>
             <Col>
               <h3 className="border-bottom border-primary text-uppercase">
@@ -65,6 +63,7 @@ const ActionItems = view(({ className, location }) => {
           <NotAvailableActionItems
             systems={systems}
             actionList={actions.notAvailable}
+            role={role}
           />
         </div>
       ))}
