@@ -1,34 +1,40 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
-// import { filter as _filter } from 'lodash';
+import { map as _map, orderBy as _orderBy } from 'lodash';
 
-// import { useStaticData } from '../StaticDataProvider';
+import { useStaticData } from '../StaticDataProvider';
 import { gameStore } from '../GameStore';
 import Log from './Log';
+import EventLogSwitch from './EventLogSwitch';
 import Preparation from '../Preparation/Preparation';
-import { msToMinutesSeconds } from '../../util';
 
 const EventLogs = view(({ className }) => {
   const {
     logs: gameLogs,
-    // injections: gameInjections,
-    // prevented_injections: preventedInjections,
+    injections: gameInjections,
+    prevented_injections: preventedInjections,
   } = gameStore;
-  // TODO: show injections
-  // const { injections } = useStaticData();
-  // const injectionsToShow = useMemo(
-  //   () =>
-  //     _filter(
-  //       injections,
-  //       (injection) =>
-  //         gameInjections[injection.id] ||
-  //         preventedInjections.some(
-  //           (preventedId) => preventedId === injection.id,
-  //         ),
-  //     ),
-  //   [gameInjections, preventedInjections, injections],
-  // );
+  const { injections } = useStaticData();
+  const logs = useMemo(() => {
+    const preventedLogs = preventedInjections.map((injectionId) => ({
+      type: 'Threat Prevented',
+      injection: injections[injectionId],
+      game_timer: injections[injectionId].trigger_time,
+      id: `injection_${injectionId}`,
+    }));
+    const injectionLogs = _map(gameInjections, (gameInjection) => ({
+      type: 'Threat Injected',
+      injection: injections[gameInjection.injection_id],
+      gameInjection: gameInjection,
+      game_timer: injections[gameInjection.injection_id].trigger_time,
+      id: `injection_${gameInjection.injection_id}`,
+    }));
+    return _orderBy(
+      [...preventedLogs, ...injectionLogs, ...gameLogs],
+      'game_timer',
+    );
+  }, [gameInjections, preventedInjections, injections, gameLogs]);
 
   return (
     <Row className={className} id="logs">
@@ -48,63 +54,9 @@ const EventLogs = view(({ className }) => {
         <Log title="00:00 - Preparation Mitigations Selected">
           <Preparation log />
         </Log>
-        {gameLogs.map(
-          ({
-            game_timer,
-            descripition,
-            type,
-            mitigation_type,
-            mitigation_id,
-            response_id,
-            action_id,
-          }) => {
-            // TODO: show data instead of ids
-            switch (type) {
-              case 'Budget Item Purchase':
-                return (
-                  <Log
-                    title={`${msToMinutesSeconds(
-                      game_timer,
-                    )} - ${type}`}
-                  >
-                    <span>
-                      {mitigation_id} {mitigation_type}
-                    </span>
-                  </Log>
-                );
-              case 'System Restore Action':
-                return (
-                  <Log
-                    title={`${msToMinutesSeconds(
-                      game_timer,
-                    )} - ${type}`}
-                  >
-                    <span>{response_id}</span>
-                  </Log>
-                );
-              case 'Campaign Action':
-                return (
-                  <Log
-                    title={`${msToMinutesSeconds(
-                      game_timer,
-                    )} - ${type}`}
-                  >
-                    <span>{action_id}</span>
-                  </Log>
-                );
-              case 'Game State Changed':
-                return (
-                  <Log
-                    title={`${msToMinutesSeconds(
-                      game_timer,
-                    )} - ${descripition}`}
-                  />
-                );
-              default:
-                return null;
-            }
-          },
-        )}
+        {logs.map((log) => (
+          <EventLogSwitch log={log} key={log.id} />
+        ))}
       </Col>
     </Row>
   );
