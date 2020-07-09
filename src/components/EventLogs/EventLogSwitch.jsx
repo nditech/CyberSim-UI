@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
+import BudgetItemLog from './BudgetItemLog';
 import Log from './Log';
 import { msToMinutesSeconds } from '../../util';
-import { useMemo } from 'react';
 
 // TODO: event log details
 const EventLogSwitch = ({
@@ -21,15 +21,12 @@ const EventLogSwitch = ({
   const eventLog = useMemo(() => {
     if (type === 'Budget Item Purchase') {
       return (
-        <Log title={`${msToMinutesSeconds(game_timer)} - ${type}`}>
-          <Card.Body>
-            <Row>
-              <Col>
-                {mitigation_id} {mitigation_type}
-              </Col>
-            </Row>
-          </Card.Body>
-        </Log>
+        <BudgetItemLog
+          game_timer={game_timer}
+          type={type}
+          mitigation_type={mitigation_type}
+          mitigation_id={mitigation_id}
+        />
       );
     }
     if (type === 'System Restore Action') {
