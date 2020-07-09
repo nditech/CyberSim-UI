@@ -37,11 +37,14 @@ const BudgetItems = view(({ className, location }) => {
         event.target?.budgetItems?.value;
       if (isValid) {
         closeError();
-        toggleMitigation({
-          id: event.target.budgetItems.value,
-          type: location,
-          value: true,
-        });
+        toggleMitigation(
+          {
+            id: event.target.budgetItems.value,
+            type: location,
+            value: true,
+          },
+          true,
+        );
       } else {
         popError('Please select an action.');
       }

@@ -120,8 +120,12 @@ export const gameStore = store({
       gameStore.emitEvent(SocketEvents.PAUSESIMULATION),
     finishSimulation: () =>
       gameStore.emitEvent(SocketEvents.FINISHSIMULATION),
-    toggleMitigation: (params) =>
-      gameStore.emitEvent(SocketEvents.CHANGEMITIGATION, params),
+    toggleMitigation: (params, showInfo = false) =>
+      gameStore.emitEvent(
+        SocketEvents.CHANGEMITIGATION,
+        params,
+        ...(showInfo ? ['Item bought'] : []),
+      ),
     performAction: (params) =>
       gameStore.emitEvent(
         SocketEvents.PERFORMACTION,
