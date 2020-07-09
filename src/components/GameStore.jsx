@@ -7,12 +7,11 @@ import { SocketEvents } from '../constants';
 
 const socket = io(process.env.REACT_APP_API_URL);
 
-let errorTimer = null;
-
 export const gameStore = store({
   loading: false,
 
   // ERROR
+  errorTimer: null,
   error: {
     message: '',
     show: false,
@@ -20,11 +19,28 @@ export const gameStore = store({
   closeError: () => (gameStore.error.show = false),
   popError: (errorMessage) => {
     gameStore.error = { message: errorMessage, show: true };
-    if (errorTimer) {
-      clearTimeout(errorTimer);
+    if (gameStore.errorTimer) {
+      clearTimeout(gameStore.errorTimer);
     }
-    errorTimer = setTimeout(() => {
+    gameStore.errorTimer = setTimeout(() => {
       gameStore.closeError();
+    }, 4000);
+  },
+
+  // INFO
+  infoTimer: null,
+  info: {
+    message: '',
+    show: false,
+  },
+  closeInfo: () => (gameStore.info.show = false),
+  popInfo: (infoMessage) => {
+    gameStore.info = { message: infoMessage, show: true };
+    if (gameStore.infoTimer) {
+      clearTimeout(gameStore.infoTimer);
+    }
+    gameStore.infoTimer = setTimeout(() => {
+      gameStore.closeInfo();
     }, 4000);
   },
 
@@ -64,16 +80,20 @@ export const gameStore = store({
       }
     });
   },
-  emitEvent: (event, params) =>
+  emitEvent: (event, params, successInfo) =>
     params
       ? socket.emit(
           event,
           params,
-          ({ error }) => error && gameStore.popError(error),
+          ({ error }) =>
+            (error && gameStore.popError(error)) ||
+            (successInfo && gameStore.popInfo(successInfo)),
         )
       : socket.emit(
           event,
-          ({ error }) => error && gameStore.popError(error),
+          ({ error }) =>
+            (error && gameStore.popError(error)) ||
+            (successInfo && gameStore.popInfo(successInfo)),
         ),
 
   // ACTIONS
@@ -103,19 +123,32 @@ export const gameStore = store({
     toggleMitigation: (params) =>
       gameStore.emitEvent(SocketEvents.CHANGEMITIGATION, params),
     performAction: (params) =>
-      gameStore.emitEvent(SocketEvents.PERFORMACTION, params),
+      gameStore.emitEvent(
+        SocketEvents.PERFORMACTION,
+        params,
+        'Action Performed',
+      ),
     restoreSystem: (params) =>
-      gameStore.emitEvent(SocketEvents.RESTORESYSTEM, params),
+      gameStore.emitEvent(
+        SocketEvents.RESTORESYSTEM,
+        params,
+        'System Restored',
+      ),
     startSimulation: () =>
       gameStore.emitEvent(SocketEvents.STARTSIMULATION),
     deliverInjection: (params) =>
       gameStore.emitEvent(SocketEvents.DELIVEREINJECTION, params),
     respondToInjection: (params) =>
-      gameStore.emitEvent(SocketEvents.RESPONDTOINJECTION, params),
+      gameStore.emitEvent(
+        SocketEvents.RESPONDTOINJECTION,
+        params,
+        'Response made',
+      ),
     nonCorrectRespondToInjection: (params) =>
       gameStore.emitEvent(
         SocketEvents.NONCORRECTRESPONDTOINJECTION,
         params,
+        'Response made',
       ),
   },
 });

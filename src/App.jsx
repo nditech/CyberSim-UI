@@ -3,6 +3,7 @@ import { view } from '@risingstack/react-easy-state';
 
 import Game from './components/Game';
 import ErrorBox from './components/ErrorBox';
+import InfoBox from './components/InfoBox';
 import { gameStore } from './components/GameStore';
 import { StaticDataProvider } from './components/StaticDataProvider';
 
@@ -13,6 +14,7 @@ const App = view(() => {
   return (
     <StaticDataProvider>
       <ErrorBox />
+      <InfoBox />
       <Game />
     </StaticDataProvider>
   );

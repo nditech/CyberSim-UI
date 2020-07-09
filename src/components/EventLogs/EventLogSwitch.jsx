@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
 import BudgetItemLog from './BudgetItemLog';
+import CampaignActionLog from './CampaignActionLog';
 import Log from './Log';
 import { msToMinutesSeconds } from '../../util';
 
@@ -42,13 +43,11 @@ const EventLogSwitch = ({
     }
     if (type === 'Campaign Action') {
       return (
-        <Log title={`${msToMinutesSeconds(game_timer)} - ${type}`}>
-          <Card.Body>
-            <Row>
-              <Col>{action_id}</Col>
-            </Row>
-          </Card.Body>
-        </Log>
+        <CampaignActionLog
+          game_timer={game_timer}
+          type={type}
+          action_id={action_id}
+        />
       );
     }
     if (type === 'Threat Injected') {
