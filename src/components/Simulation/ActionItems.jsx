@@ -46,7 +46,7 @@ const ActionItems = view(({ className, location }) => {
   }, [actions, gameSystems, location]);
 
   return (
-    <Container className={className}>
+    <Container className={className} id="actions">
       {_map(actionListByRoles, (actions, role) => (
         <div className="my-5" key={role}>
           <Row>

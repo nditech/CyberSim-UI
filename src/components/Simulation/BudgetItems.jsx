@@ -50,7 +50,7 @@ const BudgetItems = view(({ className, location }) => {
   );
 
   return (
-    <Form onSubmit={submitAction} noValidate>
+    <Form onSubmit={submitAction} noValidate id="mitigations">
       <Row className={className}>
         <Col xs={9}>
           <h3>PURCHASE AVAILABLE BUDGET ITEM:</h3>
