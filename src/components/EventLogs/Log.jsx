@@ -46,7 +46,7 @@ const AccordionLog = ({ children, title }) => {
   const [isOpen, changeIsOpen] = useState(false);
 
   useEffect(() => {
-    accordionOpeners.push(() => changeIsOpen(true));
+    accordionOpeners.push((newState) => changeIsOpen(newState));
   }, [changeIsOpen]);
 
   return (

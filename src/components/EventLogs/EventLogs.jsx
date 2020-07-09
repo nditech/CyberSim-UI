@@ -40,7 +40,7 @@ const EventLogs = view(({ className }) => {
 
   return (
     <Row className={className} id="logs">
-      <Col xs={9}>
+      <Col xs={6}>
         <h3>EVENTS LOG:</h3>
       </Col>
       <Col xs={3}>
@@ -50,7 +50,21 @@ const EventLogs = view(({ className }) => {
           type="button"
           onClick={() =>
             accordionOpeners.forEach((openAccordion) =>
-              openAccordion(),
+              openAccordion(false),
+            )
+          }
+        >
+          CLOSE ALL
+        </Button>
+      </Col>
+      <Col xs={3}>
+        <Button
+          variant="outline-primary"
+          className="rounded-pill w-100"
+          type="button"
+          onClick={() =>
+            accordionOpeners.forEach((openAccordion) =>
+              openAccordion(true),
             )
           }
         >
