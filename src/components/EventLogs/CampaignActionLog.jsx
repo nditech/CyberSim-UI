@@ -13,7 +13,11 @@ const CampaignActionLog = ({ game_timer, type, action_id }) => {
   ]);
 
   return (
-    <Log title={`${msToMinutesSeconds(game_timer)} - ${type}`}>
+    <Log
+      title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
+        action.description
+      }`}
+    >
       <Card.Body>
         <Row>
           <Col xs={6}>{action.description}</Col>
