@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Row, Col, Form, Button, Container } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
 import { gameStore } from '../GameStore';
@@ -13,6 +13,8 @@ const AvailableActionItems = view(({ actionList, role }) => {
     closeError,
   } = gameStore;
 
+  const formRef = useRef();
+
   const submitAction = useCallback(
     (event) => {
       event.preventDefault();
@@ -24,6 +26,7 @@ const AvailableActionItems = view(({ actionList, role }) => {
         performAction({
           actionId: event.target.actions.value,
         });
+        formRef.current.reset();
       } else {
         popError('Please select an action.');
       }
@@ -60,7 +63,12 @@ const AvailableActionItems = view(({ actionList, role }) => {
 
   return (
     <Container className="p-0 m-0 pl-3">
-      <Form onSubmit={submitAction} noValidate className="mb-4">
+      <Form
+        onSubmit={submitAction}
+        noValidate
+        className="mb-4"
+        ref={formRef}
+      >
         <Row className="d-flex align-items-center mb-3">
           <Col xs={9}>
             <h5 className="m-0 font-weight-bold">
