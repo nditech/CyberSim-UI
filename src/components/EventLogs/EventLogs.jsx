@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { view } from '@risingstack/react-easy-state';
+import { view, store } from '@risingstack/react-easy-state';
 import { map as _map, orderBy as _orderBy } from 'lodash';
 
 import { useStaticData } from '../StaticDataProvider';
@@ -8,6 +8,8 @@ import { gameStore } from '../GameStore';
 import Log from './Log';
 import EventLogSwitch from './EventLogSwitch';
 import Preparation from '../Preparation/Preparation';
+
+export const accordionOpeners = store([]);
 
 const EventLogs = view(({ className }) => {
   const {
@@ -46,6 +48,11 @@ const EventLogs = view(({ className }) => {
           variant="outline-primary"
           className="rounded-pill w-100"
           type="button"
+          onClick={() =>
+            accordionOpeners.forEach((openAccordion) =>
+              openAccordion(),
+            )
+          }
         >
           EXPAND ALL
         </Button>
