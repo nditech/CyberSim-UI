@@ -3,6 +3,7 @@ import { Row, Col, Card } from 'react-bootstrap';
 
 import BudgetItemLog from './BudgetItemLog';
 import CampaignActionLog from './CampaignActionLog';
+import SystemRestoreLog from './SystemRestoreLog';
 import Log from './Log';
 import { msToMinutesSeconds } from '../../util';
 
@@ -20,74 +21,70 @@ const EventLogSwitch = ({
   },
 }) => {
   const eventLog = useMemo(() => {
-    if (type === 'Budget Item Purchase') {
-      return (
-        <BudgetItemLog
-          game_timer={game_timer}
-          type={type}
-          mitigation_type={mitigation_type}
-          mitigation_id={mitigation_id}
-        />
-      );
-    }
-    if (type === 'System Restore Action') {
-      return (
-        <Log title={`${msToMinutesSeconds(game_timer)} - ${type}`}>
-          <Card.Body>
-            <Row>
-              <Col>{response_id}</Col>
-            </Row>
-          </Card.Body>
-        </Log>
-      );
-    }
-    if (type === 'Campaign Action') {
-      return (
-        <CampaignActionLog
-          game_timer={game_timer}
-          type={type}
-          action_id={action_id}
-        />
-      );
-    }
-    if (type === 'Threat Injected') {
-      return (
-        <Log
-          title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-            injection.title
-          }`}
-        >
-          <Card.Body>
-            <Row>
-              <Col>{injection.id}</Col>
-            </Row>
-          </Card.Body>
-        </Log>
-      );
-    }
-    if (type === 'Threat Prevented') {
-      return (
-        <Log
-          title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-            injection.title
-          }`}
-        >
-          <Card.Body>
-            <Row>
-              <Col>{injection.id}</Col>
-            </Row>
-          </Card.Body>
-        </Log>
-      );
-    }
-    if (type === 'Game State Changed') {
-      return (
-        <Log
-          title={`${msToMinutesSeconds(
-            game_timer,
-          )} - ${descripition}`}
-        />
-      );
+    switch (type) {
+      case 'Budget Item Purchase':
+        return (
+          <BudgetItemLog
+            game_timer={game_timer}
+            type={type}
+            mitigation_type={mitigation_type}
+            mitigation_id={mitigation_id}
+          />
+        );
+      case 'System Restore Action':
+        return (
+          <SystemRestoreLog
+            game_timer={game_timer}
+            type={type}
+            response_id={response_id}
+          />
+        );
+      case 'Campaign Action':
+        return (
+          <CampaignActionLog
+            game_timer={game_timer}
+            type={type}
+            action_id={action_id}
+          />
+        );
+      case 'Threat Injected':
+        return (
+          <Log
+            title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
+              injection.title
+            }`}
+          >
+            <Card.Body>
+              <Row>
+                <Col>{injection.id}</Col>
+              </Row>
+            </Card.Body>
+          </Log>
+        );
+      case 'Threat Prevented':
+        return (
+          <Log
+            title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
+              injection.title
+            }`}
+          >
+            <Card.Body>
+              <Row>
+                <Col>{injection.id}</Col>
+              </Row>
+            </Card.Body>
+          </Log>
+        );
+      case 'Game State Changed':
+        return (
+          <Log
+            title={`${msToMinutesSeconds(
+              game_timer,
+            )} - ${descripition}`}
+          />
+        );
+      default:
+        return null;
     }
   }, [
     action_id,
