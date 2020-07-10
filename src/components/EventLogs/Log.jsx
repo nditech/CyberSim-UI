@@ -25,12 +25,11 @@ const ToggleHeader = ({ title, changeIsOpen, isOpen }) => (
     onClick={() => changeIsOpen(!isOpen)}
   >
     <Row className="align-items-center">
-      <Col lg={8} xs={7} className="font-weight-bold">
+      <Col xs={10} className="font-weight-bold">
         {title}
       </Col>
       <Col
-        lg={4}
-        xs={5}
+        xs={2}
         className="d-flex justify-content-end align-items-center"
       >
         <AiOutlineDown

@@ -233,3 +233,11 @@ select.form-control:focus {
 .bg-success-light {
   background-color: rgba(40, 167, 69, 0.1) !important;
 }
+
+@media screen and (max-width: 991px) {
+  .log-filter {
+    label {
+      font-size: 11px !important;
+    }
+  }
+}

@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 
+import { logTypes } from './EventLogs';
 import BudgetItemLog from './BudgetItemLog';
 import CampaignActionLog from './CampaignActionLog';
 import SystemRestoreLog from './SystemRestoreLog';
 import Log from './Log';
 import { msToMinutesSeconds } from '../../util';
 
-// TODO: event log details
+// TODO: injection log details
 const EventLogSwitch = ({
   log: {
     game_timer,
@@ -19,10 +20,16 @@ const EventLogSwitch = ({
     action_id,
     injection,
   },
+  filter,
 }) => {
+  const shouldDisplay = useMemo(() => filter[type] || false, [
+    filter,
+    type,
+  ]);
+
   const eventLog = useMemo(() => {
     switch (type) {
-      case 'Budget Item Purchase':
+      case logTypes.BudgetItem:
         return (
           <BudgetItemLog
             game_timer={game_timer}
@@ -31,7 +38,7 @@ const EventLogSwitch = ({
             mitigation_id={mitigation_id}
           />
         );
-      case 'System Restore Action':
+      case logTypes.SystemRestore:
         return (
           <SystemRestoreLog
             game_timer={game_timer}
@@ -39,7 +46,7 @@ const EventLogSwitch = ({
             response_id={response_id}
           />
         );
-      case 'Campaign Action':
+      case logTypes.CampaignAction:
         return (
           <CampaignActionLog
             game_timer={game_timer}
@@ -47,7 +54,7 @@ const EventLogSwitch = ({
             action_id={action_id}
           />
         );
-      case 'Threat Injected':
+      case logTypes.ThreatInjected:
         return (
           <Log
             title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
@@ -61,7 +68,7 @@ const EventLogSwitch = ({
             </Card.Body>
           </Log>
         );
-      case 'Threat Prevented':
+      case logTypes.ThreatPrevented:
         return (
           <Log
             title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
@@ -75,7 +82,7 @@ const EventLogSwitch = ({
             </Card.Body>
           </Log>
         );
-      case 'Game State Changed':
+      case logTypes.GameState:
         return (
           <Log
             title={`${msToMinutesSeconds(
@@ -97,7 +104,7 @@ const EventLogSwitch = ({
     type,
   ]);
 
-  return eventLog;
+  return shouldDisplay && eventLog;
 };
 
 export default EventLogSwitch;

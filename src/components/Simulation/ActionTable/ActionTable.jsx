@@ -12,7 +12,7 @@ const ActionTable = () => (
     <SystemRelatedActions className="my-5" />
     <Threats className="my-5" />
     <TriggerEvent className="my-5" />
-    <EventLogs className="my-5" />
+    <EventLogs className="my-5 pb-5" />
   </>
 );
 
