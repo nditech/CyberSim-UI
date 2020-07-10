@@ -73,7 +73,7 @@ const EventLogs = view(({ className }) => {
       </Col>
       <Col xs={12}>
         <Log title="00:00 - Preparation Mitigations Selected">
-          <Preparation log />
+          <Preparation log className="card-body" />
         </Log>
         {logs.map((log) => (
           <EventLogSwitch log={log} key={log.id} />

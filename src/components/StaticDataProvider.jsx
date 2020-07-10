@@ -96,6 +96,12 @@ export const StaticDataProvider = ({ children }) => {
         responses,
         actionsLoading,
         actions,
+        loading:
+          systemsLoading ||
+          mitigationsLoading ||
+          injectionsLoading ||
+          responsesLoading ||
+          actionsLoading,
       }}
     >
       {children}
