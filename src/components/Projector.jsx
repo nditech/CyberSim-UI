@@ -2,12 +2,14 @@ import React from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import { view } from '@risingstack/react-easy-state';
 
+import { GameStates } from '../constants';
 import { gameStore } from './GameStore';
 import BPT from './BPT';
 import Systems from './Systems';
+import EventLogs from './EventLogs/EventLogs';
 
 const Projector = view(() => {
-  const { id } = gameStore;
+  const { id, state: gameState } = gameStore;
 
   return (
     <>
@@ -26,9 +28,13 @@ const Projector = view(() => {
       </div>
       <Container>
         <div className="my-5 py-5">
-          <BPT big />
+          <BPT big centered={gameState === GameStates.ASSESSMENT} />
         </div>
-        <Systems big />
+        {gameState === GameStates.ASSESSMENT ? (
+          <EventLogs />
+        ) : (
+          <Systems big />
+        )}
       </Container>
     </>
   );

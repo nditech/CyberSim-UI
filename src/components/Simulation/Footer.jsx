@@ -26,7 +26,7 @@ const Footer = view(() => {
       <Container fluid="md">
         <Row className="d-flex align-items-center justify-content-center">
           <Col xs={4} md={5}>
-            <BPT />
+            <BPT centered />
           </Col>
           <Col xs={2} className="p-0 d-flex justify-content-center">
             <Button

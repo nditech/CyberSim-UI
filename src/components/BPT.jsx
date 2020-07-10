@@ -73,7 +73,7 @@ const TimeTaken = view(({ big }) => {
 });
 
 // BudgetPollTimer
-const BPT = view(({ big }) => {
+const BPT = view(({ big, centered }) => {
   const { budget, poll } = gameStore;
 
   return (
@@ -96,7 +96,7 @@ const BPT = view(({ big }) => {
         xs={6}
         md={4}
         className={classNames('px-2 d-flex', {
-          'justify-content-center': !big,
+          'justify-content-center': centered,
         })}
       >
         <h4 className="bpt-item font-weight-normal mb-0">% {poll}</h4>
@@ -105,7 +105,7 @@ const BPT = view(({ big }) => {
         xs={6}
         md={4}
         className={classNames('px-2 d-flex', {
-          'justify-content-end': !big,
+          'justify-content-end': centered,
         })}
       >
         <TimeTaken big={big} />

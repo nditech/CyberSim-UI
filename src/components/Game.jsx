@@ -24,7 +24,10 @@ const Game = view(() => {
     return <EnterGame />;
   }
 
-  if (queryParams.isProjectorView) {
+  if (
+    queryParams.isProjectorView ||
+    gameState === GameStates.ASSESSMENT
+  ) {
     return <Projector />;
   }
 
@@ -34,11 +37,6 @@ const Game = view(() => {
 
   if (gameState === GameStates.SIMULATION) {
     return <Simulation />;
-  }
-
-  // TODO: ASSESSMENT phase
-  if (gameState === GameStates.ASSESSMENT) {
-    return <>ASSESSMENT</>;
   }
 
   return <>Unknown game state</>;
