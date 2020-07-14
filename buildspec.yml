@@ -7,16 +7,13 @@ phases:
     runtime-versions:
       nodejs: 12
     commands:
-      - echo Node version 12 installed
-
-  pre_build:
-    commands:
-      - echo Installing source NPM dependencies...
+      - echo "Node version 12 installed"
+      - echo "Installing source NPM dependencies..."
       - npm install
 
   build:
     commands:
-      - echo Building React app
+      - echo "Building React app"
       - npm run build
 
 artifacts:
