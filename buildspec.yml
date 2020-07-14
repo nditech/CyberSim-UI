@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    REACT_APP_API_URL: postgres://test:password@localhost:5432/ndi
+    REACT_APP_API_URL: http://ndicybersimbackend-env.eba-8qaneank.us-east-2.elasticbeanstalk.com
 phases:
   install:
     runtime-versions:
