@@ -9,7 +9,7 @@ $ git clone <REPO_LINK>
 $ npm install
 # Create a .env file based on .env.example
 $ cp .env.example .env
-# Start the React App on localhost:3000 (if nothing changed in .env.example)
+# Start the React App on localhost:3000
 $ npm start
 ```
 
