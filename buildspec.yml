@@ -1,0 +1,22 @@
+version: 0.2
+env:
+  variables:
+    REACT_APP_API_URL: http://ndicybersimbackend-env.eba-8qaneank.us-east-2.elasticbeanstalk.com
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - echo "Node version 12 installed"
+      - echo "Installing source NPM dependencies..."
+      - npm install
+
+  build:
+    commands:
+      - echo "Building React app"
+      - npm run build
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build

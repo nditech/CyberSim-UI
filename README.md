@@ -1,3 +1,30 @@
+# ndi-cybersim-api
+
+## To set up the project on your local environment run the following commands:
+
+```
+# Clone the project by running git clone.
+$ git clone <REPO_LINK>
+# Install the node dependencies by running
+$ npm install
+# Create a .env file based on .env.example
+$ cp .env.example .env
+# Start the React App on localhost:3000 (if nothing changed in .env.example)
+$ npm start
+```
+
+## AWS environment:
+
+### The AWS environment supports both continuous integration and continuous deployment. The environment is made of the following components:
+
+- **Github repository (nditech/CyberSim-UI)**: Each change on the local repositories are pushed to a new branch in the Github remote. Once these changes are reviewed, they are merged into the 'master' branch.
+
+- **CodePipeline (ndi-cybersim-ui-staging, ndi-cybersim-ui-prod)**: A CodePipeline project is created for both staging and production environments. For the staging environment a webhook is registered on Github, so each change on the 'master' branch will trigger and automatic build on AWS. For the production environment no webhook is registered so changes on the 'master' branch will require a manual release in CodePipeline.
+
+- **CodeBuild (ndi-cybersim-ui)**: A single CodeBuild project is created to build and test both staging and production changes. After a change is triggered on CodePiepeline (manually or automatically), the source code is transferred to CodeBuild and the steps defined in the 'buildspec.yml' file are executed. These steps include the installation of node, npm packages and the the bundling of the react app into static files. Once the build completed, CodePiepeline begins the deployment by transferring the output files in the build directory to S3. The `REACT_APP_API_URL` environment variable should be changed in the `buildspec.yml` file to the live URL of the backend API.
+
+- **S3 (ndi-cybersim-ui-staging, ndi-cybersim-ui-prod)**: A different S3 bucket is created for both staging and production. Public access is enabled on these buckets which are configured for static website hosting.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
