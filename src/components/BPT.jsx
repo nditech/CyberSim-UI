@@ -99,7 +99,7 @@ const BPT = view(({ big, centered }) => {
           'justify-content-center': centered,
         })}
       >
-        <h4 className="bpt-item font-weight-normal mb-0">% {poll}</h4>
+        <h4 className="bpt-item font-weight-normal mb-0">{poll} %</h4>
       </Col>
       <Col
         xs={6}

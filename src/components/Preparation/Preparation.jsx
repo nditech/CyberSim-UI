@@ -144,7 +144,7 @@ const Preparation = view(({ log = false, className }) => {
                     <FiBarChart2 fontSize="25px" />
                   </div>
                   <h4 className="font-weight-normal mb-0 ml-1">
-                    {id}
+                    PROJECTOR
                   </h4>
                 </Nav.Link>
               </Col>

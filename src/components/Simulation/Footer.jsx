@@ -73,7 +73,9 @@ const Footer = view(() => {
               <div>
                 <FiBarChart2 fontSize="25px" />
               </div>
-              <h4 className="font-weight-normal mb-0 ml-1">{id}</h4>
+              <h4 className="font-weight-normal mb-0 ml-1">
+                PROJECTOR
+              </h4>
             </Nav.Link>
           </Col>
         </Row>
