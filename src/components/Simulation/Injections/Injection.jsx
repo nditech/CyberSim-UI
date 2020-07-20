@@ -10,7 +10,15 @@ import { msToMinutesSeconds } from '../../../util';
 import { useStaticData } from '../../StaticDataProvider';
 
 const Injection = view(
-  ({ injection, prevented, delivered, disabled, isDanger }) => {
+  ({
+    injection,
+    prevented,
+    delivered,
+    isDanger,
+    upcoming,
+    canDeliver,
+    canMakeResponse,
+  }) => {
     const { systems } = useStaticData();
 
     const {
@@ -24,11 +32,11 @@ const Injection = view(
       if (isDanger) {
         return 'bg-danger-light';
       }
-      if (disabled) {
+      if (upcoming) {
         return 'bg-warning-light';
       }
       return 'bg-white';
-    }, [disabled, isDanger, prevented]);
+    }, [upcoming, isDanger, prevented]);
 
     return (
       <Accordion className="my-4">
@@ -50,7 +58,7 @@ const Injection = view(
                 xs={7}
                 className="font-weight-bold"
               >{`${msToMinutesSeconds(injection.trigger_time)} - ${
-                disabled
+                upcoming
                   ? `UPCOMING${prevented ? ' AVOIDED' : ''}: `
                   : ''
               }${injection.title}`}</Col>
@@ -59,21 +67,26 @@ const Injection = view(
                 xs={5}
                 className="d-flex justify-content-end align-items-center"
               >
-                {!disabled && (
+                {(canDeliver || delivered) && (
                   <Form.Check
                     type="switch"
                     className={classNames(
                       'custom-switch-right rounded-pill px-2 py-1',
-                      { 'select-row': !disabled },
+                      { 'select-row': canDeliver },
                     )}
                     style={{ width: 'fit-content' }}
                     id={injection.id}
-                    label={<span>Delivered to table:</span>}
+                    label={
+                      <span>
+                        Delivered to table (trigger effects):
+                      </span>
+                    }
                     checked={delivered}
+                    disabled={delivered}
                     onChange={(e) =>
+                      e.target.checked &&
                       deliverInjection({
                         injectionId: injection.id,
-                        delivered: e.target.checked,
                       })
                     }
                   />
@@ -145,7 +158,7 @@ const Injection = view(
               <Card.Body className={bgColor}>
                 <InjectionResponseForm
                   injection={injection}
-                  disabled={disabled}
+                  disabled={!canMakeResponse}
                 />
               </Card.Body>
             </div>

@@ -25,6 +25,7 @@ const InjectsAndResponses = view(({ className, location }) => {
         new Date(startedAt).getTime() +
         millisTakenBeforeStarted;
     let shownFutureInjectionCounter = 0;
+    let injectionToDeliverFound = false;
     return _filter(
       injections,
       ({
@@ -55,12 +56,20 @@ const InjectsAndResponses = view(({ className, location }) => {
       },
     ).map((injection) => {
       const gameInjection = gameInjections[injection.id];
+      const delivered = gameInjection?.delivered;
       const canMakeResponse =
-        gameInjection && !gameInjection.response_made_at;
+        !gameInjection?.response_made_at && delivered;
+      const canDeliver =
+        !delivered && !injectionToDeliverFound && gameInjection;
+      if (canDeliver) {
+        injectionToDeliverFound = true;
+      }
       return {
         injection,
-        disabled: !canMakeResponse,
-        delivered: !!(gameInjection && gameInjection.delivered),
+        upcoming: !gameInjection,
+        canDeliver,
+        canMakeResponse,
+        delivered,
         prevented:
           !canMakeResponse &&
           (preventedInjections.some(
@@ -72,6 +81,7 @@ const InjectsAndResponses = view(({ className, location }) => {
                 `${injection.skipper_mitigation}_${injection.skipper_mitigation_type}`
               ])),
         isDanger:
+          !canDeliver &&
           !canMakeResponse &&
           injection.trigger_time - timeTaken < 180000,
       };
@@ -96,7 +106,9 @@ const InjectsAndResponses = view(({ className, location }) => {
         {injectionsToShow.map(
           ({
             injection,
-            disabled,
+            upcoming,
+            canDeliver,
+            canMakeResponse,
             prevented,
             delivered,
             isDanger,
@@ -104,10 +116,12 @@ const InjectsAndResponses = view(({ className, location }) => {
             <Injection
               injection={injection}
               key={injection.id}
-              disabled={disabled}
               prevented={prevented}
               delivered={delivered}
               isDanger={isDanger}
+              upcoming={upcoming}
+              canDeliver={canDeliver}
+              canMakeResponse={canMakeResponse}
             />
           ),
         )}

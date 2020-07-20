@@ -141,7 +141,7 @@ export const gameStore = store({
     startSimulation: () =>
       gameStore.emitEvent(SocketEvents.STARTSIMULATION),
     deliverInjection: (params) =>
-      gameStore.emitEvent(SocketEvents.DELIVEREINJECTION, params),
+      gameStore.emitEvent(SocketEvents.DELIVERINJECTION, params),
     respondToInjection: (params) =>
       gameStore.emitEvent(
         SocketEvents.RESPONDTOINJECTION,

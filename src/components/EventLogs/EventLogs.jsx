@@ -49,6 +49,7 @@ const EventLogs = view(({ className }) => {
       game_timer: injections[gameInjection.injection_id].trigger_time,
       id: `injection_${gameInjection.injection_id}`,
     }));
+    // TODO: only show from the past (prevented injections)
     return _orderBy(
       [...preventedLogs, ...injectionLogs, ...gameLogs],
       'game_timer',
