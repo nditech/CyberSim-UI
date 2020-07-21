@@ -7,7 +7,7 @@ export const numberToUsd = (num) =>
   });
 
 export const msToMinutesSeconds = (millis) => {
-  let seconds = ((millis % 60000) / 1000).toFixed(0);
+  let seconds = parseInt(((millis % 60000) / 1000).toFixed(0));
   let minutes = Math.floor(millis / 60000);
   if (seconds === 60) {
     minutes += 1;

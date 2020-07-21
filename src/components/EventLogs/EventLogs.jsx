@@ -45,11 +45,10 @@ const EventLogs = view(({ className }) => {
     const injectionLogs = _map(gameInjections, (gameInjection) => ({
       type: 'Threat Injected',
       injection: injections[gameInjection.injection_id],
-      gameInjection: gameInjection,
+      gameInjection,
       game_timer: injections[gameInjection.injection_id].trigger_time,
       id: `injection_${gameInjection.injection_id}`,
-    }));
-    // TODO: only show from the past (prevented injections)
+    })).filter(({ gameInjection }) => gameInjection.delivered);
     return _orderBy(
       [...preventedLogs, ...injectionLogs, ...gameLogs],
       'game_timer',

@@ -1,14 +1,13 @@
 import React, { useMemo } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
 
 import { logTypes } from './EventLogs';
 import BudgetItemLog from './BudgetItemLog';
 import CampaignActionLog from './CampaignActionLog';
 import SystemRestoreLog from './SystemRestoreLog';
 import Log from './Log';
+import InjectionBody from '../Simulation/Injections/InjectionBody';
 import { msToMinutesSeconds } from '../../util';
 
-// TODO: injection log details
 const EventLogSwitch = ({
   log: {
     game_timer,
@@ -19,6 +18,7 @@ const EventLogSwitch = ({
     response_id,
     action_id,
     injection,
+    gameInjection,
   },
   filter,
 }) => {
@@ -61,11 +61,10 @@ const EventLogSwitch = ({
               injection.title
             }`}
           >
-            <Card.Body>
-              <Row>
-                <Col>{injection.id}</Col>
-              </Row>
-            </Card.Body>
+            <InjectionBody
+              injection={injection}
+              gameInjection={gameInjection}
+            />
           </Log>
         );
       case logTypes.ThreatPrevented:
@@ -75,11 +74,7 @@ const EventLogSwitch = ({
               injection.title
             }`}
           >
-            <Card.Body>
-              <Row>
-                <Col>{injection.id}</Col>
-              </Row>
-            </Card.Body>
+            <InjectionBody injection={injection} prevented />
           </Log>
         );
       case logTypes.GameState:
@@ -98,6 +93,7 @@ const EventLogSwitch = ({
     descripition,
     game_timer,
     injection,
+    gameInjection,
     mitigation_id,
     mitigation_type,
     response_id,
