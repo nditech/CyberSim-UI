@@ -71,7 +71,7 @@ const InjectsAndResponses = view(({ className, location }) => {
         canMakeResponse,
         delivered,
         prevented:
-          !canMakeResponse &&
+          !gameInjection &&
           (preventedInjections.some(
             (preventedId) => injection.id === preventedId,
           ) ||
