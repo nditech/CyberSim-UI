@@ -251,3 +251,10 @@ select.form-control:focus {
     border-radius: 1rem;
   }
 }
+
+.btn-group-toggle {
+  .btn-outline-primary:not(.active):hover {
+    background-color: white;
+    color: map-get($map: $theme-colors, $key: 'primary');
+  }
+}
