@@ -1,4 +1,4 @@
-# ndi-cybersim-api
+# ndi-cybersim-ui
 
 ## To set up the project on your local environment run the following commands:
 
