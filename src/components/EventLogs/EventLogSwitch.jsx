@@ -59,7 +59,9 @@ const EventLogSwitch = ({
           <Log
             title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
               injection.title
-            }`}
+            } (available from ${msToMinutesSeconds(
+              injection.trigger_time,
+            )})`}
           >
             <InjectionBody
               injection={injection}

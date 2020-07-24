@@ -46,7 +46,7 @@ const EventLogs = view(({ className }) => {
       type: 'Threat Injected',
       injection: injections[gameInjection.injection_id],
       gameInjection,
-      game_timer: injections[gameInjection.injection_id].trigger_time,
+      game_timer: gameInjection.delivered_at,
       id: `injection_${gameInjection.injection_id}`,
     })).filter(({ gameInjection }) => gameInjection.delivered);
     return _orderBy(

@@ -5,6 +5,7 @@ import { AiOutlineCheck } from 'react-icons/ai';
 
 import { gameStore } from '../../GameStore';
 import { useStaticData } from '../../StaticDataProvider';
+import { msToMinutesSeconds } from '../../../util';
 
 const InjectionResponseForm = view(
   ({ injection, disabled, gameInjection }) => {
@@ -107,7 +108,8 @@ const InjectionResponseForm = view(
           ) : (
             <Row>
               <Col xs={12} lg={12} className="font-weight-bold">
-                Correct responses implemented:
+                Correct responses implemented (at{' '}
+                {msToMinutesSeconds(gameInjection.response_made_at)})
               </Col>
             </Row>
           )}
