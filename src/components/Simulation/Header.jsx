@@ -92,7 +92,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             }
           >
             <p className="my-0 font-weight-bold">
-              INJECTS & RESPONSES
+              EVENTS & RESPONSES
             </p>
           </Col>
           <Col

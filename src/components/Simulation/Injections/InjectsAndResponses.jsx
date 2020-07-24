@@ -100,7 +100,7 @@ const InjectsAndResponses = view(({ className, location }) => {
   return (
     <Row className={className} id="injects">
       <Col xs={12}>
-        <h3>INJECTS AND RESPONSES:</h3>
+        <h3>EVENTS AND RESPONSES:</h3>
       </Col>
       <Col>
         {injectionsToShow.map(
