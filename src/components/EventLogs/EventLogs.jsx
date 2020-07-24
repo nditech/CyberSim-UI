@@ -25,6 +25,7 @@ export const logTypes = {
   ThreatInjected: 'Threat Injected',
   ThreatPrevented: 'Threat Prevented',
   GameState: 'Game State Changed',
+  CurveballEvent: 'Curveball Event',
 };
 
 const EventLogs = view(({ className }) => {
@@ -179,6 +180,13 @@ const EventLogs = view(({ className }) => {
             className="rounded"
           >
             {logTypes.GameState}
+          </ToggleButton>
+          <ToggleButton
+            value={logTypes.CurveballEvent}
+            variant="outline-primary"
+            className="rounded"
+          >
+            {logTypes.CurveballEvent}
           </ToggleButton>
         </ToggleButtonGroup>
       </Col>

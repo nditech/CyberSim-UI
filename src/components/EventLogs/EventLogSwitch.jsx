@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { logTypes } from './EventLogs';
 import BudgetItemLog from './BudgetItemLog';
 import CampaignActionLog from './CampaignActionLog';
+import CurveballEventLog from './CurveballEventLog';
 import SystemRestoreLog from './SystemRestoreLog';
 import Log from './Log';
 import InjectionBody from '../Simulation/Injections/InjectionBody';
@@ -17,6 +18,7 @@ const EventLogSwitch = ({
     mitigation_id,
     response_id,
     action_id,
+    curveball_id,
     injection,
     gameInjection,
   },
@@ -52,6 +54,14 @@ const EventLogSwitch = ({
             game_timer={game_timer}
             type={type}
             action_id={action_id}
+          />
+        );
+      case logTypes.CurveballEvent:
+        return (
+          <CurveballEventLog
+            game_timer={game_timer}
+            type={type}
+            curveball_id={curveball_id}
           />
         );
       case logTypes.ThreatInjected:
@@ -91,15 +101,16 @@ const EventLogSwitch = ({
         return null;
     }
   }, [
-    action_id,
-    descripition,
+    type,
     game_timer,
+    mitigation_type,
+    mitigation_id,
+    response_id,
+    action_id,
+    curveball_id,
     injection,
     gameInjection,
-    mitigation_id,
-    mitigation_type,
-    response_id,
-    type,
+    descripition,
   ]);
 
   return shouldDisplay && eventLog;
