@@ -7,6 +7,7 @@ export default {
   GAMEUPDATED: 'gameUpdated',
   CHANGEMITIGATION: 'changeMitigation',
   PERFORMACTION: 'performAction',
+  PERFORMCURVEBALL: 'performCurveball',
   STARTSIMULATION: 'startSimulation',
   PAUSESIMULATION: 'pauseSimulation',
   FINISHSIMULATION: 'finishSimulation',

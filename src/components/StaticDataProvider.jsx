@@ -83,6 +83,20 @@ export const StaticDataProvider = ({ children }) => {
       .finally(() => setActionsLoading(false));
   }, [setActions]);
 
+  // ACTIONS
+  const [curveballsLoading, setCurveballsLoading] = useState(false);
+  const [curveballs, setCurveballs] = useState([]);
+  useEffect(() => {
+    setCurveballsLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/curveballs`)
+      .then(({ data }) => {
+        setCurveballs(_keyBy(data, 'id'));
+      })
+      .catch((e) => console.error(e))
+      .finally(() => setCurveballsLoading(false));
+  }, [setCurveballs]);
+
   return (
     <StaticDataContext.Provider
       value={{
@@ -96,11 +110,14 @@ export const StaticDataProvider = ({ children }) => {
         responses,
         actionsLoading,
         actions,
+        curveballsLoading,
+        curveballs,
         loading:
           systemsLoading ||
           mitigationsLoading ||
           injectionsLoading ||
           responsesLoading ||
+          curveballsLoading ||
           actionsLoading,
       }}
     >

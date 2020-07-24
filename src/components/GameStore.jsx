@@ -132,6 +132,12 @@ export const gameStore = store({
         params,
         'Action Performed',
       ),
+    performCurveball: (params) =>
+      gameStore.emitEvent(
+        SocketEvents.PERFORMCURVEBALL,
+        params,
+        'Curveball Performed',
+      ),
     restoreSystem: (params) =>
       gameStore.emitEvent(
         SocketEvents.RESTORESYSTEM,
