@@ -51,8 +51,8 @@ const Injection = view(
           >
             <Row className="align-items-center">
               <Col
-                lg={8}
-                xs={7}
+                lg={7}
+                xs={canDeliver || delivered ? 6 : 10}
                 className="font-weight-bold"
               >{`${msToMinutesSeconds(injection.trigger_time)} - ${
                 upcoming
@@ -60,9 +60,9 @@ const Injection = view(
                   : ''
               }${injection.title}`}</Col>
               <Col
-                lg={4}
-                xs={5}
-                className="d-flex justify-content-end align-items-center"
+                lg={5}
+                xs={canDeliver || delivered ? 6 : 2}
+                className="d-flex justify-content-end align-items-center pl-1"
               >
                 {(canDeliver || delivered) && (
                   <Form.Check
@@ -89,7 +89,7 @@ const Injection = view(
                   />
                 )}
                 <AiOutlineDown
-                  className="ml-2 text-primary"
+                  className="ml-1 text-primary"
                   fontSize="25px"
                 />
               </Col>

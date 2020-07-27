@@ -135,56 +135,56 @@ const EventLogs = view(({ className }) => {
           <ToggleButton
             value={logTypes.Preparations}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.Preparations}
           </ToggleButton>
           <ToggleButton
             value={logTypes.BudgetItem}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.BudgetItem}
           </ToggleButton>
           <ToggleButton
             value={logTypes.SystemRestore}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.SystemRestore}
           </ToggleButton>
           <ToggleButton
             value={logTypes.CampaignAction}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.CampaignAction}
           </ToggleButton>
           <ToggleButton
             value={logTypes.ThreatInjected}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.ThreatInjected}
           </ToggleButton>
           <ToggleButton
             value={logTypes.ThreatPrevented}
             variant="outline-primary"
-            className="d-flex align-items-center justify-content-center mr-1 rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.ThreatPrevented}
           </ToggleButton>
           <ToggleButton
             value={logTypes.GameState}
             variant="outline-primary"
-            className="rounded"
+            className="p-1 d-flex align-items-center justify-content-center mr-1 rounded"
           >
             {logTypes.GameState}
           </ToggleButton>
           <ToggleButton
             value={logTypes.CurveballEvent}
             variant="outline-primary"
-            className="rounded"
+            className="p-1 rounded"
           >
             {logTypes.CurveballEvent}
           </ToggleButton>

@@ -70,12 +70,12 @@ const AvailableActionItems = view(({ actionList, role }) => {
         ref={formRef}
       >
         <Row className="d-flex align-items-center mb-3">
-          <Col xs={9}>
+          <Col xs={8} lg={9}>
             <h5 className="m-0 font-weight-bold">
               AVAILABLE ACTIONS:
             </h5>
           </Col>
-          <Col xs={3}>
+          <Col xs={4} lg={3}>
             <Button
               variant="outline-primary"
               className="rounded-pill w-100"

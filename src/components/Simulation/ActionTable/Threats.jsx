@@ -100,24 +100,29 @@ const Threats = view(({ className }) => {
             MITIGATED THREATS:
           </Card.Header>
           <Card.Body className="pb-3 threats-body">
-            {!!notThreats.length &&
-              notThreats.map(({ desc, location }, i) => (
-                <Row
-                  key={i}
-                  className="d-flex align-items-center py-1 justify-content-between select-row"
-                >
-                  <Col xs={10}>
-                    <AiOutlineCheck
-                      className="mr-2"
-                      fontSize="20px"
-                    />
-                    {desc}
-                  </Col>
-                  <Col xs={2} className="text-right">
-                    {location}
-                  </Col>
-                </Row>
-              ))}
+            {!!notThreats.length
+              ? notThreats.map(({ desc, location }, i) => (
+                  <Row
+                    key={i}
+                    className="d-flex align-items-center py-1 justify-content-between select-row"
+                  >
+                    <Col xs={10}>
+                      <AiOutlineCheck
+                        className="mr-2"
+                        fontSize="20px"
+                      />
+                      {desc}
+                    </Col>
+                    <Col
+                      xs={2}
+                      className="text-right"
+                      style={{ whiteSpace: 'nowrap' }}
+                    >
+                      {location}
+                    </Col>
+                  </Row>
+                ))
+              : 'No threat mitigated.'}
             {!injections && (
               <Col xs={12} className="d-flex justify-content-center">
                 <Spinner animation="border" />
@@ -139,24 +144,29 @@ const Threats = view(({ className }) => {
             NOT MITIGATED THREATS:
           </Card.Header>
           <Card.Body className="pb-3 threats-body">
-            {!!threats.length &&
-              threats.map(({ desc, location }, i) => (
-                <Row
-                  key={i}
-                  className="d-flex align-items-center py-1 justify-content-between select-row"
-                >
-                  <Col xs={10}>
-                    <AiOutlineClose
-                      className="mr-2"
-                      fontSize="20px"
-                    />
-                    {desc}
-                  </Col>
-                  <Col xs={2} className="text-right">
-                    {location}
-                  </Col>
-                </Row>
-              ))}
+            {!!threats.length
+              ? threats.map(({ desc, location }, i) => (
+                  <Row
+                    key={i}
+                    className="d-flex align-items-center py-1 justify-content-between select-row"
+                  >
+                    <Col xs={10}>
+                      <AiOutlineClose
+                        className="mr-2"
+                        fontSize="20px"
+                      />
+                      {desc}
+                    </Col>
+                    <Col
+                      xs={2}
+                      className="text-right"
+                      style={{ whiteSpace: 'nowrap' }}
+                    >
+                      {location}
+                    </Col>
+                  </Row>
+                ))
+              : 'Every threat mitigated.'}
             {!injections && (
               <Col xs={12} className="d-flex justify-content-center">
                 <Spinner animation="border" />
