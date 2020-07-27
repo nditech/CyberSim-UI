@@ -21,16 +21,16 @@ const CurveballEventLog = ({ game_timer, type, curveball_id }) => {
       <Card.Body>
         <Row>
           <Col>{curveball.description}</Col>
-          {!!curveball.poll_decrease && (
+          {!!curveball.poll_change && (
             <Col xs={2} className="text-right">
-              <span className="font-weight-bold">Poll: </span>-
-              {curveball.poll_decrease}%
+              <span className="font-weight-bold">Poll: </span>
+              {curveball.poll_change}%
             </Col>
           )}
-          {!!curveball.budget_decrease && (
+          {!!curveball.budget_change && (
             <Col xs={2} className="text-right">
-              <span className="font-weight-bold">Budget: </span>-
-              {numberToUsd(curveball.budget_decrease)}
+              <span className="font-weight-bold">Budget: </span>
+              {numberToUsd(curveball.budget_change)}
             </Col>
           )}
         </Row>

@@ -63,17 +63,18 @@ const Curveballs = ({ className }) => {
                 <Row className="py-1 select-row align-items-center">
                   <Col xs={9}>{curveball.description}</Col>
                   <Col className="text-right">
-                    {curveball.budget_decrease
-                      ? `Budget: -${numberToUsd(
-                          curveball.budget_decrease,
-                        )}`
+                    {curveball.budget_change
+                      ? `Budget: ${
+                          curveball.budget_change > 0 ? '+' : ''
+                        }${numberToUsd(curveball.budget_change)}`
                       : ''}
-                    {curveball.poll_decrease &&
-                    curveball.budget_decrease
+                    {curveball.poll_change && curveball.budget_change
                       ? ', '
                       : ''}
-                    {curveball.poll_decrease
-                      ? `Poll: -${curveball.poll_decrease}%`
+                    {curveball.poll_change
+                      ? `Poll: ${
+                          curveball.poll_change > 0 ? '+' : ''
+                        }${curveball.poll_change}%`
                       : ''}
                   </Col>
                 </Row>
