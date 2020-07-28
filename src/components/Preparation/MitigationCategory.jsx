@@ -48,7 +48,10 @@ const MitigationCategory = ({
                     label={
                       <span>{numberToUsd(mitigation.hq_cost)}</span>
                     }
-                    disabled={budget < mitigation.hq_cost}
+                    disabled={
+                      !toggledMitigations[`${mitigation.id}_hq`] &&
+                      budget < mitigation.hq_cost
+                    }
                     checked={
                       toggledMitigations[`${mitigation.id}_hq`]
                     }
@@ -89,7 +92,10 @@ const MitigationCategory = ({
                         {numberToUsd(mitigation.local_cost)}
                       </span>
                     }
-                    disabled={budget < mitigation.local_cost}
+                    disabled={
+                      !toggledMitigations[`${mitigation.id}_local`] &&
+                      budget < mitigation.local_cost
+                    }
                     checked={
                       toggledMitigations[`${mitigation.id}_local`]
                     }
