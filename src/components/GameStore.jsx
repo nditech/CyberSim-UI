@@ -85,14 +85,14 @@ export const gameStore = store({
       ? socket.emit(event, params, ({ error }) => {
           if (error) {
             gameStore.popError(error);
-          } else {
+          } else if (successInfo) {
             gameStore.popInfo(successInfo);
           }
         })
       : socket.emit(event, ({ error }) => {
           if (error) {
             gameStore.popError(error);
-          } else {
+          } else if (successInfo) {
             gameStore.popInfo(successInfo);
           }
         }),
