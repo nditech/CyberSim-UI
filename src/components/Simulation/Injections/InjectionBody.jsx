@@ -73,7 +73,7 @@ const InjectionBody = view(
             </Col>
             <Col xs={12} className="my-2">
               <span className="font-weight-bold">
-                Deliver asset to table:{' '}
+                Asset to deliver to table:{' '}
               </span>
               {injection.asset_code}
             </Col>

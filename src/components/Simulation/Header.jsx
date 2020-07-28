@@ -28,7 +28,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.CAMPAIGN_HQ)}
       >
-        <h5 className="my-2 font-weight-normal">Campaign HQ</h5>
+        <h5 className="my-2 font-weight-normal">CAMPAIGN HQ</h5>
       </Col>
       <Col
         xs={4}
@@ -40,7 +40,7 @@ const Header = ({ activeTab, setActiveTab }) => (
         )}
         onClick={() => setActiveTab(SimulationTabs.LOCAL_BRANCH)}
       >
-        <h5 className="my-2 font-weight-normal">Local Branch</h5>
+        <h5 className="my-2 font-weight-normal">LOCAL BRANCH</h5>
       </Col>
     </Row>
     <Row className="m-0 border-primary border-bottom">
@@ -119,7 +119,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-0 font-weight-bold">SECURITY ACTIONS</p>
+            <p className="my-0 font-weight-bold">PURCHASES</p>
           </Col>
         </>
       )}

@@ -82,19 +82,20 @@ export const gameStore = store({
   },
   emitEvent: (event, params, successInfo) =>
     params
-      ? socket.emit(
-          event,
-          params,
-          ({ error }) =>
-            (error && gameStore.popError(error)) ||
-            (successInfo && gameStore.popInfo(successInfo)),
-        )
-      : socket.emit(
-          event,
-          ({ error }) =>
-            (error && gameStore.popError(error)) ||
-            (successInfo && gameStore.popInfo(successInfo)),
-        ),
+      ? socket.emit(event, params, ({ error }) => {
+          if (error) {
+            gameStore.popError(error);
+          } else if (successInfo) {
+            gameStore.popInfo(successInfo);
+          }
+        })
+      : socket.emit(event, ({ error }) => {
+          if (error) {
+            gameStore.popError(error);
+          } else if (successInfo) {
+            gameStore.popInfo(successInfo);
+          }
+        }),
 
   // ACTIONS
   actions: {

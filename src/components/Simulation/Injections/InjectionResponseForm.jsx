@@ -101,7 +101,7 @@ const InjectionResponseForm = view(
                   }
                   onClick={formStore.submitResponses}
                 >
-                  FINISH RESPONSE
+                  RESOLVE EVENT
                 </Button>
               </Col>
             </Row>
