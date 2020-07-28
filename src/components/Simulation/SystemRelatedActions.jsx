@@ -67,7 +67,7 @@ const SystemRelatedActions = view(({ location, className }) => {
   );
 
   return (
-    <Form onSubmit={submitAction} noValidate>
+    <Form onSubmit={submitAction} noValidate id="systme_actions">
       <Row className={className}>
         <Col xs={9}>
           <h3>ACTIONS RELATED TO TECHNICAL SYSTEMS:</h3>

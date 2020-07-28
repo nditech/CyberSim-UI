@@ -37,7 +37,12 @@ const Curveballs = ({ className }) => {
   );
 
   return (
-    <Form onSubmit={submitCurveball} noValidate ref={formRef}>
+    <Form
+      onSubmit={submitCurveball}
+      noValidate
+      ref={formRef}
+      id="curveball"
+    >
       <Row className={className}>
         <Col xs={9}>
           <h3>CURVEBALL EVENTS</h3>

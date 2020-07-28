@@ -4,11 +4,11 @@ import { Row, Col, Container } from 'react-bootstrap';
 
 const NotAvailableActionItems = ({ systems, actionList, role }) => (
   <Container className="p-0 m-0 pl-3">
-    <Row className="d-flex align-items-center mb-3">
+    <Row className="d-flex align-items-center mb-2">
       <Col>
-        <h5 className="m-0 font-weight-bold">
+        <h6 className="m-0 font-weight-bold">
           NOT AVAILABLE ACTIONS:
-        </h5>
+        </h6>
       </Col>
     </Row>
 

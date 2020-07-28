@@ -130,36 +130,36 @@ select.form-control:focus {
 
   &-item {
     transition: box-shadow 0.2s linear;
+    box-shadow: inset 0px -5px 0px map-get($map: $theme-colors, $key:
+          'primary');
     h5 {
-      transition: font-weight 0.2s linear;
+      transition: transform 0.2s linear;
+      font-weight: normal !important;
     }
-    &.active {
+    &:hover {
       h5 {
-        font-weight: bold !important;
+        transform: scale(1.1);
       }
     }
-    &:hover,
     &.active {
-      box-shadow: inset 0px 5px 0px
+      box-shadow: inset 5px 5px 0px
           map-get($map: $theme-colors, $key: 'primary'),
-        inset 0px -5px 0px map-get($map: $theme-colors, $key:
+        inset -5px 0px 0px map-get($map: $theme-colors, $key:
               'primary');
     }
 
     &--small {
-      transition: box-shadow 0.2s linear;
-      &:hover,
-      &.active {
-        box-shadow: inset 0px 3px 0px
-            map-get($map: $theme-colors, $key: 'primary'),
-          inset 0px -3px 0px map-get($map: $theme-colors, $key:
-                'primary');
+      p {
+        transition: transform 0.2s linear;
+      }
+      &:hover {
+        p {
+          transform: scale(1.1);
+        }
       }
     }
 
     &--big {
-      transition: box-shadow 0.2s linear;
-      &:hover,
       &.active {
         box-shadow: inset 0px 7px 0px
             map-get($map: $theme-colors, $key: 'primary'),

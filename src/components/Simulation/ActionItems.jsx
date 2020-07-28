@@ -46,14 +46,21 @@ const ActionItems = view(({ className, location }) => {
   }, [actions, gameSystems, location]);
 
   return (
-    <Container className={className} id="actions">
+    <Container className={className} id={`${location}_actions`}>
+      <Row>
+        <Col xs={12}>
+          <h3 className="mb-0">
+            {location === 'local'
+              ? 'LOCAL ACTIONS:'
+              : 'HQ ACTIONS AND SECURITY ACTIONS:'}
+          </h3>
+        </Col>
+      </Row>
       {_map(actionListByRoles, (actions, role) => (
         <div className="my-5" key={role}>
           <Row>
             <Col>
-              <h3 className="border-bottom border-primary text-uppercase">
-                {role}
-              </h3>
+              <h4 className="border-bottom border-primary">{role}</h4>
             </Col>
           </Row>
           <AvailableActionItems

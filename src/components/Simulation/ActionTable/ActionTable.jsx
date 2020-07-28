@@ -1,18 +1,17 @@
 import React from 'react';
 
-import Threats from './Threats';
 import Curveballs from './Curveballs';
 import SystemRelatedActions from '../SystemRelatedActions';
+import ActionItems from '../ActionItems';
 import Systems from '../../Systems';
-import EventLogs from '../../EventLogs/EventLogs';
 
 const ActionTable = () => (
   <>
-    <Systems className="my-5" withHeader />
-    <SystemRelatedActions className="my-5" />
-    <Threats className="my-5" />
+    <ActionItems className="my-5 p-0" location="hq" />
+    <ActionItems className="my-5 p-0 pt-5" location="local" />
     <Curveballs className="my-5" />
-    <EventLogs className="my-5 pb-5" />
+    <Systems className="my-5" withHeader />
+    <SystemRelatedActions className="my-5 pb-5" />
   </>
 );
 

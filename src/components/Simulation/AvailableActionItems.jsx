@@ -69,11 +69,11 @@ const AvailableActionItems = view(({ actionList, role }) => {
         className="mb-4"
         ref={formRef}
       >
-        <Row className="d-flex align-items-center mb-3">
+        <Row className="d-flex align-items-center mb-1">
           <Col xs={8} lg={9}>
-            <h5 className="m-0 font-weight-bold">
+            <h6 className="m-0 font-weight-bold">
               AVAILABLE ACTIONS:
-            </h5>
+            </h6>
           </Col>
           <Col xs={4} lg={3}>
             <Button
