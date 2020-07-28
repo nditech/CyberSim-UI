@@ -119,7 +119,7 @@ const Header = ({ activeTab, setActiveTab }) => (
               })
             }
           >
-            <p className="my-0 font-weight-bold">SECURITY ACTIONS</p>
+            <p className="my-0 font-weight-bold">PURCHASES</p>
           </Col>
         </>
       )}
