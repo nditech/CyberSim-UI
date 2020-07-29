@@ -11,7 +11,7 @@ const ActionTable = () => (
     <ActionItems className="my-5 p-0" location="hq" />
     <ActionItems className="my-5 p-0 pt-3" location="local" />
     <Curveballs className="my-5 pt-3" />
-    <Systems className="my-5 pt-3" withHeader />
+    <Systems className="my-5 pt-3" />
     <SystemRelatedActions className="my-5 pt-3" />
     <Mitigations isInventory className="my-5 pt-3 pb-5 px-0" />
   </>
