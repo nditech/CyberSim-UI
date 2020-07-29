@@ -15,7 +15,7 @@ const Systems = view(({ className, withHeader, big }) => {
     <Row className={className} id="systems">
       {withHeader && (
         <Col xs={12}>
-          <h3>TECHNICAL SYSTEMS:</h3>
+          <h2 className="font-weight-bold">TECHNICAL SYSTEMS:</h2>
         </Col>
       )}
       {systems ? (

@@ -49,11 +49,11 @@ const ActionItems = view(({ className, location }) => {
     <Container className={className} id={`${location}_actions`}>
       <Row>
         <Col xs={12}>
-          <h3 className="mb-0">
+          <h2 className="font-weight-bold mb-0">
             {location === 'local'
               ? 'LOCAL ACTIONS:'
               : 'HQ ACTIONS AND SECURITY ACTIONS:'}
-          </h3>
+          </h2>
         </Col>
       </Row>
       {_map(actionListByRoles, (actions, role) => (

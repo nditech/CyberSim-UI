@@ -45,7 +45,7 @@ const Curveballs = ({ className }) => {
     >
       <Row className={className}>
         <Col xs={9}>
-          <h3>CURVEBALL EVENTS</h3>
+          <h2 className="font-weight-bold">CURVEBALL EVENTS</h2>
         </Col>
         <Col xs={3}>
           <Button

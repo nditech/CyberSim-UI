@@ -12,9 +12,9 @@ const MitigationCategory = ({
   toggleMitigation,
   allocatedBudget,
   budget,
-  log,
+  isSummary,
 }) => (
-  <div className={classNames('py-3', log ? 'my-3' : 'my-5')}>
+  <div className={classNames('py-3', isSummary ? 'my-3' : 'my-5')}>
     <Row className="pb-2">
       <Col xs={9}>
         <h4 className="m-0 font-weight-normal border-bottom border-primary w-100 text-uppercase">
@@ -40,7 +40,7 @@ const MitigationCategory = ({
           <Row>
             <Col xs={6} className="justify-content-end d-flex">
               {mitigation.is_hq &&
-                (!log ? (
+                (!isSummary ? (
                   <Form.Check
                     type="switch"
                     className="custom-switch-right"
@@ -82,7 +82,7 @@ const MitigationCategory = ({
             </Col>
             <Col xs={6} className="justify-content-end d-flex">
               {mitigation.is_local &&
-                (!log ? (
+                (!isSummary ? (
                   <Form.Check
                     type="switch"
                     className="custom-switch-right"

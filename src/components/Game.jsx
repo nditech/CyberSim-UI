@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 
 import { GameStates } from '../constants';
 import EnterGame from './EnterGame';
-import Preparation from './Preparation/Preparation';
+import Mitigations from './Mitigations/Mitigations';
 import Simulation from './Simulation/Simulation';
 import Projector from './Projector';
 import { gameStore } from './GameStore';
@@ -47,7 +47,7 @@ const Game = view(() => {
   }
 
   if (gameState === GameStates.PREPARATION) {
-    return <Preparation className="mb-5 pb-5" />;
+    return <Mitigations className="mb-5 pb-5" />;
   }
 
   if (gameState === GameStates.SIMULATION) {

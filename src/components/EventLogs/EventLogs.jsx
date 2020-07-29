@@ -13,7 +13,7 @@ import { useStaticData } from '../StaticDataProvider';
 import { gameStore } from '../GameStore';
 import Log from './Log';
 import EventLogSwitch from './EventLogSwitch';
-import Preparation from '../Preparation/Preparation';
+import Mitigations from '../Mitigations/Mitigations';
 
 export const accordionOpeners = store([]);
 
@@ -71,7 +71,7 @@ const EventLogs = view(({ className }) => {
   return (
     <Row className={className} id="logs">
       <Col xs={4} className="pr-1">
-        <h3>EVENTS LOG:</h3>
+        <h2 className="font-weight-bold">EVENTS LOG:</h2>
       </Col>
       <Col xs={2} className="px-1">
         <Button
@@ -193,7 +193,7 @@ const EventLogs = view(({ className }) => {
       <Col xs={12}>
         {filter[logTypes.Preparations] && (
           <Log title="00:00 - Preparation Mitigations Selected">
-            <Preparation log className="card-body" />
+            <Mitigations isLog className="card-body" />
           </Log>
         )}
         {logs.map((log) => (

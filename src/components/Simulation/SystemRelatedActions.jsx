@@ -70,7 +70,9 @@ const SystemRelatedActions = view(({ location, className }) => {
     <Form onSubmit={submitAction} noValidate id="systme_actions">
       <Row className={className}>
         <Col xs={9}>
-          <h3>ACTIONS RELATED TO TECHNICAL SYSTEMS:</h3>
+          <h2 className="font-weight-bold">
+            ACTIONS RELATED TO TECHNICAL SYSTEMS:
+          </h2>
         </Col>
         <Col xs={3}>
           <Button

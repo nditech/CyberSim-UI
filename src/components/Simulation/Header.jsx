@@ -59,7 +59,6 @@ const Header = ({ activeTab, setActiveTab }) => (
       {activeTab === SimulationTabs.ACTION_TABLE && (
         <>
           <Col
-            xs={3}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document.querySelector('#hq_actions')?.scrollIntoView({
@@ -70,7 +69,6 @@ const Header = ({ activeTab, setActiveTab }) => (
             <p className="my-0">HQ ACTIONS</p>
           </Col>
           <Col
-            xs={3}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document
@@ -83,7 +81,6 @@ const Header = ({ activeTab, setActiveTab }) => (
             <p className="my-0">LOCAL ACTIONS</p>
           </Col>
           <Col
-            xs={3}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document.querySelector('#curveball')?.scrollIntoView({
@@ -94,8 +91,7 @@ const Header = ({ activeTab, setActiveTab }) => (
             <p className="my-0">CURVEBALL EVENTS</p>
           </Col>
           <Col
-            xs={3}
-            className="simulation-menu-item--small cursor-pointer p-0"
+            className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document.querySelector('#systems')?.scrollIntoView({
                 behavior: 'smooth',
@@ -103,6 +99,19 @@ const Header = ({ activeTab, setActiveTab }) => (
             }
           >
             <p className="my-0">TECHNICAL SYSTEMS</p>
+          </Col>
+          <Col
+            className="simulation-menu-item--small cursor-pointer p-0"
+            onClick={() =>
+              document.querySelector('#mitigations')?.scrollIntoView({
+                behavior: 'smooth',
+              })
+            }
+          >
+            <p className="my-0 d-none d-lg-block">
+              MITIGATION INVENTORY
+            </p>
+            <p className="my-0 d-block d-lg-none">MITIGATIONS</p>
           </Col>
         </>
       )}
