@@ -263,3 +263,7 @@ select.form-control:focus {
     color: map-get($map: $theme-colors, $key: 'primary');
   }
 }
+
+.thick-border.border-primary {
+  border-width: 0.5em !important;
+}

@@ -27,13 +27,13 @@ const Projector = view(() => {
         </Row>
       </div>
       <Container>
-        <div className="my-5 py-5">
-          <BPT big centered={gameState === GameStates.ASSESSMENT} />
+        <div className="my-5 py-5 border-bottom border-primary thick-border">
+          <BPT big />
         </div>
         {gameState === GameStates.ASSESSMENT ? (
           <EventLogs />
         ) : (
-          <Systems big />
+          <Systems big centerHeader />
         )}
       </Container>
     </>

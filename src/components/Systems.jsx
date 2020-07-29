@@ -3,21 +3,25 @@ import { Row, Col, Spinner } from 'react-bootstrap';
 import { AiOutlineStop, AiOutlineCheck } from 'react-icons/ai';
 import { view } from '@risingstack/react-easy-state';
 import { map as _map } from 'lodash';
+import classNames from 'classnames';
 
 import { gameStore } from './GameStore';
 import { useStaticData } from './StaticDataProvider';
 
-const Systems = view(({ className, withHeader, big }) => {
+const Systems = view(({ className, centerHeader, big }) => {
   const { systems: gameSystems } = gameStore;
   const { systems } = useStaticData();
 
   return (
     <Row className={className} id="systems">
-      {withHeader && (
-        <Col xs={12}>
-          <h2 className="font-weight-bold">TECHNICAL SYSTEMS:</h2>
-        </Col>
-      )}
+      <Col
+        xs={12}
+        className={classNames({
+          'd-flex justify-content-center': centerHeader,
+        })}
+      >
+        <h2 className="font-weight-bold">TECHNICAL SYSTEMS:</h2>
+      </Col>
       {systems ? (
         _map(systems, (system) => (
           <Col

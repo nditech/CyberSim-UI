@@ -73,7 +73,7 @@ const TimeTaken = view(({ big }) => {
 });
 
 // BudgetPollTimer
-const BPT = view(({ big, centered }) => {
+const BPT = view(({ big }) => {
   const { budget, poll } = gameStore;
 
   return (
@@ -86,8 +86,13 @@ const BPT = view(({ big, centered }) => {
         xs={6}
         md={4}
         style={{ whiteSpace: 'nowrap' }}
-        className="px-2"
+        className={classNames('px-2', {
+          'd-flex flex-column align-items-center': big,
+        })}
       >
+        {big && (
+          <h2 className="font-weight-bold my-2">Available Budget</h2>
+        )}
         <h4 className="bpt-item font-weight-normal mb-0">
           {numberToUsd(budget).replace('$', '$ ')}
         </h4>
@@ -96,18 +101,26 @@ const BPT = view(({ big, centered }) => {
         xs={6}
         md={4}
         className={classNames('px-2 d-flex', {
-          'justify-content-center': centered,
+          'justify-content-center': !big,
+          'flex-column align-items-center': big,
         })}
       >
+        {big && (
+          <h2 className="font-weight-bold my-2">Public Opinion</h2>
+        )}
         <h4 className="bpt-item font-weight-normal mb-0">{poll} %</h4>
       </Col>
       <Col
-        xs={6}
+        xs={12}
         md={4}
         className={classNames('px-2 d-flex', {
-          'justify-content-end': centered,
+          'justify-content-end': !big,
+          'flex-column align-items-center': big,
         })}
       >
+        {big && (
+          <h2 className="font-weight-bold my-2">Time Elapsed</h2>
+        )}
         <TimeTaken big={big} />
       </Col>
     </Row>
