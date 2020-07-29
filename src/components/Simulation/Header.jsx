@@ -119,7 +119,6 @@ const Header = ({ activeTab, setActiveTab }) => (
         activeTab === SimulationTabs.LOCAL_BRANCH) && (
         <>
           <Col
-            xs={4}
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document.querySelector('#injects')?.scrollIntoView({
@@ -130,7 +129,18 @@ const Header = ({ activeTab, setActiveTab }) => (
             <p className="my-0">EVENTS & RESPONSES</p>
           </Col>
           <Col
-            xs={4}
+            className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+            onClick={() =>
+              document
+                .querySelector('#resolved_injects')
+                ?.scrollIntoView({
+                  behavior: 'smooth',
+                })
+            }
+          >
+            <p className="my-0">RESOLVED EVENTS</p>
+          </Col>
+          <Col
             className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
             onClick={() =>
               document.querySelector('#mitigations')?.scrollIntoView({
@@ -141,17 +151,16 @@ const Header = ({ activeTab, setActiveTab }) => (
             <p className="my-0">PURCHASES</p>
           </Col>
           <Col
-            xs={4}
             className="simulation-menu-item--small cursor-pointer p-0"
             onClick={() =>
               document
-                .querySelector('#systme_actions')
+                .querySelector('#system_actions')
                 ?.scrollIntoView({
                   behavior: 'smooth',
                 })
             }
           >
-            <p className="my-0">TECHNICAL SYSTEM ACTIONS</p>
+            <p className="my-0">SYSTEM RESTORE</p>
           </Col>
         </>
       )}

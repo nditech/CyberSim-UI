@@ -17,12 +17,17 @@ const Injection = view(
     upcoming,
     canDeliver,
     canMakeResponse,
+    resolved,
+    gameInjection,
   }) => {
     const {
       actions: { deliverInjection },
     } = gameStore;
 
     const bgColor = useMemo(() => {
+      if (resolved) {
+        return 'bg-light';
+      }
       if (prevented) {
         return 'bg-success-light';
       }
@@ -33,7 +38,7 @@ const Injection = view(
         return 'bg-warning-light';
       }
       return 'bg-white';
-    }, [upcoming, isDanger, prevented]);
+    }, [upcoming, isDanger, prevented, resolved]);
 
     return (
       <Accordion className="my-4">
@@ -55,8 +60,10 @@ const Injection = view(
                 xs={canDeliver || delivered ? 6 : 10}
                 className="font-weight-bold"
               >{`${msToMinutesSeconds(injection.trigger_time)} - ${
-                upcoming
-                  ? `UPCOMING${prevented ? ' AVOIDED' : ''}: `
+                upcoming || prevented
+                  ? `${upcoming ? 'UPCOMING' : ''}${
+                      prevented ? ' AVOIDED' : ''
+                    }: `
                   : ''
               }${injection.title}`}</Col>
               <Col
@@ -64,7 +71,7 @@ const Injection = view(
                 xs={canDeliver || delivered ? 6 : 2}
                 className="d-flex justify-content-end align-items-center pl-1"
               >
-                {(canDeliver || delivered) && (
+                {!resolved && (canDeliver || delivered) && (
                   <Form.Check
                     type="switch"
                     className={classNames(
@@ -101,6 +108,7 @@ const Injection = view(
               prevented={prevented}
               canMakeResponse={canMakeResponse}
               bgColor={bgColor}
+              gameInjection={gameInjection}
             />
           </Accordion.Collapse>
         </Card>
