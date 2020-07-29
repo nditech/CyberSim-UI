@@ -118,28 +118,30 @@ const InjectsAndResponses = view(({ className, location }) => {
           <h2 className="font-weight-bold">EVENTS AND RESPONSES:</h2>
         </Col>
         <Col>
-          {injectionsToResponse.map(
-            ({
-              injection,
-              upcoming,
-              canDeliver,
-              canMakeResponse,
-              prevented,
-              delivered,
-              isDanger,
-            }) => (
-              <Injection
-                injection={injection}
-                key={injection.id}
-                prevented={prevented}
-                delivered={delivered}
-                isDanger={isDanger}
-                upcoming={upcoming}
-                canDeliver={canDeliver}
-                canMakeResponse={canMakeResponse}
-              />
-            ),
-          )}
+          {injectionsToResponse.length
+            ? injectionsToResponse.map(
+                ({
+                  injection,
+                  upcoming,
+                  canDeliver,
+                  canMakeResponse,
+                  prevented,
+                  delivered,
+                  isDanger,
+                }) => (
+                  <Injection
+                    injection={injection}
+                    key={injection.id}
+                    prevented={prevented}
+                    delivered={delivered}
+                    isDanger={isDanger}
+                    upcoming={upcoming}
+                    canDeliver={canDeliver}
+                    canMakeResponse={canMakeResponse}
+                  />
+                ),
+              )
+            : 'No upcoming event.'}
         </Col>
       </Row>
       <Row className={className} id="resolved_injects">
@@ -147,32 +149,34 @@ const InjectsAndResponses = view(({ className, location }) => {
           <h2 className="font-weight-bold">RESOLVED EVENTS:</h2>
         </Col>
         <Col>
-          {resolvedInjections.map(
-            ({
-              injection,
-              upcoming,
-              canDeliver,
-              canMakeResponse,
-              prevented,
-              delivered,
-              isDanger,
-              resolved,
-              gameInjection,
-            }) => (
-              <Injection
-                injection={injection}
-                key={injection.id}
-                prevented={prevented}
-                delivered={delivered}
-                isDanger={isDanger}
-                upcoming={upcoming}
-                canDeliver={canDeliver}
-                canMakeResponse={canMakeResponse}
-                resolved={resolved}
-                gameInjection={gameInjection}
-              />
-            ),
-          )}
+          {resolvedInjections.length
+            ? resolvedInjections.map(
+                ({
+                  injection,
+                  upcoming,
+                  canDeliver,
+                  canMakeResponse,
+                  prevented,
+                  delivered,
+                  isDanger,
+                  resolved,
+                  gameInjection,
+                }) => (
+                  <Injection
+                    injection={injection}
+                    key={injection.id}
+                    prevented={prevented}
+                    delivered={delivered}
+                    isDanger={isDanger}
+                    upcoming={upcoming}
+                    canDeliver={canDeliver}
+                    canMakeResponse={canMakeResponse}
+                    resolved={resolved}
+                    gameInjection={gameInjection}
+                  />
+                ),
+              )
+            : 'No event resolved.'}
         </Col>
       </Row>
     </>
