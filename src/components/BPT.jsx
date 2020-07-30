@@ -1,61 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import classNames from 'classnames';
 import { BsClock } from 'react-icons/bs';
 import { view } from '@risingstack/react-easy-state';
 
 import { gameStore } from './GameStore';
-import { msToMinutesSeconds, numberToUsd } from '../util';
+import { numberToUsd } from '../util';
+import useTimeTaken from '../hooks/useTimeTaken';
 
 const TimeTaken = view(({ big }) => {
-  const {
-    paused,
-    millis_taken_before_started: millisTakenBeforeStarted,
-    started_at: startedAt,
-  } = gameStore;
-
-  // INIT TIMER
-  const [timeTaken, setTimeTaken] = useState(
-    msToMinutesSeconds(
-      paused
-        ? millisTakenBeforeStarted
-        : Date.now() -
-            new Date(startedAt).getTime() +
-            millisTakenBeforeStarted,
-    ),
-  );
-  const timeRef = useRef();
-
-  // UPDATE TIMER
-  useEffect(() => {
-    if (paused) {
-      setTimeTaken(msToMinutesSeconds(millisTakenBeforeStarted));
-    } else if (!timeRef.current) {
-      timeRef.current = setInterval(
-        () =>
-          setTimeTaken(
-            msToMinutesSeconds(
-              Date.now() -
-                new Date(startedAt).getTime() +
-                millisTakenBeforeStarted,
-            ),
-          ),
-        1000,
-      );
-    }
-    return () => {
-      if (timeRef.current) {
-        clearInterval(timeRef.current);
-        timeRef.current = undefined;
-      }
-    };
-  }, [
-    setTimeTaken,
-    timeRef,
-    paused,
-    millisTakenBeforeStarted,
-    startedAt,
-  ]);
+  const { paused } = gameStore;
+  const timeTaken = useTimeTaken({ formatted: true });
 
   return (
     <h4

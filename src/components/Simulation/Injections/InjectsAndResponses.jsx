@@ -6,86 +6,49 @@ import { filter as _filter } from 'lodash';
 import Injection from './Injection';
 import { gameStore } from '../../GameStore';
 import { useStaticData } from '../../StaticDataProvider';
+import useTimeTaken from '../../../hooks/useTimeTaken';
 
 const InjectsAndResponses = view(({ className, location }) => {
-  const {
-    paused,
-    millis_taken_before_started: millisTakenBeforeStarted,
-    started_at: startedAt,
-    injections: gameInjections,
-    prevented_injections: preventedInjections,
-    mitigations: gameMitigations,
-  } = gameStore;
+  const { injections: gameInjections } = gameStore;
   const { injections } = useStaticData();
+  const timeTaken = useTimeTaken();
 
   const { injectionsToResponse, resolvedInjections } = useMemo(() => {
-    const timeTaken = paused
-      ? millisTakenBeforeStarted
-      : Date.now() -
-        new Date(startedAt).getTime() +
-        millisTakenBeforeStarted;
-    let shownFutureInjectionCounter = 0;
     let injectionToDeliverFound = false;
     return _filter(
       injections,
-      ({
-        location: injectionLocation,
-        trigger_time: triggerTime,
-      }) => {
-        // injections return by the api in triggerTime order
-        // only allow 5 future injections to appear
-        if (shownFutureInjectionCounter === 5) {
-          return false;
-        }
-        const canAppear =
-          // Location match
-          injectionLocation === location ||
-          injectionLocation === null;
-        if (timeTaken < triggerTime && canAppear) {
-          shownFutureInjectionCounter += 1;
-        }
-        return canAppear;
-      },
+      ({ location: injectionLocation }) =>
+        injectionLocation === location || injectionLocation === null,
     ).reduce(
       (acc, injection) => {
         const gameInjection = gameInjections[injection.id];
-        // not ("Future" or "Response not made yet and not prevented")
-        const resolved = !(
-          timeTaken < injection.trigger_time ||
-          (!gameInjection?.response_made_at &&
-            !preventedInjections.some(
-              (preventedId) => injection.id === preventedId,
-            ))
-        );
-        const delivered = gameInjection?.delivered;
-        const canMakeResponse =
-          !gameInjection?.response_made_at && delivered;
+        const {
+          delivered,
+          prevented,
+          response_made_at: responseMadeAt,
+        } = gameInjection;
+        const upcoming = timeTaken < injection.trigger_time;
+        const resolved =
+          timeTaken > injection.trigger_time &&
+          (responseMadeAt || prevented);
+        const canMakeResponse = !responseMadeAt && delivered;
         const canDeliver =
-          !resolved &&
+          !upcoming &&
           !delivered &&
           !injectionToDeliverFound &&
-          gameInjection;
+          !prevented;
         if (canDeliver) {
           injectionToDeliverFound = true;
         }
         const injectionWithParams = {
           injection,
-          upcoming: !resolved && !gameInjection,
+          upcoming: timeTaken < injection.trigger_time,
           resolved,
           canDeliver,
           canMakeResponse,
           delivered,
           gameInjection,
-          prevented:
-            !gameInjection &&
-            (preventedInjections.some(
-              (preventedId) => injection.id === preventedId,
-            ) ||
-              (injection.skipper_mitigation &&
-                injection.skipper_mitigation_type &&
-                gameMitigations[
-                  `${injection.skipper_mitigation}_${injection.skipper_mitigation_type}`
-                ])),
+          prevented,
           isDanger:
             !canDeliver &&
             !canMakeResponse &&
@@ -100,16 +63,7 @@ const InjectsAndResponses = view(({ className, location }) => {
       },
       { injectionsToResponse: [], resolvedInjections: [] },
     );
-  }, [
-    paused,
-    millisTakenBeforeStarted,
-    startedAt,
-    injections,
-    location,
-    gameInjections,
-    preventedInjections,
-    gameMitigations,
-  ]);
+  }, [injections, location, gameInjections, timeTaken]);
 
   return (
     <>

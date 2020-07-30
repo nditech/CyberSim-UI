@@ -7,13 +7,14 @@ import {
   ToggleButton,
 } from 'react-bootstrap';
 import { view, store } from '@risingstack/react-easy-state';
-import { map as _map, orderBy as _orderBy } from 'lodash';
+import { orderBy as _orderBy, reduce as _reduce } from 'lodash';
 
 import { useStaticData } from '../StaticDataProvider';
 import { gameStore } from '../GameStore';
 import Log from './Log';
 import EventLogSwitch from './EventLogSwitch';
 import Mitigations from '../Mitigations/Mitigations';
+import useTimeTaken from '../../hooks/useTimeTaken';
 
 export const accordionOpeners = store([]);
 
@@ -29,32 +30,51 @@ export const logTypes = {
 };
 
 const EventLogs = view(({ className }) => {
-  const {
-    logs: gameLogs,
-    injections: gameInjections,
-    prevented_injections: preventedInjections,
-  } = gameStore;
+  const { logs: gameLogs, injections: gameInjections } = gameStore;
   const { injections } = useStaticData();
+  const timeTaken = useTimeTaken();
 
   const logs = useMemo(() => {
-    const preventedLogs = preventedInjections.map((injectionId) => ({
-      type: 'Threat Prevented',
-      injection: injections[injectionId],
-      game_timer: injections[injectionId].trigger_time,
-      id: `injection_${injectionId}`,
-    }));
-    const injectionLogs = _map(gameInjections, (gameInjection) => ({
-      type: 'Threat Injected',
-      injection: injections[gameInjection.injection_id],
-      gameInjection,
-      game_timer: gameInjection.delivered_at,
-      id: `injection_${gameInjection.injection_id}`,
-    })).filter(({ gameInjection }) => gameInjection.delivered);
+    const preventedLogs = _reduce(
+      gameInjections,
+      (acc, { injection_id, prevented }) => {
+        if (
+          prevented &&
+          timeTaken > injections[injection_id].trigger_time
+        ) {
+          acc.push({
+            type: 'Threat Prevented',
+            injection: injections[injection_id],
+            game_timer: injections[injection_id].trigger_time,
+            id: `injection_${injection_id}`,
+          });
+        }
+        return acc;
+      },
+      [],
+    );
+    const injectionLogs = _reduce(
+      gameInjections,
+      (acc, gameInjection) => {
+        if (gameInjection.delivered) {
+          acc.push({
+            type: 'Threat Injected',
+            injection: injections[gameInjection.injection_id],
+            gameInjection,
+            game_timer:
+              injections[gameInjection.injection_id].trigger_time,
+            id: `injection_${gameInjection.injection_id}`,
+          });
+        }
+        return acc;
+      },
+      [],
+    );
     return _orderBy(
       [...preventedLogs, ...injectionLogs, ...gameLogs],
       'game_timer',
     );
-  }, [gameInjections, preventedInjections, injections, gameLogs]);
+  }, [gameInjections, injections, gameLogs, timeTaken]);
 
   const [filterValue, setFilterValue] = useState(
     Object.values(logTypes),
