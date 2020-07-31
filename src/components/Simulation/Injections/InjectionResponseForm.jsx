@@ -15,32 +15,38 @@ const InjectionResponseForm = view(
     } = gameStore;
     const { responses, systems } = useStaticData();
 
+    const madeResponses = useMemo(
+      () =>
+        gameInjection &&
+        gameInjection.response_made_at && {
+          none:
+            !gameInjection.predefined_responses_made?.length &&
+            !gameInjection.is_response_correct &&
+            !gameInjection.custom_response,
+          selectedResponses: new Set(
+            gameInjection.predefined_responses_made?.length
+              ? gameInjection.predefined_responses_made
+              : [],
+          ),
+          customCorrectResponse:
+            (gameInjection.is_response_correct &&
+              gameInjection.custom_response) ||
+            '',
+          customIncorrectResponse:
+            (!gameInjection.is_response_correct &&
+              gameInjection.custom_response) ||
+            '',
+        },
+      [gameInjection],
+    );
+
     const formStore = store({
-      none: !!(
-        gameInjection?.response_made_at &&
-        !gameInjection?.predefined_responses_made?.length &&
-        !gameInjection?.is_response_correct &&
-        !gameInjection?.custom_response
-      ),
-      selectedResponses: new Set(
-        gameInjection?.predefined_responses_made?.length
-          ? gameInjection.predefined_responses_made
-          : [],
-      ),
-      isCustomCorrectResponse:
-        gameInjection?.is_response_correct &&
-        gameInjection?.custom_response,
-      customCorrectResponse:
-        (gameInjection?.is_response_correct &&
-          gameInjection?.custom_response) ||
-        '',
-      isCustomIncorrectResponse:
-        !gameInjection?.is_response_correct &&
-        gameInjection?.custom_response,
-      customIncorrectResponse:
-        (!gameInjection?.is_response_correct &&
-          gameInjection?.custom_response) ||
-        '',
+      none: false,
+      selectedResponses: new Set(),
+      isCustomCorrectResponse: false,
+      customCorrectResponse: '',
+      isCustomIncorrectResponse: false,
+      customIncorrectResponse: '',
       deselectIncorrects: () => {
         formStore.none = false;
         formStore.isCustomIncorrectResponse = false;
@@ -176,7 +182,11 @@ const InjectionResponseForm = view(
                 </span>
               }
               disabled={disabled}
-              checked={formStore.selectedResponses.has(response.id)}
+              checked={
+                madeResponses
+                  ? madeResponses.selectedResponses.has(response.id)
+                  : formStore.selectedResponses.has(response.id)
+              }
               onChange={(e) => {
                 if (e.target.checked) {
                   formStore.deselectIncorrects();
@@ -209,14 +219,22 @@ const InjectionResponseForm = view(
                     formStore.customCorrectResponse =
                       event.target.value;
                   }}
-                  value={formStore.customCorrectResponse || ''}
+                  value={
+                    madeResponses
+                      ? madeResponses.customCorrectResponse
+                      : formStore.customCorrectResponse || ''
+                  }
                   autoComplete="off"
                   style={{ fontSize: '1rem' }}
                 />
               </div>
             }
             disabled={disabled}
-            checked={formStore.isCustomCorrectResponse}
+            checked={
+              madeResponses
+                ? madeResponses.customCorrectResponse
+                : formStore.isCustomCorrectResponse
+            }
             onChange={(e) => {
               if (e.target.checked) {
                 formStore.deselectIncorrects();
@@ -248,14 +266,22 @@ const InjectionResponseForm = view(
                     formStore.customIncorrectResponse =
                       event.target.value;
                   }}
-                  value={formStore.customIncorrectResponse || ''}
+                  value={
+                    madeResponses
+                      ? madeResponses.isCustomIncorrectResponse
+                      : formStore.customIncorrectResponse || ''
+                  }
                   autoComplete="off"
                   style={{ fontSize: '1rem' }}
                 />
               </div>
             }
             disabled={disabled}
-            checked={formStore.isCustomIncorrectResponse}
+            checked={
+              madeResponses
+                ? madeResponses.isCustomIncorrectResponse
+                : formStore.isCustomIncorrectResponse
+            }
             onChange={(e) => {
               if (e.target.checked) {
                 formStore.selectCustomIncorrect();
@@ -271,7 +297,9 @@ const InjectionResponseForm = view(
             id={`${injection.id}_none`}
             label={<span>NO RESPONSE</span>}
             disabled={disabled}
-            checked={formStore.none}
+            checked={
+              madeResponses ? madeResponses.none : formStore.none
+            }
             onChange={(e) => {
               if (e.target.checked) {
                 formStore.selectNone();
