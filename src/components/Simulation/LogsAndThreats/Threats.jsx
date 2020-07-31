@@ -9,11 +9,7 @@ import { msToMinutesSeconds } from '../../../util';
 import { useStaticData } from '../../StaticDataProvider';
 
 const Threats = view(({ className }) => {
-  const {
-    mitigations: gameMitigations,
-    injections: gameInjections,
-    prevented_injections: preventedInjections,
-  } = gameStore;
+  const { injections: gameInjections } = gameStore;
   const { injections } = useStaticData();
 
   const { threats, notThreats } = useMemo(
@@ -25,39 +21,21 @@ const Threats = view(({ className }) => {
               acc,
               {
                 trigger_time: triggerTime,
-                skipper_mitigation: skipMitigation,
-                skipper_mitigation_type: skipType,
                 title,
                 id,
                 location,
+                prevented,
               },
             ) => {
-              // Was not injected yet
-              if (!gameInjections[id]) {
-                const localUp =
-                  skipMitigation &&
-                  gameMitigations[`${skipMitigation}_local`];
-                const hqUp =
-                  skipMitigation &&
-                  gameMitigations[`${skipMitigation}_hq`];
-                // Prevented or will be prevented
-                if (
-                  (skipType === 'party' && localUp && hqUp) ||
-                  (skipType === 'hq' && hqUp) ||
-                  (skipType === 'local' && localUp) ||
-                  preventedInjections.some(
-                    (preventedId) => preventedId === id,
-                  )
-                ) {
-                  acc.notThreats.push({
-                    desc:
-                      msToMinutesSeconds(triggerTime) +
-                      ' - ' +
-                      (title || id),
-                    location: location?.toUpperCase() || 'PARTY',
-                  });
-                  return acc;
-                }
+              if (gameInjections[id].prevented) {
+                acc.notThreats.push({
+                  desc:
+                    msToMinutesSeconds(triggerTime) +
+                    ' - ' +
+                    (title || id),
+                  location: location?.toUpperCase() || 'PARTY',
+                });
+                return acc;
               }
               acc.threats.push({
                 desc:
@@ -77,12 +55,7 @@ const Threats = view(({ className }) => {
             threats: [],
             notThreats: [],
           },
-    [
-      gameInjections,
-      gameMitigations,
-      injections,
-      preventedInjections,
-    ],
+    [gameInjections, injections],
   );
 
   return (

@@ -27,10 +27,13 @@ const CurveballEventLog = ({ game_timer, type, curveball_id }) => {
               {curveball.poll_change}%
             </Col>
           )}
-          {!!curveball.budget_change && (
+          {(!!curveball.budget_change ||
+            curveball.lose_all_budget) && (
             <Col xs={2} className="text-right">
               <span className="font-weight-bold">Budget: </span>
-              {numberToUsd(curveball.budget_change)}
+              {curveball.lose_all_budget
+                ? 'Party loses all it’s money'
+                : numberToUsd(curveball.budget_change)}
             </Col>
           )}
         </Row>

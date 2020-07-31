@@ -15,18 +15,56 @@ const InjectionResponseForm = view(
     } = gameStore;
     const { responses, systems } = useStaticData();
 
+    const madeResponses = useMemo(
+      () =>
+        gameInjection &&
+        gameInjection.response_made_at && {
+          none:
+            !gameInjection.predefined_responses_made?.length &&
+            !gameInjection.is_response_correct &&
+            !gameInjection.custom_response,
+          selectedResponses: new Set(
+            gameInjection.predefined_responses_made?.length
+              ? gameInjection.predefined_responses_made
+              : [],
+          ),
+          customCorrectResponse:
+            (gameInjection.is_response_correct &&
+              gameInjection.custom_response) ||
+            '',
+          customIncorrectResponse:
+            (!gameInjection.is_response_correct &&
+              gameInjection.custom_response) ||
+            '',
+        },
+      [gameInjection],
+    );
+
     const formStore = store({
-      none: !!(
-        gameInjection?.response_made_at &&
-        !gameInjection?.correct_responses_made?.length
-      ),
-      selectedResponses: new Set(
-        gameInjection?.correct_responses_made?.length
-          ? gameInjection.correct_responses_made
-          : [],
-      ),
+      none: false,
+      selectedResponses: new Set(),
+      isCustomCorrectResponse: false,
+      customCorrectResponse: '',
+      isCustomIncorrectResponse: false,
+      customIncorrectResponse: '',
+      deselectIncorrects: () => {
+        formStore.none = false;
+        formStore.isCustomIncorrectResponse = false;
+        formStore.customIncorrectResponse = '';
+      },
+      selectCustomIncorrect: () => {
+        formStore.selectedResponses = new Set();
+        formStore.isCustomCorrectResponse = false;
+        formStore.customCorrectResponse = '';
+        formStore.none = false;
+        formStore.isCustomIncorrectResponse = true;
+      },
       selectNone: () => {
         formStore.selectedResponses = new Set();
+        formStore.isCustomCorrectResponse = false;
+        formStore.customCorrectResponse = '';
+        formStore.isCustomIncorrectResponse = false;
+        formStore.customIncorrectResponse = '';
         formStore.none = true;
       },
       submitResponses: () => {
@@ -34,12 +72,33 @@ const InjectionResponseForm = view(
           nonCorrectRespondToInjection({
             injectionId: injection.id,
           });
+        } else if (
+          formStore.isCustomIncorrectResponse &&
+          formStore.customIncorrectResponse
+        ) {
+          nonCorrectRespondToInjection({
+            injectionId: injection.id,
+            customResponse: formStore.customIncorrectResponse,
+          });
         } else {
           respondToInjection({
             responseIds: [...formStore.selectedResponses],
             injectionId: injection.id,
+            ...(formStore.isCustomCorrectResponse &&
+            formStore.customCorrectResponse
+              ? { customResponse: formStore.customCorrectResponse }
+              : {}),
           });
         }
+      },
+      get responseAllowed() {
+        if (formStore.isCustomIncorrectResponse) {
+          return formStore.customIncorrectResponse;
+        }
+        if (formStore.isCustomCorrectResponse) {
+          return formStore.customCorrectResponse;
+        }
+        return formStore.none || formStore.selectedResponses.size;
       },
       get responseCost() {
         return [...formStore.selectedResponses].reduce(
@@ -92,13 +151,7 @@ const InjectionResponseForm = view(
                   variant="outline-primary"
                   className="rounded-pill w-100"
                   type="button"
-                  disabled={
-                    disabled ||
-                    !(
-                      formStore.none ||
-                      formStore.selectedResponses.size
-                    )
-                  }
+                  disabled={disabled || !formStore.responseAllowed}
                   onClick={formStore.submitResponses}
                 >
                   RESOLVE EVENT
@@ -129,10 +182,14 @@ const InjectionResponseForm = view(
                 </span>
               }
               disabled={disabled}
-              checked={formStore.selectedResponses.has(response.id)}
+              checked={
+                madeResponses
+                  ? madeResponses.selectedResponses.has(response.id)
+                  : formStore.selectedResponses.has(response.id)
+              }
               onChange={(e) => {
                 if (e.target.checked) {
-                  formStore.none = false;
+                  formStore.deselectIncorrects();
                   formStore.selectedResponses.add(response.id);
                 } else {
                   formStore.selectedResponses.delete(response.id);
@@ -144,16 +201,105 @@ const InjectionResponseForm = view(
             type="switch"
             className="py-1"
             style={{ width: 'fit-content' }}
-            id={`${injection.id}_none`}
+            id={`${injection.id}_custom_corrrect`}
             label={
-              <span>
-                {availableResponses?.length
-                  ? 'NONE OF THE ABOVE'
-                  : 'MARK AS RESPONDED (no correct responses available)'}
-              </span>
+              <div
+                className="d-flex"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                CUSTOM CORRECT (will prevent follow up):
+                <Form.Control
+                  type="text"
+                  disabled={
+                    !formStore.isCustomCorrectResponse ||
+                    gameInjection?.response_made_at
+                  }
+                  placeholder="Correct response"
+                  onChange={(event) => {
+                    formStore.customCorrectResponse =
+                      event.target.value;
+                  }}
+                  value={
+                    madeResponses
+                      ? madeResponses.customCorrectResponse
+                      : formStore.customCorrectResponse || ''
+                  }
+                  autoComplete="off"
+                  style={{ fontSize: '1rem' }}
+                />
+              </div>
             }
             disabled={disabled}
-            checked={formStore.none}
+            checked={
+              madeResponses
+                ? madeResponses.customCorrectResponse
+                : formStore.isCustomCorrectResponse
+            }
+            onChange={(e) => {
+              if (e.target.checked) {
+                formStore.deselectIncorrects();
+                formStore.isCustomCorrectResponse = true;
+              } else {
+                formStore.isCustomCorrectResponse = false;
+              }
+            }}
+          />
+          <Form.Check
+            type="switch"
+            className="custom-switch-red py-1"
+            style={{ width: 'fit-content' }}
+            id={`${injection.id}_custom_incorrrect`}
+            label={
+              <div
+                className="d-flex"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                CUSTOM INCORRECT:
+                <Form.Control
+                  type="text"
+                  disabled={
+                    !formStore.isCustomIncorrectResponse ||
+                    gameInjection?.response_made_at
+                  }
+                  placeholder="Incorrect response"
+                  onChange={(event) => {
+                    formStore.customIncorrectResponse =
+                      event.target.value;
+                  }}
+                  value={
+                    madeResponses
+                      ? madeResponses.isCustomIncorrectResponse
+                      : formStore.customIncorrectResponse || ''
+                  }
+                  autoComplete="off"
+                  style={{ fontSize: '1rem' }}
+                />
+              </div>
+            }
+            disabled={disabled}
+            checked={
+              madeResponses
+                ? madeResponses.isCustomIncorrectResponse
+                : formStore.isCustomIncorrectResponse
+            }
+            onChange={(e) => {
+              if (e.target.checked) {
+                formStore.selectCustomIncorrect();
+              } else {
+                formStore.isCustomIncorrectResponse = false;
+              }
+            }}
+          />
+          <Form.Check
+            type="switch"
+            className="custom-switch-red py-1"
+            style={{ width: 'fit-content' }}
+            id={`${injection.id}_none`}
+            label={<span>NO RESPONSE</span>}
+            disabled={disabled}
+            checked={
+              madeResponses ? madeResponses.none : formStore.none
+            }
             onChange={(e) => {
               if (e.target.checked) {
                 formStore.selectNone();

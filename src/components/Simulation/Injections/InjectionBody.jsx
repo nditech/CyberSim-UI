@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import InjectionResponseForm from './InjectionResponseForm';
 import { useStaticData } from '../../StaticDataProvider';
+import { msToMinutesSeconds } from '../../../util';
 
 const InjectionBody = view(
   ({
@@ -14,14 +15,18 @@ const InjectionBody = view(
     bgColor = '',
     gameInjection,
   }) => {
-    const { systems } = useStaticData();
+    const { systems, injections } = useStaticData();
 
     return (
       <div>
         <Card.Body
           className={classNames(
-            'border-top border-primary injection-body border-bottom',
+            'border-top border-primary injection-body',
             bgColor,
+            {
+              'border-bottom':
+                injection.recommendations || !prevented,
+            },
           )}
         >
           <Row>
@@ -72,18 +77,40 @@ const InjectionBody = view(
               </Row>
             </Col>
             <Col xs={12} className="my-2">
-              <span className="font-weight-bold">
-                Asset to deliver to table:{' '}
-              </span>
-              {injection.asset_code}
+              <Row>
+                <Col xs={6} md={4}>
+                  <span className="font-weight-bold">
+                    Asset to deliver to table:{' '}
+                  </span>
+                  {injection.asset_code}
+                </Col>
+                {injection.followup_injecion && (
+                  <Col>
+                    <span className="font-weight-bold">
+                      Follow up:{' '}
+                    </span>
+                    {`${msToMinutesSeconds(
+                      injections[injection.followup_injecion]
+                        .trigger_time,
+                    )} - ${
+                      injections[injection.followup_injecion].title
+                    } (${
+                      injections[
+                        injection.followup_injecion
+                      ].location?.toUpperCase() || 'PARTY'
+                    })`}
+                  </Col>
+                )}
+              </Row>
             </Col>
           </Row>
         </Card.Body>
         {!prevented && (
           <Card.Body
             className={classNames(
-              'border-primary injection-body border-bottom',
+              'border-primary injection-body',
               bgColor,
+              { 'border-bottom': injection.recommendations },
             )}
           >
             <InjectionResponseForm
@@ -93,16 +120,20 @@ const InjectionBody = view(
             />
           </Card.Body>
         )}
-        <Card.Body className={classNames('injection-body', bgColor)}>
-          <Row>
-            <Col xs={12}>
-              <span className="font-weight-bold">
-                Security Recommendations:{' '}
-              </span>
-              {injection.recommendations || 'Not specified'}
-            </Col>
-          </Row>
-        </Card.Body>
+        {injection.recommendations && (
+          <Card.Body
+            className={classNames('injection-body', bgColor)}
+          >
+            <Row>
+              <Col xs={12}>
+                <span className="font-weight-bold">
+                  Security Recommendations:{' '}
+                </span>
+                {injection.recommendations}
+              </Col>
+            </Row>
+          </Card.Body>
+        )}
       </div>
     );
   },
