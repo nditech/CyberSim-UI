@@ -84,8 +84,28 @@ select.form-control:focus {
   transform: translate(0.75rem, -50%);
 }
 
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label {
+  cursor: not-allowed;
+}
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: rgba(40, 167, 69, 0.7);
+  background-color: rgba(40, 167, 69, 0.7) !important;
+}
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label::before {
+  background-color: rgba(105, 167, 120, 0.7) !important;
+}
+
+.custom-switch.custom-switch-red {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: rgba(220, 53, 69, 0.7) !important;
+  }
+  .custom-control-input:disabled:checked
+    ~ .custom-control-label::before {
+    background-color: rgba(220, 115, 125, 0.7) !important;
+  }
 }
 
 .custom-switch .custom-control-label::before {
