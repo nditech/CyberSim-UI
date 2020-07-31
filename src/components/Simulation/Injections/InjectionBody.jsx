@@ -14,6 +14,7 @@ const InjectionBody = view(
     canMakeResponse,
     bgColor = '',
     gameInjection,
+    isBackground,
   }) => {
     const { systems, injections } = useStaticData();
 
@@ -25,7 +26,8 @@ const InjectionBody = view(
             bgColor,
             {
               'border-bottom':
-                injection.recommendations || !prevented,
+                injection.recommendations ||
+                (!prevented && !isBackground),
             },
           )}
         >
@@ -105,7 +107,7 @@ const InjectionBody = view(
             </Col>
           </Row>
         </Card.Body>
-        {!prevented && (
+        {!prevented && !isBackground && (
           <Card.Body
             className={classNames(
               'border-primary injection-body',

@@ -22,6 +22,7 @@ const InjectsAndResponses = view(({ className, location }) => {
     ).reduce(
       (acc, injection) => {
         const gameInjection = gameInjections[injection.id];
+        const isBackground = injection.type === 'Background';
         const {
           delivered,
           prevented,
@@ -30,8 +31,11 @@ const InjectsAndResponses = view(({ className, location }) => {
         const upcoming = timeTaken < injection.trigger_time;
         const resolved =
           timeTaken > injection.trigger_time &&
-          (responseMadeAt || prevented);
-        const canMakeResponse = !responseMadeAt && delivered;
+          (responseMadeAt ||
+            prevented ||
+            (isBackground && delivered));
+        const canMakeResponse =
+          !responseMadeAt && delivered && !isBackground;
         const canDeliver =
           !upcoming &&
           !delivered &&
@@ -49,6 +53,7 @@ const InjectsAndResponses = view(({ className, location }) => {
           delivered,
           gameInjection,
           prevented,
+          isBackground,
           isDanger:
             !canDeliver &&
             !canMakeResponse &&
@@ -82,6 +87,7 @@ const InjectsAndResponses = view(({ className, location }) => {
                   prevented,
                   delivered,
                   isDanger,
+                  isBackground,
                 }) => (
                   <Injection
                     injection={injection}
@@ -92,6 +98,7 @@ const InjectsAndResponses = view(({ className, location }) => {
                     upcoming={upcoming}
                     canDeliver={canDeliver}
                     canMakeResponse={canMakeResponse}
+                    isBackground={isBackground}
                   />
                 ),
               )
@@ -115,6 +122,7 @@ const InjectsAndResponses = view(({ className, location }) => {
                   isDanger,
                   resolved,
                   gameInjection,
+                  isBackground,
                 }) => (
                   <Injection
                     injection={injection}
@@ -127,6 +135,7 @@ const InjectsAndResponses = view(({ className, location }) => {
                     canMakeResponse={canMakeResponse}
                     resolved={resolved}
                     gameInjection={gameInjection}
+                    isBackground={isBackground}
                   />
                 ),
               )

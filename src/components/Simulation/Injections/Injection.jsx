@@ -27,6 +27,7 @@ const Injection = view(
     canMakeResponse,
     resolved,
     gameInjection,
+    isBackground,
   }) => {
     const [
       showDeliverConfirmation,
@@ -38,7 +39,7 @@ const Injection = view(
     } = gameStore;
 
     const bgColor = useMemo(() => {
-      if (resolved) {
+      if (resolved || isBackground) {
         return 'bg-light';
       }
       if (prevented) {
@@ -51,7 +52,7 @@ const Injection = view(
         return 'bg-warning-light';
       }
       return 'bg-white';
-    }, [upcoming, isDanger, prevented, resolved]);
+    }, [upcoming, isDanger, prevented, resolved, isBackground]);
 
     return (
       <>
@@ -74,10 +75,10 @@ const Injection = view(
                   xs={canDeliver || delivered ? 6 : 10}
                   className="font-weight-bold"
                 >{`${msToMinutesSeconds(injection.trigger_time)} - ${
-                  upcoming || prevented
+                  upcoming || prevented || isBackground
                     ? `${upcoming ? 'UPCOMING' : ''}${
                         prevented ? ' AVOIDED' : ''
-                      }: `
+                      }${isBackground ? ' BACKGROUND' : ''}: `
                     : ''
                 }${injection.title}`}</Col>
                 <Col
@@ -95,9 +96,13 @@ const Injection = view(
                       style={{ width: 'fit-content' }}
                       id={injection.id}
                       label={
-                        <span>
-                          Delivered to table (trigger effects):
-                        </span>
+                        isBackground ? (
+                          <span>Activate background event:</span>
+                        ) : (
+                          <span>
+                            Delivered to table (trigger effects):
+                          </span>
+                        )
                       }
                       checked={delivered}
                       disabled={delivered}
@@ -121,6 +126,7 @@ const Injection = view(
                 canMakeResponse={canMakeResponse}
                 bgColor={bgColor}
                 gameInjection={gameInjection}
+                isBackground={isBackground}
               />
             </Accordion.Collapse>
           </Card>

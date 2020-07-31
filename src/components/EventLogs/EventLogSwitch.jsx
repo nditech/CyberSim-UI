@@ -71,13 +71,16 @@ const EventLogSwitch = view(
             <Log
               title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
                 injection.title
-              } (available from ${msToMinutesSeconds(
+              } (${
+                injection.type === 'Background' ? 'background - ' : ''
+              }available from ${msToMinutesSeconds(
                 injection.trigger_time,
               )})`}
             >
               <InjectionBody
                 injection={injection}
                 gameInjection={gameInjection}
+                isBackground={injection.type === 'Background'}
               />
             </Log>
           );
@@ -86,9 +89,15 @@ const EventLogSwitch = view(
             <Log
               title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
                 injection.title
+              } ${
+                injection.type === 'Background' ? '(background)' : ''
               }`}
             >
-              <InjectionBody injection={injection} prevented />
+              <InjectionBody
+                injection={injection}
+                prevented
+                isBackground={injection.type === 'Background'}
+              />
             </Log>
           );
         case logTypes.GameState:
