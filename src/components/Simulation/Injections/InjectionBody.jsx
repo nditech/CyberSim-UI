@@ -20,8 +20,12 @@ const InjectionBody = view(
       <div>
         <Card.Body
           className={classNames(
-            'border-top border-primary injection-body border-bottom',
+            'border-top border-primary injection-body',
             bgColor,
+            {
+              'border-bottom':
+                injection.recommendations || !prevented,
+            },
           )}
         >
           <Row>
@@ -82,8 +86,9 @@ const InjectionBody = view(
         {!prevented && (
           <Card.Body
             className={classNames(
-              'border-primary injection-body border-bottom',
+              'border-primary injection-body',
               bgColor,
+              { 'border-bottom': injection.recommendations },
             )}
           >
             <InjectionResponseForm
@@ -93,16 +98,20 @@ const InjectionBody = view(
             />
           </Card.Body>
         )}
-        <Card.Body className={classNames('injection-body', bgColor)}>
-          <Row>
-            <Col xs={12}>
-              <span className="font-weight-bold">
-                Security Recommendations:{' '}
-              </span>
-              {injection.recommendations || 'Not specified'}
-            </Col>
-          </Row>
-        </Card.Body>
+        {injection.recommendations && (
+          <Card.Body
+            className={classNames('injection-body', bgColor)}
+          >
+            <Row>
+              <Col xs={12}>
+                <span className="font-weight-bold">
+                  Security Recommendations:{' '}
+                </span>
+                {injection.recommendations}
+              </Col>
+            </Row>
+          </Card.Body>
+        )}
       </div>
     );
   },
