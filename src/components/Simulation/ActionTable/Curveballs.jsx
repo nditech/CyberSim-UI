@@ -66,14 +66,24 @@ const Curveballs = ({ className }) => {
               key={curveball.id}
               label={
                 <Row className="py-1 select-row align-items-center">
-                  <Col xs={9}>{curveball.description}</Col>
+                  <Col xs={7}>{curveball.description}</Col>
                   <Col className="text-right">
-                    {curveball.budget_change
+                    {curveball.budget_change ||
+                    curveball.lose_all_budget
                       ? `Budget: ${
-                          curveball.budget_change > 0 ? '+' : ''
-                        }${numberToUsd(curveball.budget_change)}`
+                          curveball.budget_change > 0 &&
+                          !curveball.lose_all_budget
+                            ? '+'
+                            : ''
+                        }${
+                          curveball.lose_all_budget
+                            ? 'Party loses all it’s money'
+                            : numberToUsd(curveball.budget_change)
+                        }`
                       : ''}
-                    {curveball.poll_change && curveball.budget_change
+                    {curveball.poll_change &&
+                    (curveball.budget_change ||
+                      curveball.lose_all_budget)
                       ? ', '
                       : ''}
                     {curveball.poll_change
