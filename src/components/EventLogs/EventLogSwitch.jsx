@@ -101,7 +101,9 @@ const EventLogSwitch = view(
                 <span>
                   {`${msToMinutesSeconds(game_timer)} - ${type}: ${
                     injection.title
-                  }`}
+                  } (available from ${msToMinutesSeconds(
+                    injection.trigger_time,
+                  )})`}
                   {injection.type === 'Background' ? (
                     <Badge variant="secondary" className="mx-1">
                       BACKGROUND

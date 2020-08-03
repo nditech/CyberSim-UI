@@ -14,7 +14,6 @@ import { gameStore } from '../GameStore';
 import Log from './Log';
 import EventLogSwitch from './EventLogSwitch';
 import Mitigations from '../Mitigations/Mitigations';
-import useTimeTaken from '../../hooks/useTimeTaken';
 
 export const accordionOpeners = store([]);
 
@@ -32,20 +31,16 @@ export const logTypes = {
 const EventLogs = view(({ className }) => {
   const { logs: gameLogs, injections: gameInjections } = gameStore;
   const { injections } = useStaticData();
-  const timeTaken = useTimeTaken();
 
   const logs = useMemo(() => {
     const preventedLogs = _reduce(
       gameInjections,
-      (acc, { injection_id, prevented }) => {
-        if (
-          prevented &&
-          timeTaken > injections[injection_id].trigger_time
-        ) {
+      (acc, { injection_id, prevented, prevented_at }) => {
+        if (prevented) {
           acc.push({
             type: 'Threat Prevented',
             injection: injections[injection_id],
-            game_timer: injections[injection_id].trigger_time,
+            game_timer: prevented_at,
             id: `injection_${injection_id}`,
           });
         }
@@ -73,7 +68,7 @@ const EventLogs = view(({ className }) => {
       [...preventedLogs, ...injectionLogs, ...gameLogs],
       'game_timer',
     );
-  }, [gameInjections, injections, gameLogs, timeTaken]);
+  }, [gameInjections, injections, gameLogs]);
 
   const [filterValue, setFilterValue] = useState(
     Object.values(logTypes),
