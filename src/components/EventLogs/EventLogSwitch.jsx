@@ -15,7 +15,7 @@ const EventLogSwitch = view(
   ({
     log: {
       game_timer,
-      descripition,
+      description,
       type,
       mitigation_type,
       mitigation_id,
@@ -71,20 +71,26 @@ const EventLogSwitch = view(
           return (
             <Log
               title={
-                <span>
-                  {`${msToMinutesSeconds(game_timer)} - ${type}: ${
+                <div className="d-flex align-items-center">
+                  {`${msToMinutesSeconds(game_timer)} -`}{' '}
+                  <Badge pill variant="danger" className="py-1 mx-1">
+                    {type}
+                  </Badge>
+                  {`${
                     injection.title
                   } (available from ${msToMinutesSeconds(
                     injection.trigger_time,
                   )})`}
-                  {injection.type === 'Background' ? (
-                    <Badge variant="secondary" className="mx-1">
+                  {injection.type === 'Background' && (
+                    <Badge
+                      pill
+                      variant="primary"
+                      className="py-1 mx-1"
+                    >
                       BACKGROUND
                     </Badge>
-                  ) : (
-                    ''
                   )}
-                </span>
+                </div>
               }
             >
               <InjectionBody
@@ -98,20 +104,26 @@ const EventLogSwitch = view(
           return (
             <Log
               title={
-                <span>
-                  {`${msToMinutesSeconds(game_timer)} - ${type}: ${
+                <div className="d-flex align-items-center">
+                  {`${msToMinutesSeconds(game_timer)} -`}
+                  <Badge pill variant="success" className="py-1 mx-1">
+                    {type}
+                  </Badge>
+                  {`${
                     injection.title
                   } (available from ${msToMinutesSeconds(
                     injection.trigger_time,
                   )})`}
-                  {injection.type === 'Background' ? (
-                    <Badge variant="secondary" className="mx-1">
+                  {injection.type === 'Background' && (
+                    <Badge
+                      pill
+                      variant="primary"
+                      className="py-1 mx-1"
+                    >
                       BACKGROUND
                     </Badge>
-                  ) : (
-                    ''
                   )}
-                </span>
+                </div>
               }
             >
               <InjectionBody
@@ -124,9 +136,15 @@ const EventLogSwitch = view(
         case logTypes.GameState:
           return (
             <Log
-              title={`${msToMinutesSeconds(
-                game_timer,
-              )} - ${descripition}`}
+              title={
+                <div className="d-flex align-items-center">
+                  {`${msToMinutesSeconds(game_timer)} -`}
+                  <Badge pill variant="primary" className="py-1 mx-1">
+                    {type}
+                  </Badge>
+                  {description}
+                </div>
+              }
             />
           );
         default:
@@ -142,7 +160,7 @@ const EventLogSwitch = view(
       curveball_id,
       injection,
       gameInjection,
-      descripition,
+      description,
     ]);
 
     return shouldDisplay && eventLog;

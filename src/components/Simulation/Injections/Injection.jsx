@@ -81,27 +81,42 @@ const Injection = view(
                   className="d-flex justify-content-end align-items-center pl-1"
                 >
                   {canMakeResponse && (
-                    <Badge variant="info">NEEDS RESPONSE</Badge>
+                    <Badge pill variant="info" className="py-1 mx-1">
+                      NEEDS RESPONSE
+                    </Badge>
                   )}
                   {prevented && (
-                    <Badge variant="success" className="mx-1">
+                    <Badge
+                      pill
+                      variant="success"
+                      className="py-1 mx-1"
+                    >
                       AVOIDED
                     </Badge>
                   )}
                   {isBackground && (
-                    <Badge variant="secondary" className="mx-1">
+                    <Badge
+                      pill
+                      variant="primary"
+                      className="py-1 mx-1"
+                    >
                       BACKGROUND
                     </Badge>
                   )}
                   {!upcoming && !delivered && !prevented && (
-                    <Badge variant="danger" className="mx-1">
+                    <Badge
+                      pill
+                      variant="danger"
+                      className="py-1 mx-1"
+                    >
                       AVAILABLE
                     </Badge>
                   )}
                   {!prevented && upcoming && (
                     <Badge
+                      pill
                       variant={isDanger ? 'danger' : 'warning'}
-                      className="mr-1 text-white"
+                      className="py-1 mr-1 text-white"
                     >
                       {isDanger ? 'COMING SOON' : 'UPCOMING'}
                     </Badge>

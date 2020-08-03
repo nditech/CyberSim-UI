@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Badge } from 'react-bootstrap';
 
 import Log from './Log';
 import { useStaticData } from '../StaticDataProvider';
@@ -14,9 +14,19 @@ const SystemRestoreLog = ({ game_timer, type, response_id }) => {
 
   return (
     <Log
-      title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-        response.description
-      }`}
+      title={
+        <div className="d-flex align-items-center">
+          {`${msToMinutesSeconds(game_timer)} -`}
+          <Badge
+            pill
+            variant="light"
+            className="py-1 mx-1 text-white border-dark border"
+          >
+            {type}
+          </Badge>
+          {response.description}
+        </div>
+      }
     >
       <Card.Body>
         <Row>

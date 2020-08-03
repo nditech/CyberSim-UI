@@ -140,7 +140,7 @@ const Mitigations = view(
                     onClick={startSimulation}
                   >
                     <h4 className="font-weight-normal mb-0">
-                      SAVE Budget and START Simulation
+                      SAVE Items and START Simulation
                     </h4>
                   </Button>
                 </Col>

@@ -5,6 +5,7 @@ import {
   Button,
   ToggleButtonGroup,
   ToggleButton,
+  Badge,
 } from 'react-bootstrap';
 import { view, store } from '@risingstack/react-easy-state';
 import { orderBy as _orderBy, reduce as _reduce } from 'lodash';
@@ -206,7 +207,17 @@ const EventLogs = view(({ className }) => {
       </Col>
       <Col xs={12}>
         {filter[logTypes.Preparations] && (
-          <Log title="00:00 - Preparation Mitigations Selected">
+          <Log
+            title={
+              <div className="d-flex align-items-center">
+                00:00 -
+                <Badge pill variant="dark" className="py-1 mx-1">
+                  {logTypes.Preparations}
+                </Badge>
+                Preparation Mitigations Selected
+              </div>
+            }
+          >
             <Mitigations isLog className="card-body" />
           </Log>
         )}

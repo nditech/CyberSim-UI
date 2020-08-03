@@ -38,7 +38,7 @@ const AvailableActionItems = view(({ actionList, role }) => {
     () =>
       _reduce(
         actionList,
-        (descriptions, action, actionId) => {
+        (descriptions, action) => {
           const resultDescription = [];
           if (action.cost !== 0)
             resultDescription.push(

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Badge } from 'react-bootstrap';
 
 import Log from './Log';
 import { useStaticData } from '../StaticDataProvider';
@@ -19,9 +19,15 @@ const BudgetItemLog = ({
 
   return (
     <Log
-      title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-        mitigation.category
-      }`}
+      title={
+        <div className="d-flex align-items-center">
+          {`${msToMinutesSeconds(game_timer)} -`}
+          <Badge pill variant="secondary" className="py-1 mx-1">
+            {type}
+          </Badge>
+          {mitigation.category}
+        </div>
+      }
     >
       <Card.Body>
         <Row>

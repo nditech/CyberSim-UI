@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Badge } from 'react-bootstrap';
 
 import Log from './Log';
 import { useStaticData } from '../StaticDataProvider';
@@ -14,9 +14,15 @@ const CampaignActionLog = ({ game_timer, type, action_id }) => {
 
   return (
     <Log
-      title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-        action.description
-      }`}
+      title={
+        <div className="d-flex align-items-center">
+          {`${msToMinutesSeconds(game_timer)} -`}
+          <Badge pill variant="info" className="py-1 mx-1">
+            {type}
+          </Badge>
+          {action.description}
+        </div>
+      }
     >
       <Card.Body>
         <Row>
