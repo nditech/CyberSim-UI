@@ -15,7 +15,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
           <h4 className="my-1 font-weight-bold">{id}</h4>
         </Col>
       </Row>
-      <Row className="m-0 border-primary border-bottom border-top">
+      <Row className="m-0 border-primary border-bottom border-top shadow-sm">
         <Col
           xs={3}
           className={classNames(
