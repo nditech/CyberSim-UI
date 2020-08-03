@@ -10,6 +10,7 @@ import {
   Form,
   Modal,
   Button,
+  Badge,
 } from 'react-bootstrap';
 
 import InjectionBody from './InjectionBody';
@@ -70,22 +71,41 @@ const Injection = view(
               )}
             >
               <Row className="align-items-center">
+                <Col xs={5} className="font-weight-bold">
+                  {`${msToMinutesSeconds(injection.trigger_time)} - ${
+                    injection.title
+                  }`}
+                </Col>
                 <Col
-                  lg={7}
-                  xs={canDeliver || delivered ? 6 : 10}
-                  className="font-weight-bold"
-                >{`${msToMinutesSeconds(injection.trigger_time)} - ${
-                  upcoming || prevented || isBackground
-                    ? `${upcoming ? 'UPCOMING' : ''}${
-                        prevented ? ' AVOIDED' : ''
-                      }${isBackground ? ' BACKGROUND' : ''}: `
-                    : ''
-                }${injection.title}`}</Col>
-                <Col
-                  lg={5}
-                  xs={canDeliver || delivered ? 6 : 2}
+                  xs={7}
                   className="d-flex justify-content-end align-items-center pl-1"
                 >
+                  {canMakeResponse && (
+                    <Badge variant="info">NEEDS RESPONSE</Badge>
+                  )}
+                  {prevented && (
+                    <Badge variant="success" className="mx-1">
+                      AVOIDED
+                    </Badge>
+                  )}
+                  {isBackground && (
+                    <Badge variant="secondary" className="mx-1">
+                      BACKGROUND
+                    </Badge>
+                  )}
+                  {!upcoming && !delivered && !prevented && (
+                    <Badge variant="danger" className="mx-1">
+                      AVAILABLE
+                    </Badge>
+                  )}
+                  {!prevented && upcoming && (
+                    <Badge
+                      variant={isDanger ? 'danger' : 'warning'}
+                      className="mr-1 text-white"
+                    >
+                      {isDanger ? 'COMING SOON' : 'UPCOMING'}
+                    </Badge>
+                  )}
                   {!resolved && (canDeliver || delivered) && (
                     <Form.Check
                       type="switch"

@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { view } from '@risingstack/react-easy-state';
+import { Badge } from 'react-bootstrap';
 
 import { logTypes } from './EventLogs';
 import BudgetItemLog from './BudgetItemLog';
@@ -69,13 +70,22 @@ const EventLogSwitch = view(
         case logTypes.ThreatInjected:
           return (
             <Log
-              title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-                injection.title
-              } (${
-                injection.type === 'Background' ? 'background - ' : ''
-              }available from ${msToMinutesSeconds(
-                injection.trigger_time,
-              )})`}
+              title={
+                <span>
+                  {`${msToMinutesSeconds(game_timer)} - ${type}: ${
+                    injection.title
+                  } (available from ${msToMinutesSeconds(
+                    injection.trigger_time,
+                  )})`}
+                  {injection.type === 'Background' ? (
+                    <Badge variant="secondary" className="mx-1">
+                      BACKGROUND
+                    </Badge>
+                  ) : (
+                    ''
+                  )}
+                </span>
+              }
             >
               <InjectionBody
                 injection={injection}
@@ -87,11 +97,20 @@ const EventLogSwitch = view(
         case logTypes.ThreatPrevented:
           return (
             <Log
-              title={`${msToMinutesSeconds(game_timer)} - ${type}: ${
-                injection.title
-              } ${
-                injection.type === 'Background' ? '(background)' : ''
-              }`}
+              title={
+                <span>
+                  {`${msToMinutesSeconds(game_timer)} - ${type}: ${
+                    injection.title
+                  }`}
+                  {injection.type === 'Background' ? (
+                    <Badge variant="secondary" className="mx-1">
+                      BACKGROUND
+                    </Badge>
+                  ) : (
+                    ''
+                  )}
+                </span>
+              }
             >
               <InjectionBody
                 injection={injection}
