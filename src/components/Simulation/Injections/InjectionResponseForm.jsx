@@ -268,7 +268,7 @@ const InjectionResponseForm = view(
                   }}
                   value={
                     madeResponses
-                      ? madeResponses.isCustomIncorrectResponse
+                      ? madeResponses.customIncorrectResponse
                       : formStore.customIncorrectResponse || ''
                   }
                   autoComplete="off"
@@ -279,7 +279,7 @@ const InjectionResponseForm = view(
             disabled={disabled}
             checked={
               madeResponses
-                ? madeResponses.isCustomIncorrectResponse
+                ? madeResponses.customIncorrectResponse
                 : formStore.isCustomIncorrectResponse
             }
             onChange={(e) => {
