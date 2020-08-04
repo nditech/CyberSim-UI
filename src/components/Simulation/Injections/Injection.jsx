@@ -71,13 +71,13 @@ const Injection = view(
               )}
             >
               <Row className="align-items-center">
-                <Col xs={5} className="font-weight-bold">
+                <Col xs={6} className="font-weight-bold">
                   {`${msToMinutesSeconds(injection.trigger_time)} - ${
                     injection.title
                   }`}
                 </Col>
                 <Col
-                  xs={7}
+                  xs={6}
                   className="d-flex justify-content-end align-items-center pl-1"
                 >
                   {canMakeResponse && (

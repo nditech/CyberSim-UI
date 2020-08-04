@@ -71,7 +71,8 @@ const Header = view(({ activeTab, setActiveTab }) => {
         {activeTab === SimulationTabs.ACTION_TABLE && (
           <>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              md={2}
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
                   .querySelector('#hq_actions')
@@ -83,7 +84,8 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">HQ ACTIONS</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              md={2}
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
                   .querySelector('#local_actions')
@@ -95,7 +97,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">LOCAL ACTIONS</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document.querySelector('#curveball')?.scrollIntoView({
                   behavior: 'smooth',
@@ -105,7 +107,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">CURVEBALL EVENTS</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document.querySelector('#systems')?.scrollIntoView({
                   behavior: 'smooth',
@@ -115,7 +117,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">TECHNICAL SYSTEMS</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
               onClick={() =>
                 document
                   .querySelector('#mitigations')
@@ -124,10 +126,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
                   })
               }
             >
-              <p className="my-0 d-none d-lg-block">
-                MITIGATION INVENTORY
-              </p>
-              <p className="my-0 d-block d-lg-none">MITIGATIONS</p>
+              <p className="my-0">MITIGATION INVENTORY</p>
             </Col>
           </>
         )}
@@ -135,7 +134,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
           activeTab === SimulationTabs.LOCAL_BRANCH) && (
           <>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document.querySelector('#injects')?.scrollIntoView({
                   behavior: 'smooth',
@@ -145,7 +144,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">EVENTS & RESPONSES</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
                   .querySelector('#resolved_injects')
@@ -157,7 +156,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">RESOLVED EVENTS</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
                   .querySelector('#mitigations')
@@ -169,7 +168,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">PURCHASES</p>
             </Col>
             <Col
-              className="simulation-menu-item--small cursor-pointer p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
               onClick={() =>
                 document
                   .querySelector('#system_actions')
@@ -186,7 +185,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
           <>
             <Col
               xs={6}
-              className="simulation-menu-item--small cursor-pointer border-primary border-right p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document.querySelector('#threats')?.scrollIntoView({
                   behavior: 'smooth',
@@ -197,7 +196,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
             </Col>
             <Col
               xs={6}
-              className="simulation-menu-item--small cursor-pointer p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
               onClick={() =>
                 document.querySelector('#logs')?.scrollIntoView({
                   behavior: 'smooth',
