@@ -111,7 +111,7 @@ const EventLogSwitch = view(
                   </Badge>
                   {`${
                     injection.title
-                  } (available from ${msToMinutesSeconds(
+                  } (triggered at ${msToMinutesSeconds(
                     injection.trigger_time,
                   )})`}
                   {injection.type === 'Background' && (
