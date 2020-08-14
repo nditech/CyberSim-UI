@@ -106,7 +106,7 @@ const Mitigations = view(
             <Row>
               <Col xs={12}>
                 <h2 className="font-weight-bold mb-1">
-                  MITIGATION INVENTORY:
+                  PURCHASED ITEMS:
                 </h2>
               </Col>
             </Row>

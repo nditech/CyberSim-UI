@@ -77,7 +77,7 @@ const Curveballs = ({ className }) => {
                             : ''
                         }${
                           curveball.lose_all_budget
-                            ? 'Party loses all it’s money'
+                            ? 'Party loses all its money'
                             : numberToUsd(curveball.budget_change)
                         }`
                       : ''}

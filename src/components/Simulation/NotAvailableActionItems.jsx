@@ -6,9 +6,7 @@ const NotAvailableActionItems = ({ systems, actionList, role }) => (
   <Container className="p-0 m-0 pl-3">
     <Row className="d-flex align-items-center mb-2">
       <Col>
-        <h6 className="m-0 font-weight-bold">
-          NOT AVAILABLE ACTIONS:
-        </h6>
+        <h6 className="m-0 font-weight-bold">UNAVAILABLE ACTIONS:</h6>
       </Col>
     </Row>
 

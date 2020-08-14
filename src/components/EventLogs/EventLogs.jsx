@@ -5,16 +5,14 @@ import {
   Button,
   ToggleButtonGroup,
   ToggleButton,
-  Badge,
 } from 'react-bootstrap';
 import { view, store } from '@risingstack/react-easy-state';
 import { orderBy as _orderBy, reduce as _reduce } from 'lodash';
 
 import { useStaticData } from '../StaticDataProvider';
 import { gameStore } from '../GameStore';
-import Log from './Log';
 import EventLogSwitch from './EventLogSwitch';
-import Mitigations from '../Mitigations/Mitigations';
+import PreparationsLog from './PreparationsLog';
 
 export const accordionOpeners = store([]);
 
@@ -29,7 +27,7 @@ export const logTypes = {
   CurveballEvent: 'Curveball Event',
 };
 
-const EventLogs = view(({ className }) => {
+const EventLogs = view(({ className, asc = true }) => {
   const { logs: gameLogs, injections: gameInjections } = gameStore;
   const { injections } = useStaticData();
 
@@ -68,8 +66,9 @@ const EventLogs = view(({ className }) => {
     return _orderBy(
       [...preventedLogs, ...injectionLogs, ...gameLogs],
       'game_timer',
+      asc ? 'asc' : 'desc',
     );
-  }, [gameInjections, injections, gameLogs]);
+  }, [gameInjections, injections, gameLogs, asc]);
 
   const [filterValue, setFilterValue] = useState(
     Object.values(logTypes),
@@ -206,24 +205,11 @@ const EventLogs = view(({ className }) => {
         </ToggleButtonGroup>
       </Col>
       <Col xs={12}>
-        {filter[logTypes.Preparations] && (
-          <Log
-            title={
-              <div className="d-flex align-items-center">
-                00:00 -
-                <Badge pill variant="dark" className="py-1 mx-1">
-                  {logTypes.Preparations}
-                </Badge>
-                Preparation Mitigations Selected
-              </div>
-            }
-          >
-            <Mitigations isLog className="card-body" />
-          </Log>
-        )}
+        {filter[logTypes.Preparations] && asc && <PreparationsLog />}
         {logs.map((log) => (
           <EventLogSwitch log={log} key={log.id} filter={filter} />
         ))}
+        {filter[logTypes.Preparations] && !asc && <PreparationsLog />}
       </Col>
     </Row>
   );

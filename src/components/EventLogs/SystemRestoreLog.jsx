@@ -20,7 +20,7 @@ const SystemRestoreLog = ({ game_timer, type, response_id }) => {
           <Badge
             pill
             variant="light"
-            className="py-1 mx-1 text-white border-dark border"
+            className="py-1 mx-1 text-dark border-dark border"
           >
             {type}
           </Badge>

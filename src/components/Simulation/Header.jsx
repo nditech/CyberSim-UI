@@ -126,7 +126,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
                   })
               }
             >
-              <p className="my-0">MITIGATION INVENTORY</p>
+              <p className="my-0">PURCHASED ITEMS</p>
             </Col>
           </>
         )}
@@ -147,18 +147,6 @@ const Header = view(({ activeTab, setActiveTab }) => {
               className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
-                  .querySelector('#resolved_injects')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">RESOLVED EVENTS</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document
                   .querySelector('#mitigations')
                   ?.scrollIntoView({
                     behavior: 'smooth',
@@ -168,7 +156,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
               <p className="my-0">PURCHASES</p>
             </Col>
             <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
                   .querySelector('#system_actions')
@@ -178,6 +166,18 @@ const Header = view(({ activeTab, setActiveTab }) => {
               }
             >
               <p className="my-0">SYSTEM RESTORE</p>
+            </Col>
+            <Col
+              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
+              onClick={() =>
+                document
+                  .querySelector('#resolved_injects')
+                  ?.scrollIntoView({
+                    behavior: 'smooth',
+                  })
+              }
+            >
+              <p className="my-0">RESOLVED EVENTS</p>
             </Col>
           </>
         )}
