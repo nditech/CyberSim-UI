@@ -1,7 +1,7 @@
 version: 0.2
 env:
   variables:
-    REACT_APP_API_URL: https://cybersimprod-env.eba-za2aauzi.us-east-1.elasticbeanstalk.com
+    REACT_APP_API_URL: https://cybersimbackend.demcloud.org
 phases:
   install:
     runtime-versions:
