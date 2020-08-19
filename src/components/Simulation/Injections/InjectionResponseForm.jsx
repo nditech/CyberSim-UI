@@ -210,6 +210,7 @@ const InjectionResponseForm = view(
                 CUSTOM CORRECT (will prevent follow up):
                 <Form.Control
                   type="text"
+                  maxLength={250}
                   disabled={
                     !formStore.isCustomCorrectResponse ||
                     gameInjection?.response_made_at
@@ -257,6 +258,7 @@ const InjectionResponseForm = view(
                 CUSTOM INCORRECT:
                 <Form.Control
                   type="text"
+                  maxLength={250}
                   disabled={
                     !formStore.isCustomIncorrectResponse ||
                     gameInjection?.response_made_at
