@@ -27,9 +27,20 @@ label {
 .form-group {
   display: flex;
   white-space: nowrap;
+  position: relative;
+}
+
+.invalid-tooltip {
+  right: 0;
+  left: auto;
+}
+
+.pre {
+  white-space: pre-wrap;
 }
 
 input[type='text'],
+input[type='password'],
 select.form-control {
   background: transparent;
   border: none;
@@ -46,6 +57,7 @@ select.form-control {
 }
 
 input[type='text']:focus,
+input[type='password']:focus,
 select.form-control:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -151,7 +163,7 @@ select.form-control:focus {
 
 .simulation-menu {
   top: 0;
-  z-index: 1;
+  z-index: 10;
 
   &-item {
     transition: all 0.2s linear;

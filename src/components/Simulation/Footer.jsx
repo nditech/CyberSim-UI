@@ -21,10 +21,8 @@ const Footer = view(() => {
     actions: { resumeSimulation, pauseSimulation, finishSimulation },
   } = gameStore;
 
-  const [
-    showFinishConfirmation,
-    setShowFinishConfirmation,
-  ] = useState(false);
+  const [showFinishConfirmation, setShowFinishConfirmation] =
+    useState(false);
 
   return (
     <>
@@ -34,6 +32,7 @@ const Footer = view(() => {
           bottom: 0,
           paddingBottom: '0.75rem',
           paddingTop: '0.75rem',
+          zIndex: 10,
         }}
       >
         <Container fluid="md">

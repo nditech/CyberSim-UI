@@ -81,7 +81,7 @@ const Mitigations = view(
         {!isLog && !isInventory && (
           <div
             className="py-3 border-primary border-bottom position-sticky bg-white shadow"
-            style={{ top: 0, zIndex: 1 }}
+            style={{ top: 0, zIndex: 10 }}
           >
             <Container fluid="md">
               <Row>
@@ -127,7 +127,7 @@ const Mitigations = view(
         {!isLog && !isInventory && (
           <div
             className="py-3 border-primary border-top position-fixed w-100 bg-white shadow-lg"
-            style={{ bottom: 0 }}
+            style={{ bottom: 0, zIndex: 10 }}
           >
             <Container fluid="md">
               <Row>
