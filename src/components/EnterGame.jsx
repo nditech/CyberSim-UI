@@ -107,8 +107,15 @@ const EnterGame = view(() => {
             </Row>
             <Row>
               <Col>
-                <Button variant="outline-primary" className="rounded-pill w-100">
-                  <Link to="/migrate"><h4 className="font-weight-normal mb-0">Migrate Game</h4></Link>
+                <Button
+                  variant="outline-primary"
+                  className="rounded-pill w-100"
+                >
+                  <Link to="/migrate" className="button-link">
+                    <h4 className="font-weight-normal mb-0">
+                      Migrate Game
+                    </h4>
+                  </Link>
                 </Button>
               </Col>
             </Row>

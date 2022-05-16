@@ -222,7 +222,7 @@ export default function Migrate() {
                   rel="noreferrer"
                   className="mx-1"
                 >
-                  https://airtable.com/
+                  https://airtable.com
                 </a>
                 and log in.
               </div>
