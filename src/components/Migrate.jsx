@@ -22,6 +22,7 @@ export default function Migrate() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [validationError, setValidationError] = useState({});
   const [isLoading, setLoading] = useState(false);
+  const [warning, setWarning] = useState(true);
 
   const onChange = useCallback(
     (ev) => {
@@ -199,11 +200,21 @@ export default function Migrate() {
           {!isSuccess && (
             <Container fluid="md" className="mt-3 mb-5 lead">
               <h3 className="text-center">Migration guide</h3>
-              <Row className="mb-3">
+              {warning && (
+                <Alert
+                  variant="danger"
+                  dismissible
+                  onClose={() => setWarning(false)}
+                >
+                  Migrating to a new game structure will delete all
+                  current game history!
+                </Alert>
+              )}
+              <div className="mb-4">
                 1. Ask your administrator for the master password and
                 enter it into the "Master password" input field.
-              </Row>
-              <Row className="mb-3">
+              </div>
+              <div className="mb-4">
                 2. Go to
                 <a
                   href="https://airtable.com/"
@@ -214,12 +225,13 @@ export default function Migrate() {
                   https://airtable.com/
                 </a>
                 and log in.
-              </Row>
-              <Row>
+              </div>
+              <div>
                 3. Find your airtable account settings and copy your
-                airtable API key into the "Airtable API key" input field.
-              </Row>
-              <Row className="mb-3 mt-1">
+                airtable API key into the "Airtable API key" input
+                field.
+              </div>
+              <Row className="mb-4 mt-1">
                 <Col sm={12} md={4}>
                   <Image
                     fluid
@@ -235,12 +247,12 @@ export default function Migrate() {
                   />
                 </Col>
               </Row>
-              <Row className="mb-3">
-                4. Go to your desired airtable base and copy the BASE_ID
-                segment from the
-                "https://airtable.com/BASE_ID/TABLE_ID/ETC..." page url
-                into the "Airtable base id" input field.
-              </Row>
+              <div className="mb-1">
+                4. Go to your desired airtable base and copy the
+                BASE_ID segment from the
+                "https://airtable.com/BASE_ID/TABLE_ID/ETC..." page
+                url into the "Airtable base id" input field.
+              </div>
               <Row>
                 <Col sm={12}>
                   <Image
