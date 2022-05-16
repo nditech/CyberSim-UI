@@ -51,6 +51,7 @@ export default function Migrate() {
         const error = err?.response?.data;
         if (error?.validation) {
           setValidationError(error);
+          setErrors({});
         } else {
           if (error) {
             setErrors(error);
