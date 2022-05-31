@@ -8,6 +8,7 @@ import {
   Alert,
   Image,
 } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const baseState = {
@@ -69,8 +70,16 @@ export default function Migrate() {
 
   return (
     <Container fluid="md" className="mt-5 pt-5">
+      <Button
+        variant="outline-primary"
+        className="rounded-pill navigation"
+      >
+        <Link to="/" className="button-link">
+          <h4 className="font-weight-normal mb-0">Go Back</h4>
+        </Link>
+      </Button>
       <Row>
-        <Col xs={{ span: 8, offset: 2 }}>
+        <Col xs={12} md={{ span: 8, offset: 2 }}>
           <Row className="font-weight-bold">
             <Col>
               <h4>MIGRATE THE DATABASE</h4>
@@ -150,6 +159,8 @@ export default function Migrate() {
                   <h4 className="font-weight-normal mb-0">
                     {isLoading
                       ? 'Ongoing migration ...'
+                      : isSuccess
+                      ? 'Migrate the Database Again'
                       : 'Migrate the Database'}
                   </h4>
                 </Button>

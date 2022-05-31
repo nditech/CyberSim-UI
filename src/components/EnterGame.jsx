@@ -21,8 +21,16 @@ const EnterGame = view(() => {
 
   return (
     <Container fluid="md" className="mt-5 pt-5">
+      <Button
+        variant="outline-primary"
+        className="rounded-pill navigation"
+      >
+        <Link to="/migrate" className="button-link">
+          <h4 className="font-weight-normal mb-0">Migrate Game</h4>
+        </Link>
+      </Button>
       <Row>
-        <Col xs={{ span: 8, offset: 2 }}>
+        <Col xs={12} md={{ span: 8, offset: 2 }}>
           <Row className="font-weight-bold">
             <Col>
               <h4>ENTER GAME</h4>
@@ -102,20 +110,6 @@ const EnterGame = view(() => {
                   <h4 className="font-weight-normal mb-0">
                     Join Game
                   </h4>
-                </Button>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Button
-                  variant="outline-primary"
-                  className="rounded-pill w-100"
-                >
-                  <Link to="/migrate" className="button-link">
-                    <h4 className="font-weight-normal mb-0">
-                      Migrate Game
-                    </h4>
-                  </Link>
                 </Button>
               </Col>
             </Row>
