@@ -49,16 +49,10 @@ const Mitigations = view(
               (acc, category, categoryKey) => {
                 const categorySum = _reduce(
                   category,
-                  (sum, { id, hq_cost, local_cost }) => {
+                  (sum, { id, hq_cost }) => {
                     let newSum = sum;
                     if (toggledMitigations[`${id}_hq`] && hq_cost) {
                       newSum += hq_cost;
-                    }
-                    if (
-                      toggledMitigations[`${id}_local`] &&
-                      local_cost
-                    ) {
-                      newSum += local_cost;
                     }
                     return newSum;
                   },
