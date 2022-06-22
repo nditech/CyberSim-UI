@@ -17,8 +17,9 @@
     "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
+    "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^4.4.1"
   },
   "devDependencies": {
     "husky": "^4.2.5",
@@ -37,7 +38,10 @@
     "lint": "eslint --max-warnings 0 --ext js,jsx src"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "import/no-anonymous-default-export": "off"
+    }
   },
   "browserslist": {
     "production": [

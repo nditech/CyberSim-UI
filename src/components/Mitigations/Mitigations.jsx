@@ -49,16 +49,10 @@ const Mitigations = view(
               (acc, category, categoryKey) => {
                 const categorySum = _reduce(
                   category,
-                  (sum, { id, hq_cost, local_cost }) => {
+                  (sum, { id, hq_cost }) => {
                     let newSum = sum;
                     if (toggledMitigations[`${id}_hq`] && hq_cost) {
                       newSum += hq_cost;
-                    }
-                    if (
-                      toggledMitigations[`${id}_local`] &&
-                      local_cost
-                    ) {
-                      newSum += local_cost;
                     }
                     return newSum;
                   },
@@ -81,7 +75,7 @@ const Mitigations = view(
         {!isLog && !isInventory && (
           <div
             className="py-3 border-primary border-bottom position-sticky bg-white shadow"
-            style={{ top: 0, zIndex: 1 }}
+            style={{ top: 0, zIndex: 10 }}
           >
             <Container fluid="md">
               <Row>
@@ -127,7 +121,7 @@ const Mitigations = view(
         {!isLog && !isInventory && (
           <div
             className="py-3 border-primary border-top position-fixed w-100 bg-white shadow-lg"
-            style={{ bottom: 0 }}
+            style={{ bottom: 0, zIndex: 10 }}
           >
             <Container fluid="md">
               <Row>

@@ -15,7 +15,7 @@ const Projector = view(() => {
     <>
       <div
         className="position-sticky bg-white shadow"
-        style={{ top: 0, zIndex: 1 }}
+        style={{ top: 0, zIndex: 10 }}
       >
         <Row className="m-0">
           <Col

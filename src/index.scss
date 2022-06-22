@@ -15,6 +15,15 @@ code {
     monospace;
 }
 
+a {
+  color: inherit !important;
+  text-decoration: underline;
+}
+
+.button-link {
+  text-decoration: none !important;
+}
+
 // Add fixed header height to scrollIntoView
 *[id] {
   scroll-margin-top: 110px;
@@ -27,9 +36,20 @@ label {
 .form-group {
   display: flex;
   white-space: nowrap;
+  position: relative;
+}
+
+.invalid-tooltip {
+  right: 0;
+  left: auto;
+}
+
+.pre {
+  white-space: pre-wrap;
 }
 
 input[type='text'],
+input[type='password'],
 select.form-control {
   background: transparent;
   border: none;
@@ -46,6 +66,7 @@ select.form-control {
 }
 
 input[type='text']:focus,
+input[type='password']:focus,
 select.form-control:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -151,7 +172,7 @@ select.form-control:focus {
 
 .simulation-menu {
   top: 0;
-  z-index: 1;
+  z-index: 10;
 
   &-item {
     transition: all 0.2s linear;
@@ -289,4 +310,10 @@ select.form-control:focus {
 
 .thick-border.border-primary {
   border-width: 0.5em !important;
+}
+
+.navigation {
+  position: absolute;
+  top: 15px;
+  right: 20px;
 }
