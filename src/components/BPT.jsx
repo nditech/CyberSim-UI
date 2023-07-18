@@ -61,7 +61,7 @@ const BPT = view(({ big }) => {
         })}
       >
         {big && (
-          <h2 className="font-weight-bold my-2">Support in Polls</h2>
+          <h2 className="font-weight-bold my-2">Support</h2>
         )}
         <h4 className="bpt-item font-weight-normal mb-0">{poll} %</h4>
       </Col>

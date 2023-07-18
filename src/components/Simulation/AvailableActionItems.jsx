@@ -46,7 +46,7 @@ const AvailableActionItems = view(({ actionList, role }) => {
             );
           if (action.poll_increase !== 0)
             resultDescription.push(
-              `Gain ${action.poll_increase}% in polls`,
+              `Gain ${action.poll_increase}%`,
             );
           if (action.budget_increase !== 0)
             resultDescription.push(

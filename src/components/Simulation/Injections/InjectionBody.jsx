@@ -67,7 +67,7 @@ const InjectionBody = view(
                     'text-disabled': prevented,
                   })}
                 >
-                  <span className="font-weight-bold">Polls: </span>
+                  <span className="font-weight-bold">Support: </span>
                   {injection.poll_change
                     ? `${injection.poll_change}%`
                     : '-'}
