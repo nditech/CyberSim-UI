@@ -13,10 +13,6 @@ $ cp .env.example .env
 $ npm start
 ```
 
-## Migration
-
-Go to `<host>/migrate` (eg. if you're running the APP locally: [`localhost:3000/migrate`](http://localhost:3000/migrate)) and fill in the form with the relevant AirTable details, then click "Migrate the database".
-
 ## For some basic source code explanation see the [wiki page](https://github.com/nditech/CyberSim-UI/wiki)
 
 # CyberSim-UI Deployment Guide
@@ -116,6 +112,40 @@ After creating the bucket:
   ]
 }
 ```
+
+# Data Migration
+
+The application relies on a PostgreSQL database, but the initial data is sourced from an Airtable base. If you wish to customize the data for a new game, including events, locations, actions, and more, you can achieve this by modifying the data within the Airtable base.
+
+Before running a new game with modified data, it is essential to perform a "migration" from Airtable to the PostgreSQL database. Follow the step-by-step guide below to complete the migration process:
+
+## Step-by-Step Migration Guide
+
+1. **Master Password**
+
+   - Remember to set the `MIGRATION_PASSWORD` environment variable in the backend application to access the master password needed for the migration process.
+
+2. **Access Airtable**
+
+   - Visit [https://airtable.com](https://airtable.com) and log in to your Airtable account.
+
+3. **Navigate to Developer Hub**
+
+   - From the Airtable menu, navigate to the "Developer Hub."
+
+4. **Generate a Personal Access Token**
+
+   - Create a new "Personal access token" within the Developer Hub.
+
+5. **Retrieve Airtable Base ID**
+
+   - Go to the Airtable base you wish to migrate from and copy the BASE_ID segment from the page URL. It should look something like this: "https://airtable.com/BASE_ID/TABLE_ID/ETC...".
+   - Paste the copied BASE_ID into the "Airtable base id" input field on the migration form.
+
+6. **Initiate the Migration**
+   - After filling in the relevant Airtable details, click the "Migrate the database" button.
+
+By following these steps, you can successfully migrate data from Airtable to the PostgreSQL database, ensuring that your new game incorporates the customized data you have prepared.
 
 ## Known runtime warnings
 
