@@ -69,7 +69,7 @@ const InjectionBody = view(
                   })}
                 >
                   <span className="font-weight-bold">
-                    {getTextWithSynonyms('Polls')}:{' '}
+                    {getTextWithSynonyms('Poll')}:{' '}
                   </span>
                   {injection.poll_change
                     ? `${injection.poll_change}%`

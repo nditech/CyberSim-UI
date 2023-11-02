@@ -66,7 +66,7 @@ const BPT = view(({ big }) => {
       >
         {big && (
           <h2 className="font-weight-bold my-2">
-            {getTextWithSynonyms('Support in Polls')}
+            {getTextWithSynonyms('Support')}
           </h2>
         )}
         <h4 className="bpt-item font-weight-normal mb-0">{poll} %</h4>
