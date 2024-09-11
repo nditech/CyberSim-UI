@@ -145,7 +145,7 @@ const EnterGame = view(() => {
                     value={initialPollPercentage}
                     autoComplete="off"
                     step={0.5}
-                    max={100}
+                    max={200}
                     min={0}
                     isInvalid={!initialPollPercentage}
                     style={{ fontSize: '1.125rem' }}
